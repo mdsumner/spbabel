@@ -80,34 +80,13 @@ summarise_.Spatial <- function(.data, ...) {
 
 #' @rdname dplyr-Spatial
 #' @export
-transmute_.Spatial <-  function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
-  if (.hasSlot(.data, "data")) {
-    dat <- transmute_(as.data.frame(.data), .dots = dots)
-  } else {
-    stop("no data to mutate for a %s", class(.data))
-  }
- .data@data <- dat
-  .data
-}
-
-
-#' @rdname dplyr-Spatial
-#' @export
-filter_.Spatial <- function(.data, ...) {
+filter_.Spatial <- function(.data, ..., .dots) {
   if (!.hasSlot(.data, "data")) {
     stop("no data to filter for a %s", class(.data))
   }
-  .data$rnames <- as.character(seq(nrow(.data)))
-  #print(rnames)
-  if (inherits(.data, "SpatialMultiPointsDataFrame")) {
-    dat <- filter_(as_data_frame(.data@data), ...)
-  } else {
-   dat <- filter_(as_data_frame(as.data.frame(.data)), ...)
-  }
-#print(row.names(dat))
-  asub <- .data$rnames %in% dat$rnames
-  .data[asub, ]
+  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
+  masks <- lazyeval::lazy_eval(dots, data = as.data.frame(.data@data))
+  subset(.data, Reduce(`&`, masks))
 }
 
 
@@ -143,8 +122,10 @@ select_.Spatial <- function(.data, ...) {
   if (!.hasSlot(.data, "data")) {
     stop("no data to select for a %s", class(.data))
   }
- dat <-  select_(as_data_frame(as.data.frame(.data)), ...)
- .data[, names(dat)]
+  dots <- lazyeval::all_dots(.dots, ...)
+  vars <- select_vars_(names(.data), dots)
+  .data@data <- dplyr:::select_impl(.data@data, vars)
+  .data
 }
   
 #' @rdname dplyr-Spatial
@@ -172,6 +153,15 @@ distinct_.Spatial <- function(.data, ...) {
   dat <- distinct_(as_data_frame(as.data.frame(.data)), ...)
   .data[dat$order, ]
 }
+
+
+#' @rdname dplyr-Spatial
+#' @export
+left_join.Spatial <- function (x, y, by = NULL, copy = FALSE, ...) {
+  x@data <- as.data.frame(left_join(tbl_df(x@data), y, by = by, copy = copy, ...))
+  x
+}
+
 
 # getsubSpatial <- function(x) {
 #   if (inherits(x, "SpatialPolygons")) return(x@polygons)
