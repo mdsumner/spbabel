@@ -1,4 +1,8 @@
-# spbabel dev
+# spbabel 0.3.1
+
+* removed all nesting and normalize approaches out of spbabel
+
+* removed all dplyr verb methods to spdplyr
 
 * various improvements provided by jlegewie, removed transmute_ (not needed), improved filter_ and select_, added left_join and inner_join, see https://github.com/mdsumner/spbabel/pull/10
 

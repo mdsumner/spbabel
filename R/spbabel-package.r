@@ -2,43 +2,19 @@
 #'
 #'# @importFrom utils 
 #' @aliases NULL
-#' @details The spbabel package provides methods for the dplyr verbs and functions to round-trip a Spatial object to a single table and back.
+#' @details The spbabel package provides functions to round-trip a Spatial object to a single table and back.
 #' 
-#' @section O. dplyr verbs:
+#
+#' @section I. sptable: an round-trip extension to fortify for Spatial 
+#' 
+#' @section II. Conversion:
 #'  \tabular{ll}{
-#'   \code{\link[dplyr]{filter}} \tab  filter   \cr
-#'   \code{\link[dplyr]{slice}} \tab   slice   \cr
-#'   \code{\link[dplyr]{arrange}} \tab arrange   \cr
-#'   \code{\link[dplyr]{select}} \tab  select   \cr
-#'   \code{\link[dplyr]{rename}} \tab  rename   \cr
-#'   \code{\link[dplyr]{distinct}} \tab distinct  \cr
-#'   \code{\link[dplyr]{mutate}} \tab   mutate  \cr
-#'   \code{\link[dplyr]{transmute}} \tab transmute \cr
+#'  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
+#'  \code{\link{spFromTable}} \tab create Spatial object from table \cr
 #'  }
-#'  
-#' @section I. dplyr-Spatial: dplyr verbs operating directly on Spatial objects
-#' @section II. sptable: an round-trip extension to fortify for Spatial 
-#' @section III. sp_df: store the Spatial-geometry as a list-column
-#' @section IV.  sportify: single-nested fortify tables
-#' @section V. nsp_df: double-nested tables for Branch and Vertex
-#' The \code{nsp_df} class provides a "nested spatial" way to store the branches and child vertices of Spatial objects in one table. 
-#' @section VI. db_df: table normalization' 
-#' 
-#' The \code{db_df} class provides a "database table" way to store tables in a single object, the "tables" table. 
-#' 
 #' @name spbabel-package
 #' @docType package
 NULL
-
-# @section II. Conversion:
-# \tabular{ll}{
-#  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
-#  \code{\link{spFromTable}} \tab create Spatial object from table \cr
-#  \code{\link{sp_df}} \tab store the Spatial objects on a table column \cr
-#  \code{\link{nest}} \tab create a nested spatial table \cr
-#  \code{\link{db_df}} \tab create a table of tables \cr
-#  }
-#
 
 #' MultiPointsDataFrame data set
 #' 
