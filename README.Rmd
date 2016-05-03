@@ -82,7 +82,7 @@ We can also restructure objects, by mutating the value of object to be the same 
 
 ```{r}
 
-pp <- sptable(wrld_simpl %>% filter(NAME == "Japan" | grepl("Korea", NAME)))
+pp <- sptable(wrld_simpl %>% subset(NAME == "Japan" | grepl("Korea", NAME)))
 ## explode (or "disaggregate"") objects to individual polygons
 ## here each branch becomes an object, and each object only has one branch
 ## (ignoring hole-vs-island status for now)
@@ -98,6 +98,8 @@ The long-form table is also ready for ggplot2 (although `geom_polygon` cannot ha
 ```{r}
 library(ggplot2)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom_polygon()
+
+ggplot(pp) + aes(x = x_, y = y_, fill = factor(branch_), group = branch_, col = object_) + geom_polygon()
 ```
 
 # Why do this? 

@@ -87,7 +87,7 @@ We can also restructure objects, by mutating the value of object to be the same 
 
 ``` r
 
-pp <- sptable(wrld_simpl %>% filter(NAME == "Japan" | grepl("Korea", NAME)))
+pp <- sptable(wrld_simpl %>% subset(NAME == "Japan" | grepl("Korea", NAME)))
 ## explode (or "disaggregate"") objects to individual polygons
 ## here each branch becomes an object, and each object only has one branch
 ## (ignoring hole-vs-island status for now)
@@ -111,6 +111,13 @@ ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom
 ```
 
 ![](figure/README-unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+
+ggplot(pp) + aes(x = x_, y = y_, fill = factor(branch_), group = branch_, col = object_) + geom_polygon()
+```
+
+![](figure/README-unnamed-chunk-5-2.png)<!-- -->
 
 Why do this?
 ============
