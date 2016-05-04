@@ -48,7 +48,9 @@ spFromTable <- function(x, attr_tab = NULL, crs, ...) {
 geomnames <- function() {
   list(SpatialPolygonsDataFrame = c("object_",  "branch_", "island_",  "x_", "y_"),
        SpatialLinesDataFrame = c("object_",  "branch_",  "x_", "y_"),
-       SpatialPointsDataFrame = c("branch_", "object_", "x_", "y_"))
+       SpatialPointsDataFrame = c("object_", "x_", "y_"), 
+       ## this weird exception is required, otherwise we need a "topology_" indicator
+       SpatialMultPointsDataFrame = c("ptbranch_", "object_", "x_", "y_"))
 }
 
 
@@ -77,12 +79,17 @@ reverse_geomPoint <- function(a, d, proj) {
   ## if (length(unique(a$object)) > 1) warning("no support for Multipoints yet")
   SpatialPointsDataFrame(SpatialPoints(as.matrix(a[, c("x_", "y_")])), d, proj4string = CRS(proj))
 }
+#' @importFrom sp SpatialMultiPointsDataFrame SpatialMultiPoints
+reverse_geomMultPoint <- function(a, d, proj) {
 
+  SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$ptbranch_), as.matrix)), d, proj4string = CRS(proj))
+}
 detectSpClass <- function(x) {
   gn <-geomnames()
   if (all(gn$SpatialPolygonsDataFrame %in% names(x))) return("SpatialPolygonsDataFrame")
   if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
   if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
+  if (all(gn$SpatialMultiPointsDataFrame %in% names(x))) return("SpatialMultiPointsDataFrame")
   stop('cannot create Spatial* object from this input')
   
 }

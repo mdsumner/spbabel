@@ -34,9 +34,20 @@ sptable.SpatialLinesDataFrame <- function(x, ...) {
 #' @rdname sptable
 #' @importFrom dplyr bind_cols
 sptable.SpatialPointsDataFrame <- function(x, ...) {
-  bind_cols(mat2d_f(.pointsGeom(x, ...)), x@data)
+  df <- mat2d_f(.pointsGeom(x, ...))
+  df$object_ <- as.integer(df$object_) ## not needed once .pointsGeom uses tbl_df
+  bind_cols(df, x@data)
 }
 
+#' @export
+#' @rdname sptable
+#' @importFrom dplyr bind_cols
+sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
+   df <- mat2d_f(.pointsGeom(x))
+   df$object_ <- as.integer(df$object_) 
+   df$ptbranch_ <- as.integer(df$ptbranch_) 
+   df
+}
 ## TODO multipoints
 #' @importFrom dplyr data_frame
 mat2d_f <- function(x) {
@@ -124,15 +135,19 @@ mat2d_f <- function(x) {
 
 
 .pointsGeom <-  function(x, ...) {
+  ## this will have to become a tbl
   xy <- coordinates(x)
+  cnames <- c('object_', 'x_', 'y_')
   ##xy <- cbind(1:nrow(xy), xy)
   if (is.list(x@coords)) {
     br <- rep(seq_along(x@coords), unlist(lapply(x@coords, nrow)))
-
+    cnames <- c('ptbranch_', 'object_', 'x_', 'y_')
+    xy <- cbind(br, br, xy)
   } else {
     br <- seq(nrow(xy))
+    xy <- cbind(br, xy)
   }
-  xy <- cbind(br, br, xy)
-  colnames(xy) <- c('branch_', 'object_', 'x_', 'y_')
+  
+  colnames(xy) <- cnames
   return(xy)
 }

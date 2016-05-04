@@ -3,6 +3,7 @@
 \name{sptable}
 \alias{sptable}
 \alias{sptable.SpatialLinesDataFrame}
+\alias{sptable.SpatialMultiPointsDataFrame}
 \alias{sptable.SpatialPointsDataFrame}
 \alias{sptable.SpatialPolygonsDataFrame}
 \alias{sptable<-}
@@ -15,6 +16,8 @@ sptable(x, ...)
 \method{sptable}{SpatialLinesDataFrame}(x, ...)
 
 \method{sptable}{SpatialPointsDataFrame}(x, ...)
+
+\method{sptable}{SpatialMultiPointsDataFrame}(x, ...)
 
 sptable(object) <- value
 }
