@@ -8,9 +8,8 @@ License: GPL-3
 LazyData: TRUE
 Depends:
     R (>= 3.2.3),
-    dplyr,
-    sp
-Imports: ggplot2
+    dplyr
+Imports: ggplot2, sp
 RoxygenNote: 5.0.1
 Suggests: testthat,
     knitr,
