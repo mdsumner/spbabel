@@ -1,3 +1,7 @@
+# spbabel dev
+
+* fixed up multipoint support
+
 # spbabel 0.3.1
 
 * removed all nesting and normalize approaches out of spbabel
