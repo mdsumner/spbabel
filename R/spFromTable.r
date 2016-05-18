@@ -62,7 +62,7 @@ reverse_geomPoly <- function(x, d, proj) {
   ## match.ID should be replaced by method to carry the original rownames somehow
   SpatialPolygonsDataFrame(SpatialPolygons(lapply(objects, loopBranchPoly), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
-loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
+loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
 
 
 reverse_geomLine <- function(x, d, proj) {
