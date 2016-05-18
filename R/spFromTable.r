@@ -1,9 +1,7 @@
-## spFromTable must deal with the following cases (so we don't need class-methods)
-## fortified table (done)
-## sp_df type, easy just grab the "Spatial_" column
-## sportify type, unnest once
-## nsp_df type, unnest twice (need name of column)
-## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
+
+setOldClass( c("tbl_df", "tbl", "data.frame" ) )
+setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
+
 
 
 #' Convert from dplyr tbl form to Spatial*DataFrame.
@@ -21,13 +19,38 @@
 #' sp <- spFromTable(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 #' ## look, seamless Antarctica!
 #' ## library(rgdal); plot(spTransform(sp, "+proj=laea +lat_0=-70"))
+sp <- function(x, ...) {
+ UseMethod("sp")
+}
+
+#' @rdname sp
+#' @export
+sp.data.frame <- function(x, attr_tab = NULL, crs, ...) {
+  spFromTable(x, attr_tab = attr_tab, crs = crs, ...)
+}
+
+
+
+## spFromTable must deal with the following cases (so we don't need class-methods)
+## fortified table (done)
+## sp_df type, easy just grab the "Spatial_" column
+## sportify type, unnest once
+## nsp_df type, unnest twice (need name of column)
+## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
+
+
 spFromTable <- function(x, attr_tab = NULL, crs, ...) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
   target <- detectSpClass(x)
   dat <- x %>% distinct_("object_")
-  
+  toremove <- setdiff(geomnames()[[target]], "object_")
+  if (length(toremove) < (length(names(x)) -1)) {
+    dat1 <- x
+    for (i in seq_along(toremove)) dat1[[toremove[i]]] <- NULL
+    dat <- left_join(dat, dat1)
+  }
    n_object <- length(unique(x$object_))
    n_attribute <- nrow(attr_tab)
    if (is.null(n_attribute)) n_attribute <- n_object
@@ -62,7 +85,7 @@ reverse_geomPoly <- function(x, d, proj) {
   ## match.ID should be replaced by method to carry the original rownames somehow
   SpatialPolygonsDataFrame(SpatialPolygons(lapply(objects, loopBranchPoly), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
-loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
+loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
 
 
 reverse_geomLine <- function(x, d, proj) {

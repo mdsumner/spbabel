@@ -86,9 +86,9 @@ pp <- sptable(wrld_simpl %>% subset(NAME == "Japan" | grepl("Korea", NAME)))
 ## explode (or "disaggregate"") objects to individual polygons
 ## here each branch becomes an object, and each object only has one branch
 ## (ignoring hole-vs-island status for now)
-wone <- spFromTable(pp %>% mutate(object_ = branch_), crs = attr(pp, "crs"))
+wone <- sp(pp %>% mutate(object_ = branch_), crs = attr(pp, "crs"))
 op <- par(mfrow = c(2, 1), mar = rep(0, 4))
-plot(spFromTable(pp), col = grey(seq(0.3, 0.7, length = length(unique(pp$object)))))
+plot(sp(pp), col = grey(seq(0.3, 0.7, length = length(unique(pp$object)))))
 plot(wone, col = sample(rainbow(nrow(wone), alpha = 0.6)), border = NA)
 par(op)
 ```

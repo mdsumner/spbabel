@@ -10,7 +10,7 @@
 #' @section II. Conversion:
 #'  \tabular{ll}{
 #'  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
-#'  \code{\link{spFromTable}} \tab create Spatial object from table \cr
+#'  \code{\link{sp}} \tab create Spatial object from table \cr
 #'  }
 #' @name spbabel-package
 #' @docType package
@@ -31,7 +31,7 @@ NULL
 #' @docType data
 #' @examples 
 #' # recreate as sp object
-#' mp <- spFromTable(semap, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
+#' mp <- sp(semap, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 #' 
 NULL
 

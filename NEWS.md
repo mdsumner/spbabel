@@ -1,5 +1,7 @@
 # spbabel dev
 
+* renamed spFromTable to sp generic, spFromTable deprecated 
+
 * fixed up multipoint support
 
 # spbabel 0.3.1
