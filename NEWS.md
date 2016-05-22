@@ -1,5 +1,9 @@
 # spbabel dev
 
+* re-composition of poly (object_, branch_, island_, order_), line (object_, branch_, order_), point (object_), and multipoint (object_, branch_) now differentiated simply by usage of those column names
+
+* renamed spFromTable to sp generic, spFromTable deprecated 
+
 * fixed up multipoint support
 
 # spbabel 0.3.1

@@ -15,7 +15,7 @@ pointnames <- c("object_", "x_", "y_")
 pointtypes <- setNames(c("integer",  "numeric", "numeric"), pointnames)
 
 multitab <- spbabel::sptable(mpoint1)
-multinames <- c("ptbranch_", "object_", "x_", "y_")
+multinames <- c("branch_", "object_", "x_", "y_")
 multitypes <- setNames(c("integer", "integer",  "numeric", "numeric"), multinames)
 
 
