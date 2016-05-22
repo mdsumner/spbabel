@@ -27,9 +27,9 @@ test_that("can rebuild without attributes", {
 })
 
 sptab$new <- runif(nrow(sptab))
-sp1 <- sp(sptab, attr_tab = as.data.frame(sptab))
+sp1 <- sp(sptab, attr_tab = poly1@data)
 test_that("attributes are preserved, and adding a new one does only that", {
-  expect_true(all(names(poly1) == names(sp1)))
+  expect_true(all(names(poly1) %in% names(sp1)))
   expect_that(setdiff( names(sp1), names(poly1)), equals("new"))
   
 })

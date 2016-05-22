@@ -39,12 +39,12 @@ sp.data.frame <- function(x, attr_tab = NULL, crs, ...) {
 ## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
 
 
-spFromTable <- function(x, attr_tab = NULL, crs, ...) {
+spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
-  target <- detectSpClass(x)
-  dat <- x %>% distinct_("object_")
+  if (is.null(topol_)) target <- detectSpClass(x)
+  dat <- x %>% distinct_("object_", .keep_all = TRUE)
   toremove <- setdiff(geomnames()[[target]], "object_")
   if (length(toremove) < (length(names(x)) -1)) {
     dat1 <- x
@@ -69,11 +69,11 @@ spFromTable <- function(x, attr_tab = NULL, crs, ...) {
 
 ## convert this to sptable type (Spatial_, Object)
 geomnames <- function() {
-  list(SpatialPolygonsDataFrame = c("object_",  "branch_", "island_",  "x_", "y_"),
-       SpatialLinesDataFrame = c("object_",  "branch_",  "x_", "y_"),
+  list(SpatialPolygonsDataFrame = c("object_",  "branch_", "island_", "order_", "x_", "y_"),
+       SpatialLinesDataFrame = c("object_",  "branch_", "order_", "x_", "y_"),
        SpatialPointsDataFrame = c("object_", "x_", "y_"), 
-       ## this weird exception is required, otherwise we need a "topology_" indicator
-       SpatialMultPointsDataFrame = c("ptbranch_", "object_", "x_", "y_"))
+       ## strictly why not allow ordering on Multipoints, but why use sp for them anyway . . .
+       SpatialMultPointsDataFrame = c("branch_", "object_", "x_", "y_"))
 }
 
 
@@ -105,14 +105,21 @@ reverse_geomPoint <- function(a, d, proj) {
 #' @importFrom sp SpatialMultiPointsDataFrame SpatialMultiPoints
 reverse_geomMultPoint <- function(a, d, proj) {
 
-  SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$ptbranch_), as.matrix)), d, proj4string = CRS(proj))
+  SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$branch_), as.matrix)), d, proj4string = CRS(proj))
 }
 detectSpClass <- function(x) {
+  if ("topol_" %in% names(x)) return(topol2sp(x$topol_))
   gn <-geomnames()
-  if (all(gn$SpatialPolygonsDataFrame %in% names(x))) return("SpatialPolygonsDataFrame")
-  if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
-  if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
-  if (all(gn$SpatialMultiPointsDataFrame %in% names(x))) return("SpatialMultiPointsDataFrame")
+  for (i in seq_along(gn)) {
+    if (all(gn[[i]] %in% names(x))) return(names(gn)[i])
+  }
+  
+  #if (all(gn$SpatialPolygonsDataFrame %in% names(x))) return("SpatialPolygonsDataFrame")
+  #if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
+  #if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
+  #if (all(gn$SpatialMultiPointsDataFrame %in% names(x))) return("SpatialMultiPointsDataFrame")
+  cat("cannot find matching topology type from these columns")
+  print(x)
   stop('cannot create Spatial* object from this input')
   
 }

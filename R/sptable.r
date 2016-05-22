@@ -45,7 +45,7 @@ sptable.SpatialPointsDataFrame <- function(x, ...) {
 sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
    df <- mat2d_f(.pointsGeom(x))
    df$object_ <- as.integer(df$object_) 
-   df$ptbranch_ <- as.integer(df$ptbranch_) 
+   df$branch_ <- as.integer(df$branch_) 
    df
 }
 ## TODO multipoints
@@ -133,7 +133,6 @@ mat2d_f <- function(x) {
 
 
 
-
 .pointsGeom <-  function(x, ...) {
   ## this will have to become a tbl
   xy <- coordinates(x)
@@ -141,7 +140,7 @@ mat2d_f <- function(x) {
   ##xy <- cbind(1:nrow(xy), xy)
   if (is.list(x@coords)) {
     br <- rep(seq_along(x@coords), unlist(lapply(x@coords, nrow)))
-    cnames <- c('ptbranch_', 'object_', 'x_', 'y_')
+    cnames <- c('branch_', 'object_', 'x_', 'y_')
     xy <- cbind(br, br, xy)
   } else {
     br <- seq(nrow(xy))
