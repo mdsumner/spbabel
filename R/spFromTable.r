@@ -19,6 +19,7 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' sp <- spFromTable(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 #' ## look, seamless Antarctica!
 #' ## library(rgdal); plot(spTransform(sp, "+proj=laea +lat_0=-70"))
+#' ## try fixing that using the official tools . . .
 sp <- function(x, ...) {
  UseMethod("sp")
 }
@@ -94,7 +95,7 @@ reverse_geomLine <- function(x, d, proj) {
   if (ncol(d) < 1L) d$id_ <- seq(nrow(d))  ## we might end up with no attributes
   SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d)
 }
-loopBranchLine<- function(a) Lines(lapply(split(a, a$branch), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
+loopBranchLine<- function(a) Lines(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
 
 reverse_geomPoint <- function(a, d, proj) {
   # stop("not implemented")

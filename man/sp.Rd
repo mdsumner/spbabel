@@ -29,5 +29,6 @@ semap1 <- semap  \%>\% dplyr::filter(y_ > -89.9999)
 sp <- spFromTable(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 ## look, seamless Antarctica!
 ## library(rgdal); plot(spTransform(sp, "+proj=laea +lat_0=-70"))
+## try fixing that using the official tools . . .
 }
 
