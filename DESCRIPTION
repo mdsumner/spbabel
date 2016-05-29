@@ -9,12 +9,11 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.3),
     dplyr
-Imports: ggplot2, sp
+Imports: ggplot2, methods, sp
 RoxygenNote: 5.0.1
 Suggests: testthat,
     knitr,
     maptools,
-    methods,
     raster,
     rmarkdown, 
     scales

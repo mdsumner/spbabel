@@ -1,4 +1,6 @@
 library(maptools)
+library(testthat)
+library(spbabel)
 data(wrld_simpl)
 data("mpoint1")
 polytab <- spbabel::sptable(wrld_simpl)

@@ -16,10 +16,9 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' @importFrom sp coordinates CRS SpatialPoints SpatialPointsDataFrame Line Lines SpatialLines SpatialLinesDataFrame Polygon Polygons SpatialPolygons SpatialPolygonsDataFrame
 #' @examples 
 #' semap1 <- semap  %>% dplyr::filter(y_ > -89.9999)
-#' sp <- spFromTable(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
+#' sp_obj <- sp(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 #' ## look, seamless Antarctica!
-#' ## library(rgdal); plot(spTransform(sp, "+proj=laea +lat_0=-70"))
-#' ## try fixing that using the official tools . . .
+#' ## library(rgdal); plot(spTransform(sp_obj, "+proj=laea +lat_0=-70"))
 sp <- function(x, ...) {
  UseMethod("sp")
 }
@@ -39,18 +38,18 @@ sp.data.frame <- function(x, attr_tab = NULL, crs, ...) {
 ## nsp_df type, unnest twice (need name of column)
 ## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
 
-
+#' @importFrom dplyr left_join
 spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
   if (is.null(topol_)) target <- detectSpClass(x)
-  dat <- x %>% distinct_("object_", .keep_all = TRUE)
+  dat <- x %>% distinct_("object_")
   toremove <- setdiff(geomnames()[[target]], "object_")
   if (length(toremove) < (length(names(x)) -1)) {
     dat1 <- x
     for (i in seq_along(toremove)) dat1[[toremove[i]]] <- NULL
-    dat <- left_join(dat, dat1)
+    dat <- dplyr::left_join(dat, dat1)
   }
    n_object <- length(unique(x$object_))
    n_attribute <- nrow(attr_tab)
@@ -109,8 +108,8 @@ reverse_geomMultPoint <- function(a, d, proj) {
   SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$branch_), as.matrix)), d, proj4string = CRS(proj))
 }
 detectSpClass <- function(x) {
-  if ("topol_" %in% names(x)) return(topol2sp(x$topol_))
-  gn <-geomnames()
+  #if ("topol_" %in% names(x)) return(topol2sp(x$topol_))
+  gn <- geomnames()
   for (i in seq_along(gn)) {
     if (all(gn[[i]] %in% names(x))) return(names(gn)[i])
   }
