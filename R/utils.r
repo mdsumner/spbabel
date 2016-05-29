@@ -21,7 +21,7 @@ has_data <- function(x) .hasSlot(x, "data")
 }
 
 
-
+#' @importFrom methods .hasSlot
 #' @importFrom sp bbox proj4string 
 #' @importFrom dplyr tbl_df group_by
 #' @importFrom ggplot2 aes ggplot 
@@ -113,6 +113,7 @@ function (x, ...)
 #' @title sp methods
 #' @rdname sp-methods
 #' @export
+#' @importFrom methods show 
 setMethod("show", "SpatialPolygonsDataFrame", 
           function(object) {
             .print_Spatial(object)

@@ -6,4 +6,4 @@
 ^README-.*\.png$
 ^data-raw$
 ^nesting.rmd$
-^vignettes
+^vignettes1
