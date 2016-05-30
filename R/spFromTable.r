@@ -45,18 +45,13 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   ## raster::geom form
   if (is.null(topol_)) target <- detectSpClass(x)
   dat <- x %>% distinct_("object_")
-  toremove <- setdiff(geomnames()[[target]], "object_")
-  if (length(toremove) < (length(names(x)) -1)) {
-    dat1 <- x
-    for (i in seq_along(toremove)) dat1[[toremove[i]]] <- NULL
-    dat <- dplyr::left_join(dat, dat1)
-  }
-   n_object <- length(unique(x$object_))
+
+   n_object <- nrow(dat)
    n_attribute <- nrow(attr_tab)
    if (is.null(n_attribute)) n_attribute <- n_object
   if (!(n_attribute == n_object)) stop("number of rows in attr must match distinct object in x") 
   if (!is.null(attr_tab)) dat <- bind_cols(dat, attr_tab)
-  dat <- as.data.frame(dat)
+ # dat <- as.data.frame(dat)
   gom <- switch(target,
                 SpatialPolygonsDataFrame = reverse_geomPoly(x, dat, crs),
                 SpatialLinesDataFrame = reverse_geomLine(x, dat, crs),
@@ -81,6 +76,7 @@ reverse_geomPoly <- function(x, d, proj) {
   objects <- split(x, x$object_)
   ## remove those columns used by reconstruction?
   d$branch_ <- d$object_ <- d$island_ <- d$order_ <- d$x_ <- d$y_ <- NULL
+  if (ncol(d) < 1) d[["rownumber_"]] <- seq(nrow(d))
   if (ncol(d) < 1L) d$id_ <- seq(nrow(d))  ## we might end up with no attributes
   ## match.ID should be replaced by method to carry the original rownames somehow
   SpatialPolygonsDataFrame(SpatialPolygons(lapply(objects, loopBranchPoly), proj4string = CRS(proj)), d, match.ID = FALSE)
@@ -91,7 +87,7 @@ loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch_), function(b) P
 reverse_geomLine <- function(x, d, proj) {
   objects <- split(x, x$object_)
   d$branch_ <- d$object_ <- d$order_ <- d$x_ <- d$y_ <- NULL
-  if (ncol(d) < 1L) d$id_ <- seq(nrow(d))  ## we might end up with no attributes
+  if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
   SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d)
 }
 loopBranchLine<- function(a) Lines(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
@@ -100,11 +96,16 @@ reverse_geomPoint <- function(a, d, proj) {
   # stop("not implemented")
   ## the decomposition is not yet applied for Multipoints . . .
   ## if (length(unique(a$object)) > 1) warning("no support for Multipoints yet")
-  SpatialPointsDataFrame(SpatialPoints(as.matrix(a[, c("x_", "y_")])), d, proj4string = CRS(proj))
+  spts <- SpatialPoints(as.matrix(a[, c("x_", "y_")]))
+  d$object_ <- d$x_ <- d$y_ <- NULL
+  if (ncol(d) < 1) d[["rownumber_"]] <- seq(nrow(d))
+  SpatialPointsDataFrame(spts, d, proj4string = CRS(proj))
 }
 #' @importFrom sp SpatialMultiPointsDataFrame SpatialMultiPoints
 reverse_geomMultPoint <- function(a, d, proj) {
-
+  d$branch_ <- d$object_  <- d$x_ <- d$y_ <- NULL
+  if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
+  
   SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$branch_), as.matrix)), d, proj4string = CRS(proj))
 }
 detectSpClass <- function(x) {

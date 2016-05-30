@@ -24,7 +24,10 @@ sptable(object) <- value
 \arguments{
 \item{x}{\code{\link[sp]{Spatial}} object}
 
-\item{...}{ignored}
+\item{...}{ignored
+
+For simplicity \code{sptable} and its inverse \code{sp} assume that all geometry can be encoded with object, branch, island, order, x and y. 
+and that the type of topology is identified by which of these are present.}
 
 \item{object}{Spatial object}
 
@@ -33,9 +36,10 @@ sptable(object) <- value
 \value{
 \code{\link[dplyr]{tbl_df}} data_frame with columns
 \itemize{
- \item SpatialPolygonsDataFrame "object_"   "branch_"   "island_"   "_"      "y_"
- \item SpatialLinesDataFrame "object_"   "branch_"   "x_"      "y_"
- \item SpatialPointsDataFrame  "branch_"   "object_" "x_"      "y_"
+ \item SpatialPolygonsDataFrame "object_"   "branch_"   "island_"   "order_" "x"    "y_"
+ \item SpatialLinesDataFrame "object_"   "branch_" "order_"  "x_"      "y_"
+ \item SpatialPointsDataFrame  "object_" x_"      "y_"
+ \item SpatialMultiPointsDataFrame "object_" "branch_" "x_" "y_"
 }
 
 Spatial object
