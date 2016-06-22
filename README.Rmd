@@ -1,10 +1,11 @@
 ---
-output: github_document
+output:
+  md_document:
+    variant: markdown_github
 ---
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 
 ```{r, echo = FALSE,message=FALSE}
 knitr::opts_chunk$set(
@@ -14,6 +15,9 @@ knitr::opts_chunk$set(
 )
 library(dplyr)
 ```
+
+[![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel)
+
 ## Installation
 
 Spbabel can be installed directly from github: 
@@ -21,9 +25,9 @@ Spbabel can be installed directly from github:
 ```{r,eval=FALSE}
 devtools::install_github("mdsumner/spbabel")
 ```
-# spbabel: bisque or bouillon?
+# spbabel: a tidy view of Spatial
 
-Simple tools to flip between Spatial and tidy forms of data. This package is to assist in the development of tools for spatial data in R, it probably has limited use for users directly, though see examples below. 
+Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package is to assist in the development of tools for spatial data in R, it probably has limited use for users directly, though see examples below. 
 
 Spatial data in the `sp` package have a formal definition  (extending class `Spatial`) that is modelled on shapefiles, and close at least in spirit to the [Simple Features definition](https://github.com/edzer/sfr). See [What is Spatial in R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for more details. 
 
@@ -46,11 +50,9 @@ Tables are always based on the "tibble" since it's a much better data frame.
 
 The `sptable` function creates the table of coordinates with identifiers for object and branch, which is understood by `sptable<-` to "fortify" and `sp` for the reverse. 
 
-The long-form table may seem like soup, but it's not meant to be seen for normal use. It's very easy to dump this to databases, or to ask spatial databases for this form. There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator. 
+The long-form table may seem like soup, but it's not meant to be seen for normal use. It's very easy to dump this to databases, or to ask spatial databases for this form.  There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator. 
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. 
-
-
 
 
 # sptable: a round-trip-able extension to fortify
@@ -90,7 +92,6 @@ plot(woz, add = TRUE)
 We can also restructure objects, by mutating the value of object to be the same as "branch" we get individual objects from each.
 
 
-
 ```{r}
 
 pp <- sptable(wrld_simpl %>% subset(NAME == "Japan" | grepl("Korea", NAME)))
@@ -104,14 +105,15 @@ plot(wone, col = sample(rainbow(nrow(wone), alpha = 0.6)), border = NA)
 par(op)
 ```
 
-The long-form table is also ready for ggplot2 (although `geom_polygon` cannot handle islands with multiple holes - there is dev code to do this via geom_holygon): 
-
+The long-form table is also ready for ggplot2: 
 ```{r}
 library(ggplot2)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom_polygon()
 
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(branch_), group = branch_, col = object_) + geom_polygon()
 ```
+
+Please note that that `geom_polygon` cannot handle islands with multiple holes, and it only can do one hole by pretending it is a closed path and hides the boundary so you don't see the sleight of hand.  Search for "geom_holygon" for a way forward within ggplot2. 
 
 # Why do this? 
 
@@ -127,5 +129,4 @@ I want these things, and spbabel is the right compromise for where to start:
 * data-flow with dplyr piping as the engine behind a D3 web interface
 
 The ability to use [Manifold System](http://www.manifold.net/) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending". 
-
 
