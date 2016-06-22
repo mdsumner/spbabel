@@ -1,4 +1,4 @@
-This is a new release. 
+spbabel 0.3.2 first version for release on CRAN. 
 
 ## Test environments
 * local Windows 10 install (R 3.3.1)
