@@ -67,10 +67,7 @@ Use the `sptable<-` replacement method to modify the underlying geometric attrib
 ``` r
 library(maptools)
 #> Loading required package: sp
-#> Checking rgeos availability: FALSE
-#>      Note: when rgeos is not available, polygon geometry     computations in maptools depend on gpclib,
-#>      which has a restricted licence. It is disabled by default;
-#>      to enable gpclib, type gpclibPermit()
+#> Checking rgeos availability: TRUE
 data(wrld_simpl)
 library(spbabel)
 (oz <- subset(wrld_simpl, NAME == "Australia"))
