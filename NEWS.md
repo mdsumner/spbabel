@@ -1,4 +1,6 @@
-# spbabel dev
+# spbabel 0.3.2
+
+* removed internal use of a matrix in .pointsGeom
 
 * de- and re-composition of SpatialPoints and SpatialMultiPoints now consistent with other types
 
