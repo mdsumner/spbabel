@@ -1,6 +1,6 @@
 Package: spbabel
 Type: Package
-Title: Convert Data Between Spatial and Other
+Title: Convert Spatial Data Using Tidy Tables
 Version: 0.3.2
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
 Description: Functions to convert from `Spatial*DataFrame` classes to long form and vice versa. 
