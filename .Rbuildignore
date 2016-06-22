@@ -7,3 +7,4 @@
 ^data-raw$
 ^nesting.rmd$
 ^vignettes1
+^appveyor\.yml$
