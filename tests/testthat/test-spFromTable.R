@@ -39,7 +39,7 @@ test_that("we can round-trip sensibly", {
 })
 
 sptabmod <-  poly1tab
-sptabmod$branch_ <- sptabmod$object_
+sptabmod$object_ <- sptabmod$branch_
 spmod <- sp(sptabmod)
 test_that("if objects = branchs then fewer rows", {
   expect_that(nrow(spmod), equals(nrow(distinct_(poly1tab, "branch_"))))
