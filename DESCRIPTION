@@ -7,9 +7,8 @@ Description: Functions to convert from `Spatial*DataFrame` classes to long form 
 License: GPL-3
 LazyData: TRUE
 Depends:
-    R (>= 3.2.3),
-    dplyr
-Imports: ggplot2, methods, sp
+    R (>= 3.2.3)
+Imports: dplyr, ggplot2, methods, sp
 RoxygenNote: 5.0.1
 Suggests: testthat,
     knitr,

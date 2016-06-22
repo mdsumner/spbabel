@@ -15,6 +15,7 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' @importFrom dplyr %>% distinct_ as_data_frame
 #' @importFrom sp coordinates CRS SpatialPoints SpatialPointsDataFrame Line Lines SpatialLines SpatialLinesDataFrame Polygon Polygons SpatialPolygons SpatialPolygonsDataFrame
 #' @examples 
+#' library(dplyr)
 #' semap1 <- semap  %>% dplyr::filter(y_ > -89.9999)
 #' sp_obj <- sp(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 #' ## look, seamless Antarctica!
