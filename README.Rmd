@@ -23,7 +23,7 @@ library(dplyr)
 
 # spbabel: a tidy view of Spatial
 
-Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package is to assist in the development of tools for spatial data in R. There is limited use for users directly, though see examples below. 
+Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples below. 
 
 ## Installation
 
@@ -56,15 +56,13 @@ The long-form version is similar to that implemented in:
  
 # How does spbabel work
 
-After quite a lot of experimentation (see spdplyr, sp.df, gris, babelfish) it seems that the long-form table of all coordinates, with object, branch, island-status, and order provides the best middle-ground for transferring between different representations of Spatial data. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
-
-Tables are always based on the "tibble" since it's a much better data frame. 
+After quite a lot of experimentation the long-form single table of all coordinates, with object, branch, island-status, and order provides the best middle-ground for transferring between different representations of Spatial data. Tables are always based on the "tibble" since it's a much better data frame. 
 
 The `sptable` function creates the table of coordinates with identifiers for object and branch, which is understood by `sptable<-` to "fortify" and `sp` for the reverse. 
 
 The long-form table may seem like soup, but it's not meant to be seen for normal use. It's very easy to dump this to databases, or to ask spatial databases for this form.  There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator. 
 
-We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. 
+We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
 
 
 # sptable: a round-trip-able extension to fortify
@@ -140,5 +138,5 @@ I want these things, and spbabel is the right compromise for where to start:
 * integration with D3 via htmlwidgets, with shiny, and with gggeom ggvis or similar
 * data-flow with dplyr piping as the engine behind a D3 web interface
 
-The ability to use [Manifold System](http://www.manifold.net/) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending". 
+The ability to use [Manifold System](http://www.georeference.org/doc/manifold.htm) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending". 
 

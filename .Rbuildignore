@@ -8,3 +8,4 @@
 ^nesting.rmd$
 ^vignettes1
 ^appveyor\.yml$
+^cran-comments\.md$

@@ -1,14 +1,14 @@
 library(testthat)
 context("sp From Table")
 library(maptools)
-library(dplyr)
+
 library(spbabel)
 data(mpoint1)
 ## generate all topology types
 data(wrld_simpl)
 poly1 <- wrld_simpl
 line1 <- as(wrld_simpl, "SpatialLinesDataFrame")
-point1 <- as(line1, "SpatialPointsDataFrame") ##%>% select(-Lines.NR, -Lines.ID, -Line.NR)
+point1 <- as(line1, "SpatialPointsDataFrame") 
 
 ## create sptable versions
 poly1tab <- sptable(poly1)
@@ -38,7 +38,8 @@ test_that("we can round-trip sensibly", {
   #expect_true(proj4string(sp) == gsub("^ ", "", proj4string(poly1)))
 })
 
-sptabmod <- poly1tab %>% mutate(object_ = branch_)
+sptabmod <-  poly1tab
+sptabmod$branch_ <- sptabmod$object_
 spmod <- sp(sptabmod)
 test_that("if objects = branchs then fewer rows", {
   expect_that(nrow(spmod), equals(nrow(distinct_(poly1tab, "branch_"))))
@@ -52,7 +53,7 @@ test_that("can rebuild without attributes", {
 poly1tab$new <- runif(nrow(poly1tab))
 sp1 <- sp(poly1tab, attr_tab = poly1@data)
 test_that("attributes are preserved, and adding a new one does only that", {
-  
+  skip_on_cran()
   expect_true(all(names(poly1) %in% names(sp1)))
   expect_that(base::setdiff( names(sp1), names(poly1)), equals("new"))
   
