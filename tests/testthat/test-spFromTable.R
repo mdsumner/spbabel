@@ -54,7 +54,7 @@ sp1 <- sp(poly1tab, attr_tab = poly1@data)
 test_that("attributes are preserved, and adding a new one does only that", {
   
   expect_true(all(names(poly1) %in% names(sp1)))
-  expect_that(setdiff( names(sp1), names(poly1)), equals("new"))
+  expect_that(base::setdiff( names(sp1), names(poly1)), equals("new"))
   
 })
 
