@@ -42,7 +42,7 @@ sptabmod <-  poly1tab
 sptabmod$object_ <- sptabmod$branch_
 spmod <- sp(sptabmod)
 test_that("if objects = branchs then fewer rows", {
-  expect_that(nrow(spmod), equals(nrow(distinct_(poly1tab, "branch_"))))
+  expect_that(nrow(spmod), equals(nrow(dplyr::distinct_(poly1tab, "branch_"))))
 })
 
 
@@ -63,7 +63,7 @@ test_that("mismatched attributes and object number is an error", {
   expect_error(sp(poly1tab, attr_tab = data.frame(x = sample(1:20, 1))), "number of rows in attr must match distinct object in x")
 })
 
-sptable(poly1) <- sptable(poly1) %>% mutate(x_ = x_ - 5)
+sptable(poly1) <-  dplyr::mutate(sptable(poly1), x_ = x_ - 5)
 test_that("replacement sptable works", {
   expect_that(poly1, is_a("SpatialPolygonsDataFrame"))
 })
