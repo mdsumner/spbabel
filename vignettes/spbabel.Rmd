@@ -2,7 +2,10 @@
 title: "spbabel"
 author: "Michael D. Sumner"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig_width: 7
+    fig_height: 7
 vignette: >
   %\VignetteIndexEntry{spbabel}
   %\VignetteEngine{knitr::rmarkdown}
@@ -101,8 +104,10 @@ The long-form table is also ready for ggplot2:
 ```{r}
 library(ggplot2)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom_polygon()
-
-ggplot(pp) + aes(x = x_, y = y_, fill = factor(branch_), group = branch_, col = object_) + geom_polygon()
+## resample the branch_ IDs to mix up the colours so that 
+## object disaggregation is more apparent
+set.seed(10)
+ggplot(pp) + aes(x = x_, y = y_, fill = factor(sample(branch_)), group = branch_, col = object_) + geom_polygon()
 ```
 
 Please note that that `geom_polygon` cannot handle islands with multiple holes, and it only can do one hole by pretending it is a closed path and hides the boundary so you don't see the sleight of hand.  Search for "geom_holygon" for a way forward within ggplot2. 
