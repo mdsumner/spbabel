@@ -1,17 +1,21 @@
 Package: spbabel
 Type: Package
+Version: 0.3.2.9001
 Title: Convert Spatial Data Using Tidy Tables
-Version: 0.3.2
-Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
 Description: Functions to convert from `Spatial` classes to long table form, and from long table form to `Spatial`. 
-License: GPL-3
-LazyData: TRUE
+Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
+URL: https://github.com/mdsumner/spbabel
+BugReports: https://github.com/mdsumner/spbabel/issues
 Depends:
     R (>= 3.2.3)
 Imports: dplyr, ggplot2, methods, sp
-RoxygenNote: 5.0.1
 Suggests: testthat,
     maptools,
     raster,
     rmarkdown, 
-    scales
+    scales,
+    knitr
+VignetteBuilder: knitr
+LazyData: yes
+License: GPL-3
+RoxygenNote: 5.0.1
