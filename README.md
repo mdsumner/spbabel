@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel) [![](http://www.r-pkg.org/badges/version/spbabel)](http://www.r-pkg.org/pkg/spbabel) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/spbabel)](http://www.r-pkg.org/pkg/spbabel)
 
 spbabel: a tidy view of Spatial
 ===============================
