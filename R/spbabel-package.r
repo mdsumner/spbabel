@@ -10,6 +10,7 @@
 #' @section II. Conversion:
 #'  \tabular{ll}{
 #'  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
+#'  \code{\link{sptable<-}} \tab modify a Spatial object in-place  \cr
 #'  \code{\link{sp}} \tab create Spatial object from table \cr
 #'  }
 #' @name spbabel-package
