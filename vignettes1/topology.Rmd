@@ -1,0 +1,94 @@
+---
+title: "Topology in R Spatial"
+author: "Michael Sumner"
+date: "7/2/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Topology
+
+Objects in the `sp` package are complex: the R object is composed of a set of geometric objects, organized as a table of attributes belonging to those. You only have one type of topology in each, and these are points, lines, or polygons.  Each geometric object in turn may be simple or quite complex, a simple case is a filled shape, such as as a property boundary. Much more complex is a continent, composed of many land masses separated by water, and on those polygon land masses may be a lake, with an island inside that lake, and a lake on that island. A similar complexity exists for lines, a single geometric object may be set of long connected "line strings" that aren't spatially connected. Points are slightly less complex, but see {...} for how Spatial[Multi]Points are defined in a fundamentally different way.  We term these geometric objects "polygons", "lines" and "points" but beware of the slippery concept between simple and complex multi-part geometries. A single polygon in the data frame may be composed of many simple polygon rings. 
+
+Draw an analogy to multiple continents and a simpler map of islands in a peninsula, and a cadastre. Use these maps to explain the relation of layer, object, part, coordinate. 
+
+This complexity is reflected in the structure of the `sp` classes `SpatialPolygonsDataFrame` and `SpatialLinesDataFrame`, where the actual matrices of coordinates of each "part" are stored in nested lists. A single-row SpatialPolygonsDataFrame contains a SpatialPolygons which is composed of a Polygons which is composed of a list of Polygon objects - it is each Polygon that stores the matrix of the ring. Similarly this holds for SpatialLines, Lines, and Line. 
+
+Nesting of lists of matrices sounds like the complex "lake in an island in a lake in an island . . ." story from above, but the relationship does not hold. A Polygons object contains a flat list of all the simple polygon rings, and there is no pattern to how these are stored that records the relationship of holes and islands. There are only two levels to Polygons and Lines, one is the **i-th** object, and the next is the **k-th** polygon, or line, matrix.  Lines are no hierarchical like polygons can be, so it's simpler to use them as an example first. 
+
+The relationship of islands and holes is recorded as an obscure attribute, essentially each individual polygon can be identified to its parent - but only some formats and systems provide this information, and it's not applied or checked consistently. An example of the inconsistency is that there are two definitions for calculating whether you are inside or outside, these are the non-zero (or winding) rule and the even-odd rule. when you plot a polygon object, you can specify which rule is used (it is passed down to base::polypath, or to choose grid::polyGrob or grid::pathGrob), but when checking analytically via sp::point.in.poly this is not provided as a choice. The nominated hole/island status of the ring/s you are inside is what determines the answer. 
+
+I prefer ggplot2!  geom_polygon uses grid::polyGrob and so you canot have more than one hole, and even then it is done via sleight of hand. 
+
+Why is `sp` so complicated, but ggplot2 so much easier to understand? 
+
+Ggplot requires a single table of all geometric and attribute information, it then applies aesthetics (the x and y coordinates), grouping (the sets of coordinates that are connected, as above), and other properties like colour, line size etc. that correspond to the objects in the original data frame. (Each country say). 
+
+
+Explain the difference between the fortify table and the sp objects. Show examples with continents, islands/lakes, and boundary-sharing polygons. 
+
+Use the cadastre to mesh onto a DEM and plot in 3D. 
+
+Nesting what we had in the fortify table tidies this up, there's no longer an issue of "many-to-one", with its ambiguity of the "object in table ID" vs. the value of a particular attribute. 
+
+But what about all the stuff in each individual table? There's a mess of parts, hole status and order. We can continue to nest. Isn't this perfect? We have recreated the two-tier nesting of sp objects, and we no longer have a complex S4 object to deal with. 
+
+Each row in the top table is a single geometric object. Each row in the parts table is a part, we can easily see how many there are, we only store "I'm a hole" once, and we automatically have a place to store the topological membership of which parent this part is a child of. 
+
+# Nesting - the good parts
+
+* we have a single table, with attributes of ID, name, colour, group membership, ...
+* the two levels of nesting reflect the design choice in sp, but it's tidier
+* we can store more attributes on the right entity, without duplication
+
+
+Notes for future Mike: 
+
+* we have fragmented into babelfish, nf, gris, sptable. 
+* nf is the new approach to gris, with segments
+* babelfish needs to be rescued as `spnest` or `sptidy` or similar
+* integrate with doc in rogue and in spbabel wiki
+
+```{r}
+nest_.Spatial <- function(data, ...) { 
+  sptab <-  sptable(data) %>%  
+    group_by_("branch_", "object_") %>%  
+    nest_(key_col = "Branch_") %>%   
+    group_by_("object_") %>% nest_(key_col = "Object") 
+   
+  attrd <- as_data_frame(as.data.frame(data)) 
+  y <- bind_cols(attrd, sptab) 
+  attr(y, "crs") <- proj4string(data) 
+  class(y) <- c("nsp_df", class(y)) 
+  y 
+}
+library(maptools) 
+data(wrld_simpl) 
+library(tidyr) 
+library(spbabel)
+x <- nest(wrld_simpl) 
+x %>% select(Object, ISO3) %>% unnest %>% unnest 
+
+```
+
+# summary
+
+To escape the polygon hegemony we must
+
+* normalize vertices
+* create and edge-based topology which are 1d line primitives
+* generate triangle primitives for the 2D topology case
+
+So 3 models
+
+* Branch
+* Edge
+* Primitive
+
+These can be combined, or used independently. Do all this without classes, to show we can have a table-based engine without restrictions. 
+
+The crux between line and polygons is path, polygons composed of lines are *paths*. Polygons composed of edges are just PSLG. 
+
