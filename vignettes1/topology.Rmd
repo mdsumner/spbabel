@@ -52,27 +52,134 @@ Notes for future Mike:
 * babelfish needs to be rescued as `spnest` or `sptidy` or similar
 * integrate with doc in rogue and in spbabel wiki
 
+
+Interesting things about nesting is that is must happen from the inside out, we cannot double nest first by object and then by branch. 
+
+If we nest first by Object (246 rows in `wrld_simpl`), we get all the coordinates for each object in one nested table. This is basically the fortify data frame. 
+
 ```{r}
-nest_.Spatial <- function(data, ...) { 
+nest1 <- function(data, ...) { 
   sptab <-  sptable(data) %>%  
-    group_by_("branch_", "object_") %>%  
+  group_by_("object_") %>% nest_(key_col = "Object") 
+   
+  attrd <- as_data_frame(as.data.frame(data)) 
+  y <- bind_cols(attrd, sptab) 
+  attr(y, "crs") <- proj4string(data) 
+  class(y) <- c("sp1nest", class(y)) 
+  y 
+}
+
+library(maptools) 
+data(wrld_simpl) 
+library(tidyr) 
+library(spbabel)
+sp1 <- nest1(wrld_simpl) 
+x1 <- sp1 %>% 
+  filter(NAME %in% c("Australia", "New Zealand")) %>% 
+  select(Object, ISO3)  
+x1
+x1$Object[[1]]
+unnest(x1)
+```
+Note that there are several layers of redundancy here. The branch attribute is repeated for each coordinate, as is island status, and order is there so we could restore the arrangement (databases don't guarantee row order, though R does). 
+
+**Tell this story later as duplicated vertices**
+
+We can remove the need to repeat the values for branch and island by nesting twice. 
+
+```{r}
+nest2 <- function(data, ...) { 
+  sptab <-  sptable(data) %>%  
+    group_by_("branch_", "object_", "island_") %>%  
     nest_(key_col = "Branch_") %>%   
     group_by_("object_") %>% nest_(key_col = "Object") 
    
   attrd <- as_data_frame(as.data.frame(data)) 
   y <- bind_cols(attrd, sptab) 
   attr(y, "crs") <- proj4string(data) 
-  class(y) <- c("nsp_df", class(y)) 
+  class(y) <- c("sp2nest", class(y)) 
   y 
 }
-library(maptools) 
-data(wrld_simpl) 
-library(tidyr) 
-library(spbabel)
-x <- nest(wrld_simpl) 
-x %>% select(Object, ISO3) %>% unnest %>% unnest 
+sp2 <- nest2(wrld_simpl)
+## this time we have a sub-dataframe for each individual polygon ring
+x2 <- sp2 %>% 
+  filter(NAME %in% c("Australia", "New Zealand")) %>% 
+  select(Object, ISO3) 
+x2$Object[[1]]
+x2$Object[[1]]$Branch_[[1]]
+```
+
+This structure is exactly analogous to the `Spatial*DataFrame` classes, with two levels of nesting. 
+
+
+There is another level of redundancy in the coordinate values. 
+
+```{r}
+sptab <- sptable(wrld_simpl)
+nrow(sptab)
+nrow(distinct(sptab[, c("x_", "y_")]))
+```
+
+This is not only because of the extra coordinate on every ring. 
+
+```{r}
+nrow(sptab) - length(unique(sptab$branch_))
+```
+
+The same holds for this data set as lines or as points, or multipoints. 
+
+How can we use this data structure? 
+
+Filter, etc. all essentially need to unnest to do most tests. We save effort by filter on object attributes first, then drill down. 
+
+I don't think this is useful, you constantly need to unnest to do tests, but it does tidy up a lot for having a single table. 
+
+
+
+```{r}
+nest3 <- function(data, ...) { 
+  sptab <-  sptable(data)
+  sptab$vertex_ <- as.integer(factor(paste(sptab$x_, sptab$y_, sep = "-")))
+  coords <- sptab %>% select_("x_", "y_", "vertex_") %>% distinct(vertex_) 
+ 
+  ## batch duplicates
+  
+ sptab <- sptab %>%  select(-x_, -y_) %>% 
+    group_by_("branch_", "object_", "island_") %>%  
+    nest_(key_col = "Branch_") %>%   
+    group_by_("object_") %>% nest_(key_col = "Object") 
+   
+  attrd <- as_data_frame(as.data.frame(data)) 
+   attr(coords, "crs") <- proj4string(data) 
+   ## more natural to now use a database
+env <- environment()
+env$object <- bind_cols(attrd, sptab)
+env$vertices <- coords
+env
+#  y <- list(object = bind_cols(attrd, sptab) , vertices = coords)
+  #class(y) <- c("sp3nest", class(y)) 
+  #y 
+}
+sp3 <- nest3(wrld_simpl)
+with(sp3, 
+     dat <- filter(object, NAME == "Australia"),  
+     vert < dat %>% select(Object) %>% unnest() %>% unnest() %>% select(vertex_)) %>% inner_join(vertices)
+vert
+)
+
+
+
+
+
+## this time we have a sub-dataframe of only the vertex index 
+x3 <- sp3 %>% 
+  filter(NAME %in% c("Australia", "New Zealand")) %>% 
+  select(Object, ISO3) 
+x3$Object[[1]]
+x3$Object[[1]]$Branch_[[1]]
 
 ```
+
 
 # summary
 
