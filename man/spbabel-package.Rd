@@ -17,6 +17,7 @@ The spbabel package provides functions to round-trip a Spatial object to a singl
 
  \tabular{ll}{
  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
+ \code{\link{sptable<-}} \tab modify a Spatial object in-place  \cr
  \code{\link{sp}} \tab create Spatial object from table \cr
  }
 }
