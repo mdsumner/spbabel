@@ -1,13 +1,12 @@
-#' Convert between different types of spatial objects. 
-#'
-#' @details A basis for converting between different types of spatial objects, including an in-place method to modify the underlying geometry of 'Spatial' classes using data frame idioms.The spbabel package provides functions to round-trip a Spatial object to a single table and back.
+#' Convert between different types of spatial objects.
 #' 
-#' @section I. sptable: round-trip tidying for Spatial 
+#' @description Facilities for converting between different types of spatial objects, including an in-place method to modify the underlying geometry of 'Spatial' classes using data frame idioms.The spbabel package provides functions to round-trip a Spatial object to a single table and back.
 #' 
-#' @section II. Conversion:
+#' @details
+#' 
 #'  \tabular{ll}{
-#'  \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial DataFrame object  \cr
 #'  \code{\link{sptable<-}} \tab modify a Spatial object in-place  \cr
+#'  \code{\link{sptable}} \tab create a \code{\link[tibble]{tibble}} from Spatial DataFrame object  \cr
 #'  \code{\link{sp}} \tab create Spatial DataFrame object from table \cr
 #'  }
 #' @name spbabel-package
@@ -23,7 +22,7 @@ NULL
 
 #' "South-east" map data. 
 #' 
-#' Created in /data-raw/ \code{semap} is the \code{sptable} version of some of \code{\link[maptools]{{wrld_simpl}}, and \code{seatt} is the matching attribute data, linked by 'object_'. 
+#' Created in /data-raw/ \code{semap} is the \code{sptable} version of some of \code{\link[maptools]{wrld_simpl}}, and \code{seatt} is the matching attribute data, linked by 'object_'. 
 #' @name semap
 #' @docType data
 #' @examples 

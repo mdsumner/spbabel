@@ -51,9 +51,8 @@ and that the type of topology is identified by which of these are present.
 
 This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
 \itemize{
- \item \code{\link[broom]{sp_tidiers}}
- \item \code{\link[raster]{geom}}
  \item \code{\link[broom]{sp_tidiers}} (replacement of 'ggplot2::fortify').
+ \item \code{\link[raster]{geom}}
  \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' workflow. 
 }
 }

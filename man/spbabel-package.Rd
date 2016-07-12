@@ -5,20 +5,12 @@
 \alias{spbabel-package}
 \title{Convert between different types of spatial objects.}
 \description{
-Convert between different types of spatial objects.
+Facilities for converting between different types of spatial objects, including an in-place method to modify the underlying geometry of 'Spatial' classes using data frame idioms.The spbabel package provides functions to round-trip a Spatial object to a single table and back.
 }
 \details{
-A basis for converting between different types of spatial objects, including an in-place method to modify the underlying geometry of 'Spatial' classes using data frame idioms.The spbabel package provides functions to round-trip a Spatial object to a single table and back.
-}
-\section{I. sptable}{
- round-trip tidying for Spatial
-}
-
-\section{II. Conversion}{
-
- \tabular{ll}{
- \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial DataFrame object  \cr
+\tabular{ll}{
  \code{\link{sptable<-}} \tab modify a Spatial object in-place  \cr
+ \code{\link{sptable}} \tab create a \code{\link[tibble]{tibble}} from Spatial DataFrame object  \cr
  \code{\link{sp}} \tab create Spatial DataFrame object from table \cr
  }
 }
