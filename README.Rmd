@@ -40,11 +40,9 @@ The development version can be installed directly from github:
 devtools::install_github("mdsumner/spbabel")
 ```
 
-## Formal spatial data in R
+## Formal and informal spatial data in R
 
-Spatial data in the `sp` package have a formal definition  (extending class `Spatial`) that is modelled on shapefiles, and close at least in spirit to the [Simple Features definition](https://github.com/edzer/sfr). See [What is Spatial in R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for more details. 
-
-Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator [babelfish](https://en.wikipedia.org/wiki/List_of_races_and_species_in_The_Hitchhiker%27s_Guide_to_the_Galaxy#Babel_fish). Soup may be thick and creamy as in the "twice cooked" *bisque* or clear as in the "boiled" *bouillon* and this analogy can be applied in many ways. 
+Spatial data in the `sp` package have a formal definition  (extending class `Spatial`) that is modelled on shapefiles, and close at least in spirit to the [Simple Features definition](https://github.com/edzer/sfr). See [What is Spatial in R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for more details.  Spatial data in the `ggplot2` package has no formal definition and there's not a lot of guidance for how to switch between these two worlds, or the opportunities that exist for other options. 
 
 The `spbabel` package tries to help by providing a more systematic encoding into the long-form with consistent naming and lossless ways to re-compose the original (or somewhat modified) objects. 
 
@@ -73,9 +71,6 @@ The `sptable` function creates the table of coordinates with identifiers for obj
 The long-form table may seem like soup, but it's not meant to be seen for normal use. It's very easy to dump this to databases, or to ask spatial databases for this form.  There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator. 
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
-
-
-
 
 
 # Why do this? 

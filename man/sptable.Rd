@@ -24,10 +24,7 @@ sptable(object) <- value
 \arguments{
 \item{x}{\code{\link[sp]{Spatial}} object}
 
-\item{...}{ignored
-
-For simplicity \code{sptable} and its inverse \code{sp} assume that all geometry can be encoded with object, branch, island, order, x and y. 
-and that the type of topology is identified by which of these are present.}
+\item{...}{ignored}
 
 \item{object}{Spatial object}
 
@@ -48,6 +45,31 @@ Spatial object
 Decompose a Spatial object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.
 }
 \details{
-Input can be a \code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[sp]{SpatialLinesDataFrame}} or a \code{\link[sp]{SpatialPointsDataFrame}}.
+Input can be a \code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[sp]{SpatialLinesDataFrame}}, \code{\link[sp]{SpatialMultiPointsDataFrame}} or a \code{\link[sp]{SpatialPointsDataFrame}}.
+For simplicity \code{sptable} and its inverse \code{sp} assume that all geometry can be encoded with object, branch, island, order, x and y. 
+and that the type of topology is identified by which of these are present.
+}
+\examples{
+## holey is decomposed SpatialPolygonsDataFrame
+spdata <- sp(holey)
+plot(spdata, col = rainbow(nrow(spdata), alpha = 0.4))
+points(holey$x_, holey$y_, cex = 4)
+holes <- subset(holey, !island_)
+## add the points that only belong to holes
+points(holes$x_, holes$y_, pch = "+", cex = 2)
+## convert to not-holes
+notahole <- holes
+notahole$island_ <- TRUE
+also convert to singular objects - note that this now means we have an overlapping pair of polys
+because the door had a hole filled by another object
+notahole$object_ <- notahole$branch_
+plot(sp(notahole), add = TRUE, col = "red")
+
+## example using in-place modification with sptable<-
+library(maptools)
+data(wrld_simpl)
+holey2 <- holey
+library(dplyr)
+sptable(holey2) <- sptable(woz) \%>\% mutate(y_ = y_ + 5)
 }
 

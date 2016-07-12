@@ -1,3 +1,9 @@
+# spbabel dev
+
+* extra documentation added
+
+* fix up package structure for CRAN
+
 # spbabel 0.3.2
 
 * removed internal use of a matrix in .pointsGeom

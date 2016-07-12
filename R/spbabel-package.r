@@ -19,7 +19,6 @@ NULL
 
 #' MultiPointsDataFrame data set
 #' 
-
 #' @name mpoint1
 #' @docType data
 #' @rdname mpoint1
@@ -27,7 +26,7 @@ NULL
 
 #' "South-east" map data. 
 #' 
-#' Created in /data-raw/ \code{semap} is the setable() version of some of maptools wrld_simpl, and \code{seatt} is the matching attribute data, linked by `object`. 
+#' Created in /data-raw/ \code{semap} is the \code{sptable} version of some of \code{\link[maptools]wrld_simpl}}, and \code{seatt} is the matching attribute data, linked by `object_`. 
 #' @name semap
 #' @docType data
 #' @examples 
@@ -39,9 +38,16 @@ NULL
 
 #' "South-east" map attribute data. 
 #' 
-#' Created in /data-raw/
+#' Created in /data-raw/. 
 #' @name seatt
 #' @docType data
 #' @rdname semap
 NULL
 
+#' Multi-part, multi-holed, neighbouring, not completely topological polygons.  
+#' 
+#' Created in /data-raw/ from a manual drawing built in Manifold GIS. 
+#' @name holey
+#' @docType data
+#' @rdname holey
+NULL
