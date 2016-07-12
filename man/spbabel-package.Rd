@@ -2,23 +2,24 @@
 % Please edit documentation in R/spbabel-package.r
 \docType{package}
 \name{spbabel-package}
-\title{A basis for converting between different types of spatial objects.}
+\alias{spbabel-package}
+\title{Convert between different types of spatial objects.}
 \description{
-# @importFrom utils
+Convert between different types of spatial objects.
 }
 \details{
-The spbabel package provides functions to round-trip a Spatial object to a single table and back.
+A basis for converting between different types of spatial objects, including an in-place method to modify the underlying geometry of 'Spatial' classes using data frame idioms.The spbabel package provides functions to round-trip a Spatial object to a single table and back.
 }
 \section{I. sptable}{
- an round-trip extension to fortify for Spatial
+ round-trip tidying for Spatial
 }
 
 \section{II. Conversion}{
 
  \tabular{ll}{
- \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial*DataFrame  \cr
+ \code{\link{sptable}} \tab create a \code{\link[dplyr]{tbl_df}} from Spatial DataFrame object  \cr
  \code{\link{sptable<-}} \tab modify a Spatial object in-place  \cr
- \code{\link{sp}} \tab create Spatial object from table \cr
+ \code{\link{sp}} \tab create Spatial DataFrame object from table \cr
  }
 }
 

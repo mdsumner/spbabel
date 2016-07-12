@@ -7,7 +7,7 @@
 \alias{sptable.SpatialPointsDataFrame}
 \alias{sptable.SpatialPolygonsDataFrame}
 \alias{sptable<-}
-\title{Convert from Spatial*DataFrame to table.}
+\title{Convert from sp package 'Spatial' classes to a table.}
 \usage{
 sptable(x, ...)
 
@@ -42,12 +42,20 @@ sptable(object) <- value
 Spatial object
 }
 \description{
-Decompose a Spatial object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.
+Decompose a \code{\link[sp]{Spatial}} object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.
 }
 \details{
 Input can be a \code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[sp]{SpatialLinesDataFrame}}, \code{\link[sp]{SpatialMultiPointsDataFrame}} or a \code{\link[sp]{SpatialPointsDataFrame}}.
 For simplicity \code{sptable} and its inverse \code{sp} assume that all geometry can be encoded with object, branch, island, order, x and y. 
 and that the type of topology is identified by which of these are present.
+
+This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
+\itemize{
+ \item \code{\link[broom]{sp_tidiers}}
+ \item \code{\link[raster]{geom}}
+ \item \code{\link[broom]{sp_tidiers}} (replacement of 'ggplot2::fortify').
+ \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' workflow. 
+}
 }
 \examples{
 ## holey is decomposed SpatialPolygonsDataFrame
@@ -57,11 +65,13 @@ points(holey$x_, holey$y_, cex = 4)
 holes <- subset(holey, !island_)
 ## add the points that only belong to holes
 points(holes$x_, holes$y_, pch = "+", cex = 2)
+
+## manipulate based on topology
 ## convert to not-holes
 notahole <- holes
 notahole$island_ <- TRUE
-also convert to singular objects - note that this now means we have an overlapping pair of polys
-because the door had a hole filled by another object
+#also convert to singular objects - note that this now means we have an overlapping pair of polys
+#because the door had a hole filled by another object
 notahole$object_ <- notahole$branch_
 plot(sp(notahole), add = TRUE, col = "red")
 
