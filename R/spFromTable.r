@@ -45,7 +45,7 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
   if (is.null(topol_)) target <- detectSpClass(x)
-  dat <- x %>% distinct_("object_")
+  dat <- x %>% distinct_("object_", .keep_all = TRUE)
 
    n_object <- nrow(dat)
    n_attribute <- nrow(attr_tab)
@@ -56,7 +56,8 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   gom <- switch(target,
                 SpatialPolygonsDataFrame = reverse_geomPoly(x, dat, crs),
                 SpatialLinesDataFrame = reverse_geomLine(x, dat, crs),
-                SpatialPointsDataFrame = reverse_geomPoint(x, dat, crs)
+                SpatialPointsDataFrame = reverse_geomPoint(x, dat, crs), 
+                SpatialMultiPointsDataFrame = reverse_geomMultiPoint(x, dat, crs)
   )
   gom
 }
@@ -67,9 +68,9 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
 geomnames <- function() {
   list(SpatialPolygonsDataFrame = c("object_",  "branch_", "island_", "order_", "x_", "y_"),
        SpatialLinesDataFrame = c("object_",  "branch_", "order_", "x_", "y_"),
-       SpatialPointsDataFrame = c("object_", "x_", "y_"), 
        ## strictly why not allow ordering on Multipoints, but why use sp for them anyway . . .
-       SpatialMultPointsDataFrame = c("branch_", "object_", "x_", "y_"))
+       SpatialMultiPointsDataFrame = c("branch_", "object_", "x_", "y_"),
+       SpatialPointsDataFrame = c("object_", "x_", "y_"))
 }
 
 
@@ -103,7 +104,7 @@ reverse_geomPoint <- function(a, d, proj) {
   SpatialPointsDataFrame(spts, d, proj4string = CRS(proj))
 }
 #' @importFrom sp SpatialMultiPointsDataFrame SpatialMultiPoints
-reverse_geomMultPoint <- function(a, d, proj) {
+reverse_geomMultiPoint <- function(a, d, proj) {
   d$branch_ <- d$object_  <- d$x_ <- d$y_ <- NULL
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
   

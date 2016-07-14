@@ -14,6 +14,7 @@ point1 <- as(line1, "SpatialPointsDataFrame")
 poly1tab <- sptable(poly1)
 line1tab <- sptable(line1)
 point1tab <- sptable(point1)
+mpoint1tab <- sptable(mpoint1)
 
 ## reconstructed versions
 poly0 <- sp(poly1tab, attr_tab = as.data.frame(poly1))
@@ -22,7 +23,7 @@ line0 <- sp(line1tab, attr_tab = as.data.frame(line1))
 ## the line metadata (i.e. a partial fortify)
 point0 <- sp(point1tab, attr_tab = point1@data)
 
-
+mpoint0 <- sp(mpoint1tab, attr_tab = mpoint1@data)
 test_that("we can round-trip sensibly", {
   expect_true(all(names(poly1) == names(poly0)))
   expect_that(nrow(poly1), equals(nrow(poly0)))
@@ -33,6 +34,9 @@ test_that("we can round-trip sensibly", {
   ## sp() needs to no replicate names
   expect_true(all(names(point1) == names(point0)))
   expect_that(nrow(point1), equals(nrow(point0)))
+  
+  expect_true(all(names(mpoint1) == names(mpoint0)))
+  expect_that(nrow(mpoint1), equals(nrow(mpoint0)))
   
   # gah these are such a pain
   #expect_true(proj4string(sp) == gsub("^ ", "", proj4string(poly1)))
@@ -48,6 +52,7 @@ test_that("if objects = branchs then fewer rows", {
 
 test_that("can rebuild without attributes", {
   expect_that(sp(poly1tab), is_a(class(poly1)))
+  expect_that(sp(mpoint1tab), is_a(class(mpoint1)))
 })
 
 poly1tab$new <- runif(nrow(poly1tab))

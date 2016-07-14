@@ -59,6 +59,7 @@ This is analogous to the following but in spbabel provides a consistent way to r
 \examples{
 ## holey is decomposed SpatialPolygonsDataFrame
 spdata <- sp(holey)
+library(sp)
 plot(spdata, col = rainbow(nrow(spdata), alpha = 0.4))
 points(holey$x_, holey$y_, cex = 4)
 holes <- subset(holey, !island_)
