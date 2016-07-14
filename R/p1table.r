@@ -1,8 +1,12 @@
-recompose <- function(x, rcnames = c("v", "bXv", "b")) {
+recompose <- function(x, rcnames = c("v", "bXv", "b"), clnames = NULL) {
   y <- x[[rcnames[1L]]]
   if (length(rcnames) > 1) {
     for (i in seq_along(rcnames)[-1L]) {
-      y <- inner_join(y, x[[rcnames[i]]])
+      if (is.null(clnames)) { 
+        y <- inner_join(y, x[[rcnames[[i]]]])
+      } else {
+        y <- inner_join(y, x[[rcnames[i]]], clnames[i-1])
+      }
     }
   }
   y
@@ -51,9 +55,13 @@ p1table.default <- function(x, ...) {
 #' @importFrom dplyr bind_cols bind_rows select slice inner_join tibble
 p1tableFromM <- function(x) {
   br <- vector("list", nrow(x$o))
+  mtab <- spbabel:::recompose(x, clnames = c("vertex_", "branch_"))
   for (i in seq(nrow(x$o))) {
-    obj <- x$o %>% select(object_) %>% slice(i)  %>% inner_join(x$b, "object_") %>% inner_join(x$bXv, "branch_") %>% inner_join(x$v, "vertex_")
-    br[[i]] <- bind_rows(lapply(split(obj, obj$branch_), function(a) bind_cols(pairs0(a$vertex_), tibble(branch_ = head(a$branch_, -1)))))
+    obj <- x$o %>% dplyr::select(object_) %>% 
+      dplyr::slice(i)  %>% 
+      dplyr::inner_join(mtab)
+    br[[i]] <- dplyr::bind_rows(lapply(split(obj, obj$branch_), 
+                                       function(a) dplyr::bind_cols(pairs0(a$vertex_), tibble(branch_ = head(a$branch_, -1)))))
   }
   bind_rows(br)
 } 
