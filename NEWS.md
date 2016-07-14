@@ -1,5 +1,9 @@
 # spbabel dev
 
+* fix MultiPoints
+
+* updates for dplyr `distinct(.keep_all)`
+
 * extra documentation added
 
 * fix up package structure for CRAN
