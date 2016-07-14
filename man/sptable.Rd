@@ -31,7 +31,7 @@ sptable(object) <- value
 \item{value}{modified sptable version of object}
 }
 \value{
-\code{\link[dplyr]{tbl_df}} data_frame with columns
+\code{\link[tibble]{tibble}}  with columns
 \itemize{
  \item SpatialPolygonsDataFrame "object_"   "branch_"   "island_"   "order_" "x"    "y_"
  \item SpatialLinesDataFrame "object_"   "branch_" "order_"  "x_"      "y_"
@@ -57,7 +57,7 @@ This is analogous to the following but in spbabel provides a consistent way to r
 }
 }
 \examples{
-## holey is decomposed SpatialPolygonsDataFrame
+## holey is a decomposed SpatialPolygonsDataFrame
 spdata <- sp(holey)
 library(sp)
 plot(spdata, col = rainbow(nrow(spdata), alpha = 0.4))
@@ -78,8 +78,9 @@ plot(sp(notahole), add = TRUE, col = "red")
 ## example using in-place modification with sptable<-
 library(maptools)
 data(wrld_simpl)
-holey2 <- holey
+spdata2 <- spdata
 library(dplyr)
-sptable(holey2) <- sptable(woz) \%>\% mutate(y_ = y_ + 5)
+## modify the geometry on this object without separating the vertices from the objects
+sptable(spdata2) <- sptable(spdata2) \%>\% mutate(x_ = x_ + 10, y_ = y_ + 5)
 }
 

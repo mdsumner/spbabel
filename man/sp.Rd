@@ -10,7 +10,7 @@ sp(x, ...)
 \method{sp}{data.frame}(x, attr_tab = NULL, crs, ...)
 }
 \arguments{
-\item{x}{data_frame as created by \code{\link{sptable}}}
+\item{x}{tibble as created by \code{\link{sptable}}}
 
 \item{...}{unused}
 

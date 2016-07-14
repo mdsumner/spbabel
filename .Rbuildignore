@@ -6,3 +6,4 @@
 ^data-raw$
 ^appveyor\.yml$
 ^cran-comments\.md$
+^codecov\.yml$

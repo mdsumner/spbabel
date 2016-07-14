@@ -1,5 +1,9 @@
 # spbabel dev
 
+* added holey data set
+
+* update to use tibble rather than dplyr data_frame
+
 * fix MultiPoints
 
 * updates for dplyr `distinct(.keep_all)`

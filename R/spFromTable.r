@@ -6,13 +6,13 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 
 #' Convert from dplyr tbl form to Spatial*DataFrame.
 #'
-#' @param x data_frame as created by \code{\link{sptable}}
+#' @param x tibble as created by \code{\link{sptable}}
 #' @param crs projection, defaults to \code{NA_character_}
 #' @param attr_tab remaining data from the attributes
 #' @param ... unused
 #' @return Spatial*
 #' @export
-#' @importFrom dplyr %>% distinct_ as_data_frame
+#' @importFrom dplyr %>% distinct_ 
 #' @importFrom sp coordinates CRS SpatialPoints SpatialPointsDataFrame Line Lines SpatialLines SpatialLinesDataFrame Polygon Polygons SpatialPolygons SpatialPolygonsDataFrame
 #' @examples 
 #' library(dplyr)
