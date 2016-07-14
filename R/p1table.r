@@ -1,17 +1,29 @@
-recompose <- function(x, rcnames = c("v", "bXv", "b"), clnames = NULL) {
+
+grispaths <- function() {
+  list(branch = c("o", "b", "bXv", v))
+  list(edge = c("b", "s", "v"))
+  
+}
+cascade_inner <- function(x, rcnames = c("v", "bXv", "b")) {
   y <- x[[rcnames[1L]]]
   if (length(rcnames) > 1) {
     for (i in seq_along(rcnames)[-1L]) {
-      if (is.null(clnames)) { 
         y <- inner_join(y, x[[rcnames[[i]]]])
-      } else {
-        y <- inner_join(y, x[[rcnames[i]]], clnames[i-1])
-      }
     }
   }
   y
 }
 
+cascade_semi <- function(x, y, rcnames = c("b", "bXv", "v")) {
+  for (i in seq_along(rcnames)) {
+    name <- rcnames[[i]]
+    x[[name]] <- semi_join(x[[name]])
+  }
+  y
+}
+propagate <- function(x, objects) {
+  select_(objects, "object_")
+}
 #' Title
 #'
 #' @param x 
