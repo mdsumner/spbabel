@@ -74,5 +74,6 @@ mtableFrom2 <- function(dat1, map1) {
   ## four tables (dat1, map2, map4, map5)
   bXv <- map1 %>% dplyr::select_(.dots = bxv_atts)
   v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
-  list(o = dat1, b = b, bXv = bXv, v = v)
+  res <- list(o = dat1, b = b,  bXv = bXv, v = v)
+  res
 }
