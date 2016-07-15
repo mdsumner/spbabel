@@ -49,6 +49,8 @@ inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
   }
   first
 }
+
+
 #' Multiple tidy tables
 #' 
 #' Creates a set of tidy tables from input objects. 
@@ -77,15 +79,6 @@ mtable.Spatial <- function(x, ...) {
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[tabmap$object_]
   mtableFrom2(tabdat, tabmap)
-}
-
-letsnumbers <- c(letters, LETTERS, 0:9)
-idmaker <- function() {
-  paste(sample(letsnumbers, 10, replace = TRUE)  , collapse = "")
-}
-
-id_n <- function(x = 1) {
-  unlist(lapply(seq(x), idmaker))
 }
 
 #' Convert two linked tables to four. 
