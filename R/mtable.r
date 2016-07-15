@@ -73,8 +73,19 @@ mtable <- function(x, ...) {
 mtable.Spatial <- function(x, ...) {
   tabmap <- spbabel::sptable(x)
   tabdat <- tibble::as_tibble(x)
-  tabdat$object_ <- seq(nrow(tabdat))
+  
+  tabdat$object_ <- id_n(nrow(tabdat))
+  tabmap$object_ <- tabdat$object_[tabmap$object_]
   mtableFrom2(tabdat, tabmap)
+}
+
+letsnumbers <- c(letters, LETTERS, 0:9)
+idmaker <- function() {
+  paste(sample(letsnumbers, 10, replace = TRUE)  , collapse = "")
+}
+
+id_n <- function(x = 1) {
+  unlist(lapply(seq(x), idmaker))
 }
 
 #' Convert two linked tables to four. 
@@ -96,6 +107,7 @@ mtableFrom2 <- function(dat1, map1) {
   ## classify unique vertices by unique index
   map1 <- map1 %>%
     mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts)))))
+  #map1$vertex_ <- id_nrow(nrow(map1))[map1$vertex_]
   ## branches, owner object and island status
   b <- map1 %>% distinct_(.dots = b_atts) 
   ## four tables (dat1, map2, map4, map5)
