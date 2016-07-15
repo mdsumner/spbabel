@@ -22,6 +22,33 @@
 #   x
 # }
 
+
+#' Cascading subset on object for mtable. 
+#'
+#' @param x 
+#' @param ... 
+#'
+#' @export
+#'
+semi_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
+  first <- dplyr::filter(x[[tables[1]]], ...)
+  x[[1]] <- last <- first 
+  tables <- tables[-1]
+  for (itab in tables) {
+    x[[itab]] <- last <- dplyr::semi_join(x[[itab]], last)
+  }
+  x
+}
+
+inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
+  first <- dplyr::filter(x[[tables[1]]], ...)
+  #x[[1]] <- last <- first 
+  tables <- tables[-1]
+  for (itab in tables) {
+    first <-  dplyr::inner_join(x[[itab]], first)
+  }
+  first
+}
 #' Multiple tidy tables
 #' 
 #' Creates a set of tidy tables from input objects. 
