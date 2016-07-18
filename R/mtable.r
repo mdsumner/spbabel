@@ -76,8 +76,12 @@ mtable.Spatial <- function(x, ...) {
   tabmap <- spbabel::sptable(x)
   tabdat <- tibble::as_tibble(x)
   
+  ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[tabmap$object_]
+  
+  tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
+ 
   mtableFrom2(tabdat, tabmap)
 }
 
@@ -98,8 +102,11 @@ mtableFrom2 <- function(dat1, map1) {
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
   bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
   ## classify unique vertices by unique index
+  ## could tidy this up some more . . .
   map1 <- map1 %>%
-    mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts)))))
+    mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) %>% 
+    mutate(vertex_ = id_n(length(unique(vertex_)))[vertex_])
+  
   #map1$vertex_ <- id_nrow(nrow(map1))[map1$vertex_]
   ## branches, owner object and island status
   b <- map1 %>% distinct_(.dots = b_atts) 

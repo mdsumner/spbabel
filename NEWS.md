@@ -1,5 +1,7 @@
 # spbabel dev
 
+* moved to using character IDs for object, branch, vertex
+
 * added track data set
 
 * added holey data set

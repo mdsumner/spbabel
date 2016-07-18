@@ -1,9 +1,5 @@
 
-grispaths <- function() {
-  list(branch = c("o", "b", "bXv", v))
-  list(edge = c("b", "s", "v"))
-  
-}
+##' internal method that produces sptable() analog from mtable
 cascade_inner <- function(x, rcnames = c("v", "bXv", "b")) {
   y <- x[[rcnames[1L]]]
   if (length(rcnames) > 1) {
@@ -14,15 +10,13 @@ cascade_inner <- function(x, rcnames = c("v", "bXv", "b")) {
   y
 }
 
+##' propagate a subset from objects down
 cascade_semi <- function(x, y, rcnames = c("b", "bXv", "v")) {
   for (i in seq_along(rcnames)) {
     name <- rcnames[[i]]
     x[[name]] <- semi_join(x[[name]])
   }
   y
-}
-propagate <- function(x, objects) {
-  select_(objects, "object_")
 }
 #' Title
 #'
@@ -58,6 +52,16 @@ p1table <- function(x, ...) {
   UseMethod("p1table")
 }
 
+p1table.Spatial <- function(x, ...) {
+  mlist <- mtable(x)
+  br <- vector("list", nrow(tabdat))
+  for (i in seq(nrow(tabdat))) {
+    mobj <- cascade_semi(mlist, object_ == i) ## dplyr::inner_join(tabdat[i, "object_"], tabmap, "object_")
+    br[[i]] <- dplyr::bind_rows(lapply(split(objmap, objmap$branch_), 
+                                       function(a) dplyr::bind_cols(pairs0(a$vertex_), tibble(branch_ = head(a$branch_, -1)))))
+  }
+  bind_rows(br)
+}
 #' @export
 p1table.default <- function(x, ...) {
   x$s <- p1tableFromM(x)
@@ -67,7 +71,7 @@ p1table.default <- function(x, ...) {
 #' @importFrom dplyr bind_cols bind_rows select slice inner_join tibble
 p1tableFromM <- function(x) {
   br <- vector("list", nrow(x$o))
-  mtab <- spbabel:::recompose(x, clnames = c("vertex_", "branch_"))
+  mtab <- cascade_inner(x)
   for (i in seq(nrow(x$o))) {
     obj <- x$o %>% dplyr::select(object_) %>% 
       dplyr::slice(i)  %>% 
