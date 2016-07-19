@@ -1,5 +1,5 @@
 
-##' internal method that produces sptable() analog from mtable
+# internal method that produces sptable() analog from mtable
 cascade_inner <- function(x, rcnames = c("v", "bXv", "b")) {
   y <- x[[rcnames[1L]]]
   if (length(rcnames) > 1) {
@@ -10,7 +10,7 @@ cascade_inner <- function(x, rcnames = c("v", "bXv", "b")) {
   y
 }
 
-##' propagate a subset from objects down
+# propagate a subset from objects down
 cascade_semi <- function(x, y, rcnames = c("b", "bXv", "v")) {
   for (i in seq_along(rcnames)) {
     name <- rcnames[[i]]
@@ -18,15 +18,7 @@ cascade_semi <- function(x, y, rcnames = c("b", "bXv", "v")) {
   }
   y
 }
-#' Title
-#'
-#' @param x 
-#' @param ... 
-#'
-#' @return
-#' @export
-#'
-#' @examples
+
 sp_p1 <- function(x, ...) {
   ## re-compose to just two tables
   tab <- recompose(x, c("v", "bXv", "b"))
@@ -42,7 +34,7 @@ sp_p1 <- function(x, ...) {
 #' @param ... arguments passed to methods
 #'
 #' @return list of tibbles
-#' @export
+#' @noRd
 #'
 #' @examples
 #' data(holey)
@@ -52,6 +44,7 @@ p1table <- function(x, ...) {
   UseMethod("p1table")
 }
 
+#' @noRd
 p1table.Spatial <- function(x, ...) {
   mlist <- mtable(x)
   br <- vector("list", nrow(tabdat))
@@ -62,12 +55,14 @@ p1table.Spatial <- function(x, ...) {
   }
   bind_rows(br)
 }
-#' @export
+
+#' @noRd
 p1table.default <- function(x, ...) {
   x$s <- p1tableFromM(x)
   x
 }
 
+#' @noRd
 #' @importFrom dplyr bind_cols bind_rows select slice inner_join tibble
 p1tableFromM <- function(x) {
   br <- vector("list", nrow(x$o))
@@ -82,10 +77,12 @@ p1tableFromM <- function(x) {
   bind_rows(br)
 } 
 
+#' @noRd
 #' @importFrom tibble tibble
 pairs0 <- function (x) {
   tibble(s0 = head(x, -1), s1 = tail(x, -1))
 }
+#' @noRd
 #' @importFrom dplyr inner_join transmute 
 seg2struct <- function(x) {
   v <- x$v
