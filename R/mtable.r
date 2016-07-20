@@ -98,7 +98,7 @@ mtableFrom2 <- function(dat1, map1) {
   v_atts <- c("x_", "y_")
   o_atts <- setdiff(names(map1), v_atts)
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
-  #bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
+  bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
  
   ## classify unique vertices by unique index
   ## could tidy this up some more . . .
