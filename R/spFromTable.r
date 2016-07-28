@@ -83,7 +83,7 @@ reverse_geomPoly <- function(x, d, proj) {
   ## match.ID should be replaced by method to carry the original rownames somehow
   SpatialPolygonsDataFrame(SpatialPolygons(lapply(objects, loopBranchPoly), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
-loopBranchPoly <- function(a) Polygons(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
+loopBranchPoly <- function(a) Polygons(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L] == 1)), as.character(a$object_[1L]))
 
 
 reverse_geomLine <- function(x, d, proj) {
@@ -92,7 +92,8 @@ reverse_geomLine <- function(x, d, proj) {
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
   SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d)
 }
-loopBranchLine<- function(a) Lines(lapply(split(a, a$branch_), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
+dropZeroRowFromList <- function(x) x[unlist(lapply(x, nrow)) > 0L]
+loopBranchLine<- function(a) Lines(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
 
 reverse_geomPoint <- function(a, d, proj) {
   # stop("not implemented")

@@ -1,5 +1,7 @@
 # spbabel dev
 
+* branch IDs can now be factor, before this resulted in empty data.frames from split
+
 * moved to using character IDs for object, branch, vertex
 
 * added track data set
