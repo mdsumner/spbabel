@@ -1,4 +1,4 @@
-# spbabel 0.3.3
+# spbabel 0.4.0
 
 * new function 'map_table' to produce the more general multiple-table model
 
