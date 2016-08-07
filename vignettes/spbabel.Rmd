@@ -109,6 +109,7 @@ par(op)
 ```
 
 The long-form table is also ready for ggplot2: 
+
 ```{r}
 library(ggplot2)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom_polygon()
@@ -122,5 +123,38 @@ Please note that that `geom_polygon` cannot handle islands with multiple holes, 
 
 ## De-duplication of vertices
 
-De-duplication is performed in "x"/"y" by default, but the technique is general and could be applied to a geometric space of any dimension. Duplicates are identified by coercing numeric values to character (after 'base::duplicated') and so is not robust to numeric issues. We haven't found any problems yet. 
+For the four-table for de-duplication is performed in "x"/"y" by default, but the technique is general and could be applied to a geometric space of any dimension. Duplicates are identified by coercing numeric values to character (after 'base::duplicated') and so is not robust to numeric issues. We haven't found any problems yet. 
 
+An example of working with the four table form. 
+
+```{r}
+codes <- c("AUS",  "SLB",  "FJI", "FSM", "KIR", 
+"NCL", "NFK", "CCK", "CXR", "VUT", "NRU",  "PNG", 
+"SGP", "TUV", "IDN", "TLS", "PLW", "MHL", "NZL")
+
+mm <- map_table(wrld_simpl %>% subset(ISO3 %in% codes))
+
+## cross the dateline properly
+mm$v <- mm$v %>% mutate(x_ = ifelse(x_ < 0, x_ + 360, x_))
+plot(mm$v[, c("x_", "y_")])
+
+## get an sp object
+## cascaded inner join and arrange within branch
+mm_sp <- sp(
+  with(mm, 
+       inner_join(v, bXv) %>%  inner_join(b) %>% 
+         arrange(branch_, order_) %>% select(-vertex_)), 
+            attr_tab = mm$o)
+
+mm_sp
+plot(mm_sp, col = grey(seq(0, 1, length = nrow(mm_sp))))
+```
+
+```{r, fig.height=9, fig.width=9}
+## get a gg plot
+
+ggplot(with(mm, inner_join(v, bXv) %>% inner_join(b) %>% inner_join(select(mm$o, NAME, object_)))) + 
+  aes(x = x_, y = y_, group = branch_, fill = NAME) + 
+  geom_polygon() + ggplot2::coord_equal()
+
+```

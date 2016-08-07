@@ -13,4 +13,4 @@ spbabel 0.4.0 update
 
 The only dependency is spdplyr, which passes check against this update. 
 
-
+Also checked with 'devtools::revdep_check'. 
