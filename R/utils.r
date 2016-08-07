@@ -24,7 +24,6 @@ has_data <- function(x) .hasSlot(x, "data")
 #' @importFrom methods .hasSlot
 #' @importFrom sp bbox proj4string 
 #' @importFrom dplyr tbl_df group_by
-#' @importFrom ggplot2 aes ggplot 
 .print_Spatial <- 
 function (x, ...) 
 {

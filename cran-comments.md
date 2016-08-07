@@ -1,4 +1,4 @@
-spbabel 0.3.2 first version for release on CRAN. 
+spbabel 0.4.0 update
 
 ## Test environments
 * local Windows 10 install (R 3.3.1)
@@ -7,11 +7,10 @@ spbabel 0.3.2 first version for release on CRAN.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+0 errors | 0 warnings | 0 notes
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+The only dependency is spdplyr, which passes check against this update. 
+
 

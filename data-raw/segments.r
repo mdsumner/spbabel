@@ -49,7 +49,7 @@ make_segment_table <- function(x) {
 # x <- list(o = o, b = b, bXs = bXs, sXv = sXv, v = v)
 
 plotx <- function(x) {
-  y <- spbabel:::inner_cascade(x, tables = names(x))
+  y <- inner_cascade(x, tables = names(x))
   plot(y[, c("x_", "y_")])
   lapply(split(y, y$segment_), function(x) segments(x$x_[1], x$y_[1], 
                                                    x$x_[2], x$y_[2]))

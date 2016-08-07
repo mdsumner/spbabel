@@ -49,6 +49,7 @@ NULL
 NULL
 
 #' Multi-object track with x, y, z, and time. 
+#' 
 #' Created in /data-raw/track.r
 #' @name track
 #' @docType data

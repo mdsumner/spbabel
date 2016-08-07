@@ -27,27 +27,35 @@ Spbabel provides simple tools to flip between Spatial and tidy forms of data. Th
 
 Spatial data in the `sp` package have a formal definition  (extending class `Spatial`) that is modelled on shapefiles, and close at least in spirit to the [Simple Features definition](https://github.com/edzer/sfr). See [What is Spatial in R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for more details. 
 
-Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator [babelfish](https://en.wikipedia.org/wiki/List_of_races_and_species_in_The_Hitchhiker%27s_Guide_to_the_Galaxy#Babel_fish). Soup may be thick and creamy as in the "twice cooked" *bisque* or clear as in the "boiled" *bouillon* and this analogy can be applied in many ways. 
+Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator [babelfish](https://en.wikipedia.org/wiki/List_of_races_and_species_in_The_Hitchhiker%27s_Guide_to_the_Galaxy#Babel_fish). 
+
 
 The `spbabel` package tries to help by providing a more systematic encoding into the long-form with consistent naming and lossless ways to re-compose the original (or somewhat modified) objects. 
 
-The long-form version is similar to that implemented in: 
+There are two main forms. 
+
+1. The two-table form is the "coordinates with identifiers", and the metadata
+2. The four-table form applies *database normalization* of the coordinates table into branches and vertices, adding a fourth link table to allow de-duplication of the coordinates. 
+
+
+The two-table version is similar to that implemented in: 
 
 * sp's `as()` coercion for  `SpatialLinesDataFrame` to `SpatialPointsDataFrame`
 * rasters's `geom()`
 * ggplot2's `fortify()`
 * gris' normalized tables
  
-# How does spbabel work
+The four-table form is in development across a number of projects. It is straightforward to work with but there aren't any high-level tools in package form yet. 
 
-The long-form single table of all coordinates, with object, branch, island-status, and order provides the best middle-ground for transferring between different representations of Spatial data. Tables are always based on the "tibble" since it's a much better data frame. 
+# How do the 'sptable()' and 'sp()' functions work
+
+The long-form single table of all coordinates, with object, branch, island-status, and order provides a reasonable middle-ground for transferring between different representations of Spatial data. Tables are always based on the "tibble" since it's a much better data frame. 
 
 The `sptable` function creates the table of coordinates with identifiers for object and branch, which is understood by `sptable<-` to "fortify" and `sp` for the reverse. 
 
 The long-form table may seem like soup, but it's not meant to be seen for normal use. It's very easy to dump this to databases, or to ask spatial databases for this form.  There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator. 
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
-
 
 # sptable: a round-trip-able extension to fortify
 
@@ -110,4 +118,9 @@ set.seed(10)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(sample(branch_)), group = branch_, col = object_) + geom_polygon()
 ```
 
-Please note that that `geom_polygon` cannot handle islands with multiple holes, and it only can do one hole by pretending it is a closed path and hides the boundary so you don't see the sleight of hand.  Search for "geom_holygon" for a way forward within ggplot2. 
+Please note that that `geom_polygon` cannot handle islands with multiple holes, and it only can do one hole by pretending it is a closed path and hides the boundary so you don't see the sleight of hand.  See the package 'ggpolypath' for a 'geom_polypath' geom. 
+
+## De-duplication of vertices
+
+De-duplication is performed in "x"/"y" by default, but the technique is general and could be applied to a geometric space of any dimension. Duplicates are identified by coercing numeric values to character (after 'base::duplicated') and so is not robust to numeric issues. We haven't found any problems yet. 
+

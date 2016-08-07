@@ -23,11 +23,11 @@
 # }
 
 
-#' Cascading subset on object for mtable. 
+#' Cascading subset on object for \code{map_table}. 
 #'
 #' @param x 
 #' @param ... 
-#'
+#' @importFrom dplyr semi_join
 #' @noRd
 semi_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
   first <- dplyr::filter(x[[tables[1]]], ...)
@@ -50,28 +50,45 @@ inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
 }
 
 
-#' Multiple tidy tables
+#' A decomposition of 'vector' map data structures to tables. 
 #' 
-#' Creates a set of tidy tables from input objects. 
+#' Creates a set of related tables to store the appropriate
+#' entities in spatial map data. 
 #'
-#' 
+#' The basic entities behind spatial data, and hence the "map tables" are: 
+#' \describe{
+#'  \item{vertices}{the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.}
+#'  \item{branches}{a single connected chain of vertices, or "parts"}
+#'  \item{objects}{a collection of branches aligned to a row of metadata}
+#'  }
+#'  
+#'  This is the basic "topology" of traditional GIS vector data, for points, 
+#'  lines, polygons and their multi-counterparts. By default map_tables will 
+#'  produce these tables and also de-duplicated the input vertices, adding a 
+#'  fourth table to link vertices to branches. 
+#'  
+#'  Other topology types such as triangle or quad meshes can extend this 
+#'  four-entity model, or exist without the branches at all. See "mesh_table" ??
+#'  
+#'  
 #' @param x object to tidy
 #' @param ... arguments passed to methods
 #'
 #' @return list of tibbles
-#' @noRd
+#' @export
 #' @examples
 #' data(holey)
 #' spholey <- sp(holey)
-#' mtable(spholey)
-mtable <- function(x, ...) {
-  UseMethod("mtable")
+#' map_table(spholey)
+map_table <- function(x, ...) {
+  UseMethod("map_table")
 }
 
-#' @noRd
+
+#' @export
 #' @importFrom tibble as_tibble
-mtable.Spatial <- function(x, ...) {
-  tabmap <- spbabel::sptable(x)
+map_table.Spatial <- function(x, ...) {
+  tabmap <- sptable(x)
   tabdat <- tibble::as_tibble(x)
   
   ## remove this if sptable is updated
@@ -80,8 +97,12 @@ mtable.Spatial <- function(x, ...) {
   
   tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
  
-  mtableFrom2(tabdat, tabmap)
+  out <- map_table_From2(tabdat, tabmap)
+  # no class or methods in spbabel for map_table()
+  #class(out) <- c("map_table", "list")
+  out
 }
+
 
 #' Convert two linked tables to four. 
 #' 
@@ -92,8 +113,9 @@ mtable.Spatial <- function(x, ...) {
 #'
 #' @importFrom dplyr %>% bind_rows distinct_ mutate select select_
 #' @importFrom tibble tibble
+#' @importFrom utils head
 #' @noRd
-mtableFrom2 <- function(dat1, map1) {
+map_table_From2 <- function(dat1, map1) {
   ## we expect that these attributes, taken together are "unique vertices" potentially shared by neighbours
   v_atts <- c("x_", "y_")
   o_atts <- setdiff(names(map1), v_atts)
@@ -103,8 +125,9 @@ mtableFrom2 <- function(dat1, map1) {
   ## classify unique vertices by unique index
   ## could tidy this up some more . . .
   map1 <- map1 %>%
-    mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) %>% 
-    mutate(vertex_ = spbabel:::id_n(length(unique(vertex_)))[vertex_])
+    mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts)))))  
+  #mutate(vertex_ = id_n(length(unique(vertex_)))[vertex_])
+  map1$vertex_ <- id_n(length(unique(map1$vertex_)))[map1$vertex_]
   
   branchV_to_segmentV <- function(x) {
     head(matrix(x, ncol = 2, nrow = length(x) + 1L), -1L)
@@ -120,25 +143,8 @@ mtableFrom2 <- function(dat1, map1) {
   res
 }
 
-
-mtableFrom2_old <- function(dat1, map1) {
-  ## we expect that these attributes, taken together are "unique vertices" potentially shared by neighbours
-  v_atts <- c("x_", "y_")
-  o_atts <- setdiff(names(map1), v_atts)
-  b_atts <- setdiff(o_atts, c("order_", "vertex_"))
-  bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
-  ## classify unique vertices by unique index
-  ## could tidy this up some more . . .
-  map1 <- map1 %>%
-    mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) %>% 
-    mutate(vertex_ = id_n(length(unique(vertex_)))[vertex_])
-  
-  #map1$vertex_ <- id_nrow(nrow(map1))[map1$vertex_]
-  ## branches, owner object and island status
-  b <- map1 %>% distinct_(.dots = b_atts) 
-  ## four tables (dat1, map2, map4, map5)
-  bXv <- map1 %>% dplyr::select_(.dots = bxv_atts)
-  v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
-  res <- list(o = dat1, b = b,  bXv = bXv, v = v)
-  res
-}
+#map_table.RasterLayer <- function(x, ...) {
+  ## v is the corners
+  ## b is the quad index
+  ## o is the pixel discrete values
+#}

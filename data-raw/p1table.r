@@ -78,6 +78,7 @@ p1tableFromM <- function(x) {
 } 
 
 #' @noRd
+#' @importFrom utils head tail
 #' @importFrom tibble tibble
 pairs0 <- function (x) {
   tibble(s0 = head(x, -1), s1 = tail(x, -1))

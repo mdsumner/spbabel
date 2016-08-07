@@ -1,4 +1,6 @@
-# spbabel dev
+# spbabel 0.3.3
+
+* new function 'map_table' to produce the more general multiple-table model
 
 * branch IDs can now be factor, before this resulted in empty data.frames from split
 

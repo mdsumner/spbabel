@@ -3,10 +3,8 @@
 \docType{data}
 \name{track}
 \alias{track}
-\title{Multi-object track with x, y, z, and time. 
-Created in /data-raw/track.r}
+\title{Multi-object track with x, y, z, and time.}
 \description{
-Multi-object track with x, y, z, and time. 
 Created in /data-raw/track.r
 }
 
