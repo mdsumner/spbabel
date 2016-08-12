@@ -1,0 +1,50 @@
+---
+title: "Geometry in tables"
+author: "Michael D. Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Geometry in Tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map ata are usually stored. The tools and data structure tools for `sp` are very powerful and can be used for a wide variety of map-data manipulations and visualizations. 
+
+This document aims to show that there are opportunities to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. 
+
+## Two worlds and two tables 
+
+A `Spatial` object is a complex S4 classed structure composed of lists of coordinates, values, and metadata. It has
+
+* a data frame of attributes for each individual map object
+* a complex hierarchical list of matrices of coordinates (x and y, or longitude and latitude)
+* projection metadata
+* a bounding box
+
+The geometry is in the complex list, and this is defined *just-so* by S4 classes with rigourous constraints to conform to spatial standards. This includes determined details such as the "winding" order for rings defining polygon islands or holes, and the details of which hole belongs to which island. 
+
+A `ggplot2` 'object' is a data frame. It has columns: 
+
+* "long" and "lat" to store the 'x' and 'y' coordinates (or longitude and latitude)
+* "id" to identify each map object
+* "group" to identify each "piece" (polygon ring, line-path, or [multi-]point), unique across all objects
+* "piece" to identify each "piece" within "id" (unique only within ID, provides a count of pieces)
+* "order" to record the correct winding order, or path order 
+* "hole" to denote if a polygon ring was a hole or an island
+
+There's one major thing missing from these two worlds, the `ggplot2` object is really two objects, our list neglecte the exact same data frame that we listed first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
+
+The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the 
+(I'm only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. ...).
+
+## Specific example
+
+Illustrate by converting maps package to sp to ggplot2, and maps to ggplot2. 
+
+## spbabel
+
+There are two functions in `spbabel` that try to re-unite these two tables. 
+
+
+
