@@ -35,16 +35,72 @@ A `ggplot2` 'object' is a data frame. It has columns:
 
 There's one major thing missing from these two worlds, the `ggplot2` object is really two objects, our list neglecte the exact same data frame that we listed first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
 
-The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the 
+The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. T
 (I'm only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. ...).
 
 ## Specific example
 
 Illustrate by converting maps package to sp to ggplot2, and maps to ggplot2. 
 
+Verify with analogous plots in maps, sp, base, and ggplot2- with object comparisons, and maybe digests of the coords ??
+
+
 ## spbabel
 
 There are two functions in `spbabel` that try to re-unite these two tables. 
 
+sptable - fortify but with new names
 
+sp - a driver function to produce Spatial objects, in this case 'spFromDataFrame'
+
+This is not done with a single object with a special class, but it could be. 
+
+```{r}
+PSEUDOCODE
+
+obj <- list(maptab, dattab); class(obj) <- "twotable_geom"
+
+plot.twotable-geom <- function(x, ...) x
+
+`[.twotable_geom <- function(x, i, j, ...) x
+  
+plot(obj[1, ])
+
+```
+
+Another way to do this is to nest the tables, something we'll explore in another document. 
+
+Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
+
+```{r}
+RSQLITE with dplyr
+
+```
+Another document that receives this database and explores nesting, demand-read. 
+
+
+## Tidy tables
+
+We have tidied up in one sense, we've removed a complicated object with specialist requirements and created two tables that can be plotted and manipulated with generic tools. 
+
+There is redundancy in the geometry table. 'Tidy' means '3NF' or 'third-normal-form', and 3NF means that we remove the repeated values that could be stored just once. 
+
+How do we remove this redundancy? First identify the entities that exist. 
+
+Objects, parts, coordinates. 
+
+
+If we create a "parts" table, we will have three tables, one with all the x/y coordinates and their part ID and order within part, the parts table with attributes part ID, island status, and the object metadata table. 
+
+Benefit is size of data is reduced. 
+
+## Four tables
+
+Further normalizatoin inserts a partXcoord table, and puts the order and vertex id on this. 
+Benefit is 
+
+- further data reduction 
+- removal of duplicated coordinates
+- ability to demand page
+- ready for topology
 
