@@ -40,7 +40,7 @@ The other parts missing from ggplot2 is the details about which hole belongs to 
 
 What else is missing? 
 
-- identifiers on parts, ggplot understands this and maps provides it
+- identifiers on parts, ggplot understands this and maps provides it (with limitations)
 - identifiers on coordinates 
 - topology
 
@@ -49,24 +49,51 @@ What else is missing?
 Illustrate by converting maps package to sp to ggplot2, and maps to ggplot2. 
 
 ```{r}
+library(maps)
+x <- map(plot = FALSE, resolution = 0, fill = TRUE)
+map(x, fill = TRUE)
+y <- map(plot = TRUE, resolution = 0, fill = TRUE)
+map(y, fill = TRUE)
+plot(x, pch = "."); polypath(x, col = "grey")
+plot(y, pch = "."); polypath(y, col = "grey")
+
+#x <- map(regions = c("Australia", "New Zealand"), fill = TRUE, col = "grey", border = "red")
+
+x <- map("county", fill = TRUE)
+plot(x); polygon(x, col = "grey")
 mapstidy <- function(x) {
   bad <- is.na(x$x)
   ## TODO check badx and bady are the same
-  regions <- cumsum(bad)
-  coords <- tibble::as_tibble(list(x_ = x$x, y_ = x$y, count = regions))[!bad, ]
-  obj <- unlist(lapply(strsplit(x$names, ":"), "[", 1L))
-  part <- unlist(lapply(strsplit(x$names, ":"), tail, 1L))
-  coords$object_ <- obj[coords$count + 1L]
-  coords$branch_ <- part[coords$count + 1L]
+  partsID <- cumsum(bad) + 1L
+
+  ## bad drops all the polygon list bounds
+  coords <- tibble::as_tibble(list(x_ = x$x, y_ = x$y, branch_ = partsID))[!bad, ]
+  coords$object_ <- coords$branch_ 
   coords$island_ <- TRUE  ## hmm needs work
   coords$order_ <- seq(nrow(coords))
+ 
+  length(unique(coords$branch_))
+  partname <- x$names
+  partname[duplicated(partname)] <- paste0(partname[duplicated(partname)], ":1")
   
-  
-  spbabel::sp(coords, attr_tab = tibble::tibble(region = obj))         
-  }
+  obj <- unlist(lapply(strsplit(partname, ":"), "[", 1L))
+  partiden <- unlist(lapply(strsplit(x$names, ":"), tail, 1L))
 
-#mp <- mapstidy(map(regions = "Australia", plot = FALSE))
-#mp <- mapstidy(map(plot = FALSE))
+  coords$object_ <- obj[coords$branch_]
+  coords$branch_ <- partiden[coords$branch_]
+  
+  spbabel::sp(coords)         
+}
+
+
+for (i in seq_along(x$names)) {
+  mp <- map(regions = x$names[i], plot = FALSE); 
+  bads[i] <- gIsValid(SpatialPolygons(list(Polygons(list(Polygon(cbind(mp$x, mp$y))), "1"))))
+}
+
+allmap <- map(plot = FALSE)
+mp <- mapstidy(map(regions = "Australia", plot = FALSE))
+mp <- mapstidy(map(plot = FALSE))
 ```
 Verify with analogous plots in maps, sp, base, and ggplot2- with object comparisons, and maybe digests of the coords ??
 
