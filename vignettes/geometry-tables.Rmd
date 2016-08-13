@@ -38,10 +38,36 @@ There's one major thing missing from these two worlds, the `ggplot2` object is r
 The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. T
 (I'm only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. ...).
 
+What else is missing? 
+
+- identifiers on parts, ggplot understands this and maps provides it
+- identifiers on coordinates 
+- topology
+
 ## Specific example
 
 Illustrate by converting maps package to sp to ggplot2, and maps to ggplot2. 
 
+```{r}
+mapstidy <- function(x) {
+  bad <- is.na(x$x)
+  ## TODO check badx and bady are the same
+  regions <- cumsum(bad)
+  coords <- tibble::as_tibble(list(x_ = x$x, y_ = x$y, count = regions))[!bad, ]
+  obj <- unlist(lapply(strsplit(x$names, ":"), "[", 1L))
+  part <- unlist(lapply(strsplit(x$names, ":"), tail, 1L))
+  coords$object_ <- obj[coords$count + 1L]
+  coords$branch_ <- part[coords$count + 1L]
+  coords$island_ <- TRUE  ## hmm needs work
+  coords$order_ <- seq(nrow(coords))
+  
+  
+  spbabel::sp(coords, attr_tab = tibble::tibble(region = obj))         
+  }
+
+#mp <- mapstidy(map(regions = "Australia", plot = FALSE))
+#mp <- mapstidy(map(plot = FALSE))
+```
 Verify with analogous plots in maps, sp, base, and ggplot2- with object comparisons, and maybe digests of the coords ??
 
 
@@ -55,8 +81,8 @@ sp - a driver function to produce Spatial objects, in this case 'spFromDataFrame
 
 This is not done with a single object with a special class, but it could be. 
 
-```{r}
-PSEUDOCODE
+```{r, eval=FALSE}
+#PSEUDOCODE
 
 obj <- list(maptab, dattab); class(obj) <- "twotable_geom"
 
@@ -72,8 +98,8 @@ Another way to do this is to nest the tables, something we'll explore in another
 
 Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
 
-```{r}
-RSQLITE with dplyr
+```{r,eval=FALSE}
+#RSQLITE with dplyr
 
 ```
 Another document that receives this database and explores nesting, demand-read. 
