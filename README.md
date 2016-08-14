@@ -16,6 +16,36 @@ spbabel: a tidy view of Spatial
 
 Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes.
 
+This framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables that can be transferred from and to R in many different ways.
+
+Currently supported are
+
+-   sp
+-   ggplot2
+-   gris
+
+In progress are
+
+-   graphics
+-   rgl
+-   maps
+-   spatstat
+-   sf
+-   trip
+
+Planned are
+
+-   PBSmapping
+-   lawn
+
+-   the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others
+
+If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.
+
+The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation.
+
+Not all pairwise combinations are of interest, but most importantly some of the representations are more general than others. The only one that can be used to represent all others is 'gris', but 'ggplot2' also comes pretty close.
+
 Installation
 ------------
 
