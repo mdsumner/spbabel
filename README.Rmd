@@ -57,9 +57,11 @@ Planned are
 
 If you know of other variants that should be included, please file an issue or let me know.  Once the basic framework is available, adding new conversions will be pretty simple. 
 
-The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation. 
+There already are converters for Spatial classes, why do this? There are converters, but the sp classes reflect modern GIS standards and thes are quite restrictive. There are many spatial data structures in R that cannot be represented in sp, and that cannot be represented by extending the existing classes. To do so requires a more fundamental re-write. 
 
-Not all pairwise combinations are of interest, but most importantly some of the representations are more general than others. The only one that can be used to represent all others is 'gris', but 'ggplot2' also comes pretty close. 
+Conversions between existing forms is simply a side-benefit of having a more general framework. The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation. 
+
+Not all pairwise combinations are of interest, but most importantly some of the representations are more general than others. The only one that can be used to represent all others is a set of relational tables, and 'gris' does most of this, but 'ggplot2' also comes pretty close. Neither have been used extensively to do this though!
 
 
 
