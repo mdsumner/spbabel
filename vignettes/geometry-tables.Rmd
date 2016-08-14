@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map ata are usually stored. The tools and data structure tools for `sp` are very powerful and can be used for a wide variety of map-data manipulations and visualizations. 
+The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map data are usually stored. The tools and data structure tools for `sp` are very powerful and can be used for a wide variety of map-data manipulations and visualizations, but they are not inherently extensible. 
 
 This document aims to show that there are opportunities to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. 
 
@@ -24,7 +24,7 @@ A `Spatial` object is a complex S4 classed structure composed of lists of coordi
 
 The geometry is in the complex list, and this is defined *just-so* by S4 classes with rigourous constraints to conform to spatial standards. This includes determined details such as the "winding" order for rings defining polygon islands or holes, and the details of which hole belongs to which island. 
 
-A `ggplot2` 'object' is a data frame. It has columns: 
+A `ggplot2` 'object' is a data frame, and---ok---it's not really an object. It has columns: 
 
 * "long" and "lat" to store the 'x' and 'y' coordinates (or longitude and latitude)
 * "id" to identify each map object
@@ -33,7 +33,8 @@ A `ggplot2` 'object' is a data frame. It has columns:
 * "order" to record the correct winding order, or path order 
 * "hole" to denote if a polygon ring was a hole or an island
 
-There's one major thing missing from these two worlds, the `ggplot2` object is really two objects, our list neglecte the exact same data frame that we listed first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
+There's one major thing missing still, the `ggplot2` case is really two data frames, and the list neglects the exact same data frame that we listed first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
+
 
 The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. T
 (I'm only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. ...).
@@ -46,25 +47,74 @@ What else is missing?
 
 ## Specific example
 
-Illustrate by converting maps package to sp to ggplot2, and maps to ggplot2. 
+To illustrate the relation between `sp` and `ggplot2`, read in a polygon layer from the `maps` package and convert, and plot. 
 
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 library(maps)
-x <- map(plot = FALSE, resolution = 0, fill = TRUE)
-map(x, fill = TRUE)
-y <- map(plot = TRUE, resolution = 0, fill = TRUE)
-map(y, fill = TRUE)
-plot(x, pch = "."); polypath(x, col = "grey")
-plot(y, pch = "."); polypath(y, col = "grey")
-
-#x <- map(regions = c("Australia", "New Zealand"), fill = TRUE, col = "grey", border = "red")
-
-x <- map("county", fill = TRUE)
-plot(x); polygon(x, col = "grey")
-
-
+## there's a long side-story here, that we ignore for now
+amap <- map("world", plot = FALSE, resolution = 0, fill = TRUE)
+map(amap, fill = TRUE)
+str(amap)
 ```
 
+This is a simple list structure, with 'x' and 'y' values separate by 'NA', and a 'names' vector. 
+
+There is a name element for every "NA-separated" section. 
+
+```{r}
+sum(is.na(amap$x))
+```
+
+To plot this with gpplot2 we need a single table. 
+
+```{r}
+fortify.map <- function(x) {
+  bad <- is.na(x$x)
+  seq_ids <- cumsum(bad) + 1L
+  data.frame(x = x$x, y = x$y, id = seq_ids)[!bad, ]
+}
+library(ggplot2)
+amaptab <- fortify(amap) 
+
+ggplot(amaptab) + aes(x = x, y = y, group = id, fill = id) + geom_polygon()
+```
+
+If you look carefully there are two big problems, there's an awkward polygon catastrophe a the "southern boundary" of Antarctica - it becomes much clearer if we zoom in. 
+
+```{r}
+## for now, it's easier to subset by re-reading
+ant <- map("world", regions = "Antarctica", plot = FALSE, fill = TRUE)
+ggplot(fortify(ant)) + aes(x = x, y = y, group = id, fill = id) + geom_polygon() + geom_path()
+```
+
+The problem is that in this coordinate system, there's no extension of the continent to the "south pole", and so the polygon wraps around awkwardly, leaving a dangle in the west. The issue is more apparent by including the boundary, with 'geom_path'. 
+
+There's no "fixing" this without putting on the dummy coordinates at [-180, -90] and [180, -90] - but we are stuck since when we do that we then get the funny boundary dangle when plotted in a reasonable projection. 
+
+Here's a plot *without* the extra coordinates at the poles. 
+
+```{r}
+library(ggalt)
+prj <- "+proj=laea +lat_0=-90 +ellps=WGS84 +lon_0=140"
+ggplot(fortify(ant)) + aes(x = x, y = y, group = id, fill = id) + geom_polygon() + geom_path() + coord_proj(prj)
+```
+
+Here's one where the extra coordinates are present. 
+
+```{r}
+library(maptools)
+data(wrld_simpl)
+## note it's now called "long"/"lat" not "x"/"y"
+ggplot(fortify(subset(wrld_simpl, NAME == "Antarctica"))) + aes(x = long, y = lat, group = group, fill = group) + geom_polygon() + geom_path() + coord_proj(prj) + scale_color_discrete(guide = FALSE)
+```
+
+
+For ggplot2 we have to copy on the 
+
+
+```{r}
+
+```
 The maps fill=FALSE output is the arcs (ala TopoJSON) between node vertices. 
 
 should be able to find cycles by linking seqs and vertices, to reconstruct polys: 
