@@ -71,20 +71,22 @@ To plot this with gpplot2 we need a single table.
 fortify.map <- function(x) {
   bad <- is.na(x$x)
   seq_ids <- cumsum(bad) + 1L
-  data.frame(x = x$x, y = x$y, id = seq_ids)[!bad, ]
+  data.frame(x = x$x, y = x$y, group = seq_ids, id = seq_ids)[!bad, ]
 }
 library(ggplot2)
 amaptab <- fortify(amap) 
 
-ggplot(amaptab) + aes(x = x, y = y, group = id, fill = id) + geom_polygon()
+ggplot(amaptab) + aes(x = x, y = y, group = group, fill = group) + geom_polygon()
 ```
+
+### Problem 1
 
 If you look carefully there are two big problems, there's an awkward polygon catastrophe a the "southern boundary" of Antarctica - it becomes much clearer if we zoom in. 
 
 ```{r}
 ## for now, it's easier to subset by re-reading
 ant <- map("world", regions = "Antarctica", plot = FALSE, fill = TRUE)
-ggplot(fortify(ant)) + aes(x = x, y = y, group = id, fill = id) + geom_polygon() + geom_path()
+ggplot(fortify(ant)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path()
 ```
 
 The problem is that in this coordinate system, there's no extension of the continent to the "south pole", and so the polygon wraps around awkwardly, leaving a dangle in the west. The issue is more apparent by including the boundary, with 'geom_path'. 
@@ -96,7 +98,7 @@ Here's a plot *without* the extra coordinates at the poles.
 ```{r}
 library(ggalt)
 prj <- "+proj=laea +lat_0=-90 +ellps=WGS84 +lon_0=140"
-ggplot(fortify(ant)) + aes(x = x, y = y, group = id, fill = id) + geom_polygon() + geom_path() + coord_proj(prj)
+ggplot(fortify(ant)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path() + coord_proj(prj)
 ```
 
 Here's one where the extra coordinates are present. 
@@ -104,22 +106,51 @@ Here's one where the extra coordinates are present.
 ```{r}
 library(maptools)
 data(wrld_simpl)
+ant2 <- subset(wrld_simpl, NAME == "Antarctica")
+rownames(ant2) <- NULL
 ## note it's now called "long"/"lat" not "x"/"y"
-ggplot(fortify(subset(wrld_simpl, NAME == "Antarctica"))) + aes(x = long, y = lat, group = group, fill = group) + geom_polygon() + geom_path() + coord_proj(prj) + scale_color_discrete(guide = FALSE)
+ggplot(fortify(ant2)) + aes(x = long, y = lat, group = group, fill = group) + geom_polygon() + geom_path() + coord_proj(prj) + guides(fill = FALSE)
 ```
 
 
-For ggplot2 we have to copy on the 
+### Problem 2 
 
+The second problem is that we are not drawing holes correctly. To see this zoom in on southern Africa, where the country of Lesotho punches out a hole in South Africa. 
 
 ```{r}
-
+## for now, it's easier to subset by re-reading
+afr <- map("world", regions = c("South Africa", "Lesotho"), plot = FALSE, fill = TRUE)
+ggplot(fortify(afr)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path()
 ```
-The maps fill=FALSE output is the arcs (ala TopoJSON) between node vertices. 
 
-should be able to find cycles by linking seqs and vertices, to reconstruct polys: 
+That looks ok, but see what happens when we take just South Africa. 
 
-Verify with analogous plots in maps, sp, base, and ggplot2- with object comparisons, and maybe digests of the coords ??
+```{r}
+## for now, it's easier to subset by re-reading
+library(ggpolypath)
+safr <- map("world", regions = "South Africa", plot = FALSE, fill = TRUE)
+ggplot(fortify(safr)) + aes(x = x, y = y, group =group, col = factor(group)) + geom_polypath() + geom_path() 
+```
+
+The data for South Africa is literally stored with the hole it needs to be plotted on its own, as well as the same "island" needed for Lesotho. 
+
+We can get the hole with polypath, but this reminds us that we are double-storing a lot of coordinates - this is the same for any neighbouring polygons, all those shared boundaries and not "shared", they are stored explicitly. 
+
+
+
+
+Finally, show that sp plots the hole just fine without any effort. 
+
+```{r}
+library(dplyr)
+sp_afr <- fortify(afr) %>% 
+  transmute(x_ = x, y_ = y, object_ = unlist(lapply(strsplit(afr$names[id], ":"), "[", 1L)), branch_ = id, 
+         island_ = !grepl("hole", afr$names[id]), order_ = row_number()) %>% 
+  spbabel::sp()
+
+plot(sp_afr, col = rainbow(nrow(sp_afr)))
+plot(sp_afr[2, ], col = "grey")
+```
 
 
 ## spbabel
