@@ -1,3 +1,12 @@
+# The maps fill=FALSE output is the arcs (ala TopoJSON) between node vertices. 
+# 
+# should be able to find cycles by linking seqs and vertices, to reconstruct polys: 
+#   
+#   Verify with analogous plots in maps, sp, base, and ggplot2- with object comparisons, and maybe digests of the coords ??
+# 
+
+
+
 ## logic to make this work is
 ## check length of seqs vs. length of names
 ## if length(unique(names)) is not equal to length(seqs) 
