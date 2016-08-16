@@ -219,18 +219,29 @@ Another way to do this is to nest the tables, something we'll explore in another
 Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
 Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
 
+
+
 ```{r,eval=FALSE}
 library(dplyr)
-db <- src_sqlite("maps_county_01.sqlite3", create = TRUE)
+library(tibble)
+library(maps)
+library(ggplot2)
+db <- src_sqlite("data-raw/maps_county.sqlite3", create = TRUE)
 mp <- map("county", plot = FALSE, fill = TRUE)
 ## todo make sure the object ids are right 
 ## and that these are sp()-able - add interpreters for the fortify form (?)
 geom <- copy_to(db, fortify(mp), name = "geom", temporary = FALSE)
-dat <- copy_to(db, data.frame(county = mp$names), name = "metadata", temporary = FALSE)
+## I can be a bit old-fashioned
+statename <- substr(mp$name, 1, unlist(gregexpr(",", mp$name)) - 1L)
+countyname <- substr(mp$name, unlist(gregexpr(",", mp$name)) + 1, nchar(mp$name))
+dat <- copy_to(db, tibble(county = countyname, 
+                          state = statename, group = seq_along(statename)), name = "metadata", temporary = FALSE)
 geom
 dat
 rm(geom, dat, db)
 ```
+
+
 Another document that receives this database and explores nesting, demand-read. 
 
 
@@ -251,7 +262,7 @@ Benefit is size of data is reduced.
 
 ## Four tables
 
-Further normalizatoin inserts a partXcoord table, and puts the order and vertex id on this. 
+Further normalization inserts a partXcoord table, and puts the order and vertex id on this. 
 Benefit is 
 
 - further data reduction 
