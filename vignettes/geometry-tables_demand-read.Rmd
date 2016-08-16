@@ -1,0 +1,26 @@
+---
+title: "Geometry tables - read on-demand"
+author: "Michael D. Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Geometry tables read on-demand}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Another vignette in this package sent us a file. 
+
+```{r,eval=FALSE}
+library(dplyr)
+db <- src_sqlite("maps_county.sqlite3", create = FALSE)
+db
+```
+
+There are two tables in it, and luckily we know what to do. 
+
+```{r,eval=FALSE}
+tbl(db, "geom")
+
+tbl(db, "metadata")
+```
