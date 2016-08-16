@@ -81,7 +81,7 @@ ggplot(amaptab) + aes(x = x, y = y, group = group, fill = group) + geom_polygon(
 
 ### Problem 1
 
-If you look carefully there are two big problems, there's an awkward polygon catastrophe a the "southern boundary" of Antarctica - it becomes much clearer if we zoom in. 
+If you look carefully there are two big problems, there's an awkward polygon catastrophe a the "southern boundary" of Antarctica - it becomes clearer if we zoom in. 
 
 ```{r}
 ## for now, it's easier to subset by re-reading
@@ -155,11 +155,57 @@ plot(sp_afr[2, ], col = "grey")
 
 ## spbabel
 
-There are two functions in `spbabel` that try to re-unite these two tables. 
+There are theree functions in `spbabel` to transfer between 'sp' and 'ggplot2'. 
 
-sptable - fortify but with new names
+1. **sptable* - decomposes the geometry to a single table (like `fortify` but with different column names)
+2. **sp** - a driver function to produce Spatial objects, in this case a 'sp.data.frame' method
+3. **sptable<-** - a replacement version of 'sptable' to do the changes "in place"
 
-sp - a driver function to produce Spatial objects, in this case 'spFromDataFrame'
+In simplest form, the journey goes like this. 
+
+```{r}
+library(spbabel)
+wrld_geom <- sptable(wrld_simpl)
+wrld_data <- as.data.frame(wrld_simpl) ## make clear that we need two tables
+
+(sp_rtrip <- sp(wrld_geom, attr_tab = wrld_data))
+
+```
+
+The table 'wrld_geom' carried its map projection string with it as an 'attribute', but this is not reliable
+without creating methods for a special class. We can make sure it's carried using a manual step. 
+
+```{r}
+wrld_geom <- sptable(wrld_simpl)
+wrld_data <- as.data.frame(wrld_simpl) ## make clear that we need two tables
+wrld_prj <- proj4string(wrld_simpl)
+(sp_rtrip <- sp(wrld_geom, attr_tab = wrld_data, crs = wrld_prj))
+
+```
+
+What is the point of doing this? We can modify the data using standard table tools. 
+
+```{r}
+wrld_geom <- sptable(wrld_simpl[9, ])
+wrld_prj <- proj4string(wrld_simpl)
+sp(wrld_geom, crs = wrld_prj)
+wrld_geom$object_ <- wrld_geom$branch_
+sp(wrld_geom, crs = wrld_prj)
+
+```
+
+See how we decomposed all the parts into their own object, and once we return to `Spatial` that is reflected in the number of objects. 
+
+The replacement method allows this to be done without breaking anything apart, so this is the more "user-level" function, where 'sp' and 'sptable' are for developers. With this version we can very easily pipe our geometry modifications in convenient syntax. 
+
+```{r,eval=FALSE}
+wrld <- wrld_simpl[9:10, ] ## pick two objects this time
+sptable(wrld) <- sptable(wrld) %>% mutate(object_ = branch_)
+wrld
+
+```
+There is a gotcha here in that if we had any "holes" they would now be "non-hole" objects, but with that caveat in mind it's a powerful way to work with these data. 
+
 
 This is not done with a single object with a special class, but it could be. 
 
