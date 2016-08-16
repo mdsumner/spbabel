@@ -204,31 +204,32 @@ sptable(wrld) <- sptable(wrld) %>% mutate(object_ = branch_)
 wrld
 
 ```
+
 There is a gotcha here in that if we had any "holes" they would now be "non-hole" objects, but with that caveat in mind it's a powerful way to work with these data. 
+
+Note that the attribute data were dropped as it is now ambiguous as to what values corresponde to which objects, and that information is external to the replacement methods. (The 'sp::disaggregate' function is really a better way to do that particular task.)
 
 
 This is not done with a single object with a special class, but it could be. 
 
-```{r, eval=FALSE}
-#PSEUDOCODE
 
-obj <- list(maptab, dattab); class(obj) <- "twotable_geom"
-
-plot.twotable-geom <- function(x, ...) x
-
-`[.twotable_geom <- function(x, i, j, ...) x
-  
-plot(obj[1, ])
-
-```
 
 Another way to do this is to nest the tables, something we'll explore in another document. 
 
 Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
+Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
 
 ```{r,eval=FALSE}
-#RSQLITE with dplyr
-
+library(dplyr)
+db <- src_sqlite("maps_county_01.sqlite3", create = TRUE)
+mp <- map("county", plot = FALSE, fill = TRUE)
+## todo make sure the object ids are right 
+## and that these are sp()-able - add interpreters for the fortify form (?)
+geom <- copy_to(db, fortify(mp), name = "geom", temporary = FALSE)
+dat <- copy_to(db, data.frame(county = mp$names), name = "metadata", temporary = FALSE)
+geom
+dat
+rm(geom, dat, db)
 ```
 Another document that receives this database and explores nesting, demand-read. 
 
