@@ -22,7 +22,10 @@ Suggests: testthat,
     scales,
     knitr,
     covr, 
-    broom
+    broom, 
+    ggalt, 
+    ggpolypath,
+    maps
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
