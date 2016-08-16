@@ -14,6 +14,7 @@
 ## otherwise
 ##    returns SPoly with names as attribute on objects
 ## ignore part to object union, as that should happen on the arcs
+#' @importFrom utils tail
 sp.map <- function(x) {
   bad <- is.na(x$x)
   ## TODO check badx and bady are the same
