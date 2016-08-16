@@ -100,7 +100,18 @@ mat2d_f <- function(x) {
 #' @export
 "sptable<-" <-
   function(object, value) {
-       sp(value, as.data.frame(object), proj4string(object))
+    # joiner <- idmaker(20)
+    #    datadata <- as.data.frame(object) 
+    #    datadata[[joiner]] <- seq(nrow(datadata))
+    #    value[[joiner]] <- as.integer(factor(value[["object_"]]))
+    #    datadata <- inner_join(datadata, value[, joiner])
+    if (nrow(object)  == length(unique(value$object_))) {
+      ## assume ok
+    } else {
+      warning("dropping attribute data since object number and metadata rows not the same")
+      return(sp(value,  crs = proj4string(object)))
+      }
+    sp(value,  as.data.frame(object), proj4string(object))
 
   }
 

@@ -68,7 +68,4 @@ test_that("mismatched attributes and object number is an error", {
   expect_error(sp(poly1tab, attr_tab = data.frame(x = sample(1:20, 1))), "number of rows in attr must match distinct object in x")
 })
 
-sptable(poly1) <-  dplyr::mutate(sptable(poly1), x_ = x_ - 5)
-test_that("replacement sptable works", {
-  expect_that(poly1, is_a("SpatialPolygonsDataFrame"))
-})
+
