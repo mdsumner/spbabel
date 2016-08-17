@@ -74,9 +74,7 @@ library(spbabel)
 ```
 
 
-Obviously there's a lot of wasted coordinates here, so hopefully our friend figures out a more efficient storage in the db . . .
-
-Show how the two tables may be combined, with nesting. 
+Obviously there's a lot of wasted coordinates here, so hopefully our friend figures out a more efficient storage in the db. 
 
 
 ## Simple features from normalized tables (mostly topology)

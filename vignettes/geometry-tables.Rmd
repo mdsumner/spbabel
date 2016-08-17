@@ -210,13 +210,14 @@ There is a gotcha here in that if we had any "holes" they would now be "non-hole
 Note that the attribute data were dropped as it is now ambiguous as to what values corresponde to which objects, and that information is external to the replacement methods. (The 'sp::disaggregate' function is really a better way to do that particular task.)
 
 
-This is not done with a single object with a special class, but it could be. 
+This is not done with a single object with a special class, but it could be. See
+document on an S3 class for fortified, single-nested, and double-nested forms. 
 
 
-
-Another way to do this is to nest the tables, something we'll explore in another document. 
 
 Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
+
+
 Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
 
 
@@ -251,7 +252,42 @@ We have tidied up in one sense, we've removed a complicated object with speciali
 
 There is redundancy in the geometry table. 'Tidy' means '3NF' or 'third-normal-form', and 3NF means that we remove the repeated values that could be stored just once. 
 
-How do we remove this redundancy? First identify the entities that exist. 
+Notice what we actually have in the "fortified" version of an sp object. 
+
+```{r}
+allnumbers <- function(x) {x[] <- lapply(x, function(a) if(is.character(a)) as.integer(factor(a)) else as.numeric(a)); x}
+
+oz <- subset(wrld_simpl, NAME == "Australia")
+plot(allnumbers(fortify(oz)), pch = 19, cex = 0.2)
+```
+
+Clearly there's really not much information in the fortified table after you have dealt with the x and y coordinates, there's a lot of wasted storage here. 
+
+'Spatial' classes avoid this wastage by not exploring the encoding explicitly on every coordinate, but in one of two ways,  either 
+
+* implicitly, or
+* just once as a sort of "label" attribute 
+
+The implicit examples are 'order', the right order for the coordinates is just the order they come in, the 'piece' value is either 1, or 2+ depending on a list of length 1 or more, and id and group are the same. Group and piece are really aliases, just one is absolute (to the entire set) the other relative (to position within a geometry) . 
+
+Tags such whether it is a hole or not is an "attribute" tagged onto the object that holds the matrix of coordinates. We don't see the "comments" attribute here, which in sp (if present) tells us which piece 'belongs' to which other piece (i.e. when it's a hole, what island is it a hole of?). 
+
+Again, this is discussed [elsewhere] but the crux is the need for comments is a legacy of the "shapefile" era, no longer necessary in this the "simple features" era. More on that later. 
+
+
+(There are subtle rules and conventions about ordering and holes, which is discussed [elsewhere]). 
+
+
+How do we remove this redundancy? 
+
+* Create complex nested objects (we already have sp, maps, and other examples).
+* Create "tidy(-ish)" tables using nesting, there are at least three ways to do this (gggeom, single, double nesting)
+* Create normalized tables and put like with like. 
+
+TABLES
+
+
+First identify the entities that exist. 
 
 Objects, parts, coordinates. 
 
