@@ -9,6 +9,42 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Abstract
+
+
+This package is a response to the missing use-cases in GIS (geographic information systems) using R. It's an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds. 
+
+Gris is not a replacement for the *very powerful* existing tools for traditional 
+GIS is R. If there's a better tool for the job, the 'gris' philosophy is to convert to the structures needed by that tool and do it, then return the result to gris world. 
+
+Gris provides
+
+- a general, tidy, table-based framework for storing spatial data
+- a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
+- a unified and general data model that can be used to store any spatial data, and  
+- a common framework for conversions from and to other formats
+
+
+Gris can be used to
+
+- convert a flat vector drawing of polygons into a topological 
+mesh of 2D triangles and 1D line segments with X, Y, Z geometry, while maintaining the identity of the original polygons and its discrete attributes. 
+- to store and transmit complex spatial data via generic storage of tables in databases
+- store multi-dimensional geo-spatial data, such as 3d box models with "face" topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path. 
+
+Gris relies on 
+
+- dplyr and tibble for sensible and powerful data frames
+- spbabel for conversion drivers from and to other formats
+
+Gris does not
+
+-use nested tables, though see ...
+- 
+
+
+## Introduction
+
 The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map data are usually stored. The tools and data structure tools for `sp` are very powerful and can be used for a wide variety of map-data manipulations and visualizations, but they are not inherently extensible. 
 
 This document aims to show that there are opportunities to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. 
