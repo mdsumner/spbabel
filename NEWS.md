@@ -1,5 +1,7 @@
 # spbabel dev
 
+* use duplicated rather than distinct_, see https://github.com/mdsumner/spbabel/issues/27
+
 * semi_cascade now keeps quiet
 
 * spbabel<- replacement function now drops attributes if object and row numbers

@@ -133,6 +133,7 @@ map_table_From2 <- function(dat1, map1) {
  
   ## classify unique vertices by unique index
   ## could tidy this up some more . . .
+  #fpaste <- function(...) paste(..., sep = "_")
   map1 <- map1 %>%
     mutate(vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts)))))  
   #mutate(vertex_ = id_n(length(unique(vertex_)))[vertex_])
@@ -146,8 +147,11 @@ map_table_From2 <- function(dat1, map1) {
   ## branches, owner object and island status
   b <- map1 %>% distinct_(.dots = b_atts) 
   ## four tables (dat1, map2, map4, map5)
-  bXv <- map1 %>% dplyr::select_(.dots = bxv_atts)
-  v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
+
+    bXv <- map1 %>% dplyr::select_(.dots = bxv_atts)
+    #print(head(map1))
+    v <- map1[!duplicated(map1$vertex_), c(v_atts, "vertex_")]
+    #  v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
   res <- list(o = dat1, b = b,  bXv = bXv, v = v)
   res
 }
