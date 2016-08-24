@@ -1,5 +1,6 @@
 # spbabel dev
 
+* semi_cascade now keeps quiet
 
 * spbabel<- replacement function now drops attributes if object and row numbers
 not the same
