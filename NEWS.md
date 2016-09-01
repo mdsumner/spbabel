@@ -1,5 +1,8 @@
 # spbabel dev
 
+* workarounds for SpatialPoints, SpatialMultiPoints (removed problematic high-level use of as_tibble, which
+meant that points/multipoints weren't being built properly)
+
 * use duplicated rather than distinct_, see https://github.com/mdsumner/spbabel/issues/27
 
 * semi_cascade now keeps quiet

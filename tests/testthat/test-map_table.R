@@ -69,5 +69,13 @@ test_that("build from scratch", {
   
 })
 
+library(maptools)
+data(wrld_simpl)
+pts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
+mpts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")
 
+test_that("points work", {
+  expect_that(names(map_table(mpts)), equals(c("o", "b", "bXv", "v")))
+  expect_that(names(map_table(pts)), equals(c("o", "b", "bXv", "v")))
+})
 

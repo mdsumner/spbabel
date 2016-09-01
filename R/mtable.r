@@ -94,18 +94,34 @@ map_table <- function(x, ...) {
 }
 
 
+
 #' @export
 #' @importFrom tibble as_tibble
 map_table.Spatial <- function(x, ...) {
-  tabmap <- sptable(x)
-  tabdat <- tibble::as_tibble(x)
   
+  # fugn incongruous points as ever
+  as.data.frame.SpatialMultiPointsDataFrame <- function(x, ...) {
+    x@data
+  }
+  ## I will regret these internal functions . . .
+  ## needs a proper fix
+  as.data.frame.SpatialPointsDataFrame <- function(x, ...) {
+    x@data
+  }
+  
+  
+  tabmap <- sptable(x)
+  ## why did this ever work?
+#  tabdat <- tibble::as_tibble(x)
+  tabdat <- tibble::as_tibble(as.data.frame(x)) 
   ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[tabmap$object_]
-  
+  if (class(x) == "SpatialPointsDataFrame") {
+    ## no branches
+  } else {
   tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
- 
+  }
   out <- map_table_From2(tabdat, tabmap)
   # no class or methods in spbabel for map_table()
   #class(out) <- c("map_table", "list")
