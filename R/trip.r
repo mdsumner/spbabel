@@ -8,7 +8,7 @@ map_table.trip <- function(x, ...) {
   mpts <- as_trip_MultiPoints(x)
   tabs <- map_table(mpts)
   ## now put the stuff back on
-  tabs$v <- bind_cols(tabs$v, x@data)
+  tabs$bXv <- bind_cols(tabs$bXv, x@data)
   tabs
 }
 
