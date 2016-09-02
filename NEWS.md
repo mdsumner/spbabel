@@ -1,5 +1,7 @@
 # spbabel dev
 
+* new map_table method for 'trip' objects
+
 * workarounds for SpatialPoints, SpatialMultiPoints (removed problematic high-level use of as_tibble, which
 meant that points/multipoints weren't being built properly)
 

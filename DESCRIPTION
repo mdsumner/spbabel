@@ -25,7 +25,8 @@ Suggests: testthat,
     broom, 
     ggalt, 
     ggpolypath,
-    maps
+    maps, 
+    trip
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
