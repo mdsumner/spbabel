@@ -48,4 +48,7 @@ test_that("sptable points structure is sound", {
   expect_equal(sapply(multitab, class)[multinames], multitypes)
 })
 
-
+context("holes")
+test_that("hole checking", {
+  expect_that(sptable(sp(holey)), is_a("tbl_df"))
+})
