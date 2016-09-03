@@ -132,13 +132,6 @@ mat2d_f <- function(x) {
          poly = x@polygons[[i]]@Polygons)
 )
 }
-.holes <- function(x, i, j, type) {
-  switch(type, 
-         line = NULL, 
-         ## negate here since it will be NULL outside for lines
-         poly = !x@polygons[[i]]@Polygons[[j]]@hole
-         )
-}
 
 .island <- function(x, i, j, type) {
   switch(type, 
