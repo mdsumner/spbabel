@@ -17,7 +17,7 @@
 #' @export
 #' @rdname sp
 #' @importFrom utils tail
-sp.map <- function(x) {
+sp.map <- function(x, ...) {
   bad <- is.na(x$x)
   ## TODO check badx and bady are the same
   partsID <- cumsum(bad) + 1L
