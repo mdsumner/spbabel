@@ -23,40 +23,7 @@
 # }
 
 
-semi_join_be_quiet_if_there_is_only_1 <- function(x, y, by = NULL, copy = FALSE, ...) {
-  comm <- intersect(names(x), names(y))
-  if (length(comm) == 1L) {
-    by <- comm
-  }
-  semi_join(x, y, by = by, copy = copy, ...)
-}
 
-
-#' Cascading subset on object for \code{map_table}. 
-#'
-#' @param x 
-#' @param ... 
-#' @importFrom dplyr semi_join
-#' @noRd
-semi_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
-  first <- dplyr::filter(x[[tables[1]]], ...)
-  x[[1]] <- last <- first 
-  tables <- tables[-1]
-  for (itab in tables) {
-    x[[itab]] <- last <- semi_join_be_quiet_if_there_is_only_1(x[[itab]], last)
-  }
-  x
-}
-
-inner_cascade <- function(x, ..., tables = c("o", "b", "bXv", "v")) {
-  first <- dplyr::filter(x[[tables[1]]], ...)
-  #x[[1]] <- last <- first 
-  tables <- tables[-1]
-  for (itab in tables) {
-    first <-  dplyr::inner_join(x[[itab]], first)
-  }
-  first
-}
 
 
 #' A decomposition of 'vector' map data structures to tables. 
@@ -155,10 +122,7 @@ map_table_From2 <- function(dat1, map1) {
   ver_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
   map1[["vertex_"]] <- id_n(length(unique(ver_)))[ver_]
   #map1[["vertex_"]] <- id_n(length(unique(vertex_)))[vertex_]
-  
-  branchV_to_segmentV <- function(x) {
-    head(matrix(x, ncol = 2, nrow = length(x) + 1L), -1L)
-  }
+
   
   #map1$vertex_ <- id_nrow(nrow(map1))[map1$vertex_]
   ## branches, owner object and island status
