@@ -150,10 +150,10 @@ map_table_From2 <- function(dat1, map1) {
   ## classify unique vertices by unique index
   ## could tidy this up some more . . .
   #fpaste <- function(...) paste(..., sep = "_")
-  map1 <- #map1 %>%
-    mutate(map1, vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) 
-  #vertex_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
-  map1 <- mutate(map1, vertex_ = id_n(length(unique(vertex_)))[vertex_])
+  #map1 <- #map1 %>%
+  #  mutate(map1, vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) 
+  ver_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
+  map1[["vertex_"]] <- id_n(length(unique(ver_)))[ver_]
   #map1[["vertex_"]] <- id_n(length(unique(vertex_)))[vertex_]
   
   branchV_to_segmentV <- function(x) {

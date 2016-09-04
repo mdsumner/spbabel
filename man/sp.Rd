@@ -6,7 +6,7 @@
 \alias{sp.map}
 \title{Convert from dplyr tbl form to Spatial*DataFrame.}
 \usage{
-\method{sp}{map}(x)
+\method{sp}{map}(x, ...)
 
 sp(x, ...)
 
