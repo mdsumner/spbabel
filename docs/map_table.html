@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>map_table. spbabel 0.4.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">spbabel 0.4.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>A decomposition of &#39;vector&#39; map data structures to tables.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='map_table.html'>map_table</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>object to tidy</dd>
+      <dt>...</dt>
+      <dd>arguments passed to methods</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+list of tibbles
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Creates a set of related tables to store the appropriate
+entities in spatial map data.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The basic entities behind spatial data, and hence the &quot;map tables&quot; are: 
+<dl>
+ <dt>vertices</dt><dd>the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.</dd></p>
+
+      <p><dt>branches</dt><dd>a single connected chain of vertices, or &quot;parts&quot;</dd></p>
+
+      <p><dt>objects</dt><dd>a collection of branches aligned to a row of metadata</dd></p>
+
+      <p></dl></p>
+
+      <p>This is the basic &quot;topology&quot; of traditional GIS vector data, for points, 
+ lines, polygons and their multi-counterparts. By default map_tables will 
+ produce these tables and also de-duplicated the input vertices, adding a 
+ fourth table to link vertices to branches.</p>
+
+      <p>Other topology types such as triangle or quad meshes can extend this 
+ four-entity model, or exist without the branches at all. See &quot;mesh_table&quot; ??</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/data'>data</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">)</span>
+<span class="symbol">spholey</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='sp.html'>sp</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">)</span>
+<span class="functioncall"><a href='map_table.html'>map_table</a></span><span class="keyword">(</span><span class="symbol">spholey</span><span class="keyword">)</span></div>
+<div class='output'>$o
+# A tibble: 3 × 2
+  rownumber_    object_
+       &lt;int&gt;      &lt;chr&gt;
+1          1 fZLjaCErTV
+2          2 2kctymzdy8
+3          3 rQTm8TdGRQ
+
+$b
+# A tibble: 9 × 3
+     object_    branch_ island_
+       &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+1 fZLjaCErTV bnsNDAR6ln    TRUE
+2 fZLjaCErTV QENOfVV98y   FALSE
+3 fZLjaCErTV CtkGEWmSev   FALSE
+4 fZLjaCErTV ZqJuKl6HHr   FALSE
+5 fZLjaCErTV BxbCybxI1x    TRUE
+6 fZLjaCErTV GLqrD5ynPd    TRUE
+7 2kctymzdy8 9jG0SoHZbD    TRUE
+8 rQTm8TdGRQ XYznzPFOFZ    TRUE
+9 rQTm8TdGRQ R2a39FwWKN   FALSE
+
+$bXv
+# A tibble: 50 × 3
+      branch_ order_    vertex_
+        &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
+1  bnsNDAR6ln      1 1Jp41pyVhm
+2  bnsNDAR6ln      2 kP15IJQpc4
+3  bnsNDAR6ln      3 jHh7ck68S2
+4  bnsNDAR6ln      4 0TtggXxd9L
+5  bnsNDAR6ln      5 1Jp41pyVhm
+6  QENOfVV98y      1 11vam6r27a
+7  QENOfVV98y      2 RnTnCuJpC4
+8  QENOfVV98y      3 e9Lk4cKo4Y
+9  QENOfVV98y      4 8cBN9t1H2F
+10 QENOfVV98y      5 11vam6r27a
+# ... with 40 more rows
+
+$v
+# A tibble: 27 × 3
+      x_    y_    vertex_
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;
+1      0     0 1Jp41pyVhm
+2      0    19 kP15IJQpc4
+3     46    19 jHh7ck68S2
+4     46     0 0TtggXxd9L
+5      7     6 11vam6r27a
+6     13     6 RnTnCuJpC4
+7     13    13 e9Lk4cKo4Y
+8      7    13 8cBN9t1H2F
+9     18     1 8Y3KV9SnsS
+10    24     1 FzTNy7sdJn
+# ... with 17 more rows
+
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>map_table</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

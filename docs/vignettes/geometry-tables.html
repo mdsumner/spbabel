@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Michael D. Sumner" />
+
+<meta name="date" content="2016-09-04" />
+
+<title>Geometry in tables</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Geometry in tables</h1>
+<h4 class="author"><em>Michael D. Sumner</em></h4>
+<h4 class="date"><em>2016-09-04</em></h4>
+
+
+
+<div id="abstract" class="section level2">
+<h2>Abstract</h2>
+<p>This package is a response to the missing use-cases in GIS (geographic information systems) using R. It’s an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds.</p>
+<p>Gris is not a replacement for the <em>very powerful</em> existing tools for traditional GIS is R. If there’s a better tool for the job, the ‘gris’ philosophy is to convert to the structures needed by that tool and do it, then return the result to gris world.</p>
+<p>Gris provides</p>
+<ul>
+<li>a general, tidy, table-based framework for storing spatial data</li>
+<li>a clear delineation between the <em>topology</em> and the <em>geometry</em> of spatial data, a distinction that is usually muddled</li>
+<li>a unified and general data model that can be used to store any spatial data, and<br />
+</li>
+<li>a common framework for conversions from and to other formats</li>
+</ul>
+<p>Gris can be used to</p>
+<ul>
+<li>convert a flat vector drawing of polygons into a topological mesh of 2D triangles and 1D line segments with X, Y, Z geometry, while maintaining the identity of the original polygons and its discrete attributes.</li>
+<li>to store and transmit complex spatial data via generic storage of tables in databases</li>
+<li>store multi-dimensional geo-spatial data, such as 3d box models with “face” topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path.</li>
+</ul>
+<p>Gris relies on</p>
+<ul>
+<li>dplyr and tibble for sensible and powerful data frames</li>
+<li>spbabel for conversion drivers from and to other formats</li>
+</ul>
+<p>Gris does not</p>
+</div>
+<div id="use-nested-tables-though-see" class="section level2">
+<h2>-use nested tables, though see …</h2>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>sp</code> and <code>ggplot2</code> packages are both widely used in R for plotting maps. The visualization tools in <code>ggplot2</code> are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map data are usually stored. The tools and data structure tools for <code>sp</code> are very powerful and can be used for a wide variety of map-data manipulations and visualizations, but they are not inherently extensible.</p>
+<p>This document aims to show that there are opportunities to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of <code>ggplot2</code> into the specialized domain of spatial data.</p>
+</div>
+<div id="two-worlds-and-two-tables" class="section level2">
+<h2>Two worlds and two tables</h2>
+<p>A <code>Spatial</code> object is a complex S4 classed structure composed of lists of coordinates, values, and metadata. It has</p>
+<ul>
+<li>a data frame of attributes for each individual map object</li>
+<li>a complex hierarchical list of matrices of coordinates (x and y, or longitude and latitude)</li>
+<li>projection metadata</li>
+<li>a bounding box</li>
+</ul>
+<p>The geometry is in the complex list, and this is defined <em>just-so</em> by S4 classes with rigourous constraints to conform to spatial standards. This includes determined details such as the “winding” order for rings defining polygon islands or holes, and the details of which hole belongs to which island.</p>
+<p>A <code>ggplot2</code> ‘object’ is a data frame, and—ok—it’s not really an object. It has columns:</p>
+<ul>
+<li>“long” and “lat” to store the ‘x’ and ‘y’ coordinates (or longitude and latitude)</li>
+<li>“id” to identify each map object</li>
+<li>“group” to identify each “piece” (polygon ring, line-path, or [multi-]point), unique across all objects</li>
+<li>“piece” to identify each “piece” within “id” (unique only within ID, provides a count of pieces)</li>
+<li>“order” to record the correct winding order, or path order</li>
+<li>“hole” to denote if a polygon ring was a hole or an island</li>
+</ul>
+<p>There’s one major thing missing still, the <code>ggplot2</code> case is really two data frames, and the list neglects the exact same data frame that we listed first for ‘sp’. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates.</p>
+<p>The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. T (I’m only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. …).</p>
+<p>What else is missing?</p>
+<ul>
+<li>identifiers on parts, ggplot understands this and maps provides it (with limitations)</li>
+<li>identifiers on coordinates</li>
+<li>topology</li>
+</ul>
+</div>
+<div id="specific-example" class="section level2">
+<h2>Specific example</h2>
+<p>To illustrate the relation between <code>sp</code> and <code>ggplot2</code>, read in a polygon layer from the <code>maps</code> package and convert, and plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maps)
+## there's a long side-story here, that we ignore for now
+amap &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="st">&quot;world&quot;</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">resolution =</span> <span class="dv">0</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
+<span class="kw">map</span>(amap, <span class="dt">fill =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(amap)</code></pre></div>
+<pre><code>## List of 4
+##  $ x    : num [1:100964] -69.9 -69.9 -69.9 -70 -70.1 ...
+##  $ y    : num [1:100964] 12.5 12.4 12.4 12.5 12.5 ...
+##  $ range: num [1:4] -180 190.3 -85.2 83.6
+##  $ names: chr [1:1627] &quot;Aruba&quot; &quot;Afghanistan&quot; &quot;Angola&quot; &quot;Angola:Cabinda&quot; ...
+##  - attr(*, &quot;class&quot;)= chr &quot;map&quot;</code></pre>
+<p>This is a simple list structure, with ‘x’ and ‘y’ values separate by ‘NA’, and a ‘names’ vector.</p>
+<p>There is a name element for every “NA-separated” section.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">is.na</span>(amap$x))</code></pre></div>
+<pre><code>## [1] 1626</code></pre>
+<p>To plot this with gpplot2 we need a single table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fortify.map &lt;-<span class="st"> </span>function(x) {
+  bad &lt;-<span class="st"> </span><span class="kw">is.na</span>(x$x)
+  seq_ids &lt;-<span class="st"> </span><span class="kw">cumsum</span>(bad) +<span class="st"> </span>1L
+  <span class="kw">data.frame</span>(<span class="dt">x =</span> x$x, <span class="dt">y =</span> x$y, <span class="dt">group =</span> seq_ids, <span class="dt">id =</span> seq_ids)[!bad, ]
+}
+<span class="kw">library</span>(ggplot2)
+amaptab &lt;-<span class="st"> </span><span class="kw">fortify</span>(amap) 
+
+<span class="kw">ggplot</span>(amaptab) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">group =</span> group, <span class="dt">fill =</span> group) +<span class="st"> </span><span class="kw">geom_polygon</span>()</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div id="problem-1" class="section level3">
+<h3>Problem 1</h3>
+<p>If you look carefully there are two big problems, there’s an awkward polygon catastrophe a the “southern boundary” of Antarctica - it becomes clearer if we zoom in.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## for now, it's easier to subset by re-reading
+ant &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="st">&quot;world&quot;</span>, <span class="dt">regions =</span> <span class="st">&quot;Antarctica&quot;</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
+<span class="kw">ggplot</span>(<span class="kw">fortify</span>(ant)) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">group =</span> group, <span class="dt">fill =</span> group) +<span class="st"> </span><span class="kw">geom_polygon</span>() +<span class="st"> </span><span class="kw">geom_path</span>()</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The problem is that in this coordinate system, there’s no extension of the continent to the “south pole”, and so the polygon wraps around awkwardly, leaving a dangle in the west. The issue is more apparent by including the boundary, with ‘geom_path’.</p>
+<p>There’s no “fixing” this without putting on the dummy coordinates at [-180, -90] and [180, -90] - but we are stuck since when we do that we then get the funny boundary dangle when plotted in a reasonable projection.</p>
+<p>Here’s a plot <em>without</em> the extra coordinates at the poles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggalt)
+prj &lt;-<span class="st"> &quot;+proj=laea +lat_0=-90 +ellps=WGS84 +lon_0=140&quot;</span>
+<span class="kw">ggplot</span>(<span class="kw">fortify</span>(ant)) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">group =</span> group, <span class="dt">fill =</span> group) +<span class="st"> </span><span class="kw">geom_polygon</span>() +<span class="st"> </span><span class="kw">geom_path</span>() +<span class="st"> </span><span class="kw">coord_proj</span>(prj)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Here’s one where the extra coordinates are present.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maptools)
+<span class="kw">data</span>(wrld_simpl)
+ant2 &lt;-<span class="st"> </span><span class="kw">subset</span>(wrld_simpl, NAME ==<span class="st"> &quot;Antarctica&quot;</span>)
+<span class="kw">rownames</span>(ant2) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+## note it's now called &quot;long&quot;/&quot;lat&quot; not &quot;x&quot;/&quot;y&quot;
+<span class="kw">ggplot</span>(<span class="kw">fortify</span>(ant2)) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group =</span> group, <span class="dt">fill =</span> group) +<span class="st"> </span><span class="kw">geom_polygon</span>() +<span class="st"> </span><span class="kw">geom_path</span>() +<span class="st"> </span><span class="kw">coord_proj</span>(prj) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## Regions defined for each Polygons</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<p>The second problem is that we are not drawing holes correctly. To see this zoom in on southern Africa, where the country of Lesotho punches out a hole in South Africa.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## for now, it's easier to subset by re-reading
+afr &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="st">&quot;world&quot;</span>, <span class="dt">regions =</span> <span class="kw">c</span>(<span class="st">&quot;South Africa&quot;</span>, <span class="st">&quot;Lesotho&quot;</span>), <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
+<span class="kw">ggplot</span>(<span class="kw">fortify</span>(afr)) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">group =</span> group, <span class="dt">fill =</span> group) +<span class="st"> </span><span class="kw">geom_polygon</span>() +<span class="st"> </span><span class="kw">geom_path</span>()</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>That looks ok, but see what happens when we take just South Africa.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## for now, it's easier to subset by re-reading
+<span class="kw">library</span>(ggpolypath)
+safr &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="st">&quot;world&quot;</span>, <span class="dt">regions =</span> <span class="st">&quot;South Africa&quot;</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
+<span class="kw">ggplot</span>(<span class="kw">fortify</span>(safr)) +<span class="st"> </span><span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">group =</span>group, <span class="dt">col =</span> <span class="kw">factor</span>(group)) +<span class="st"> </span><span class="kw">geom_polypath</span>() +<span class="st"> </span><span class="kw">geom_path</span>() </code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The data for South Africa is literally stored with the hole it needs to be plotted on its own, as well as the same “island” needed for Lesotho.</p>
+<p>We can get the hole with polypath, but this reminds us that we are double-storing a lot of coordinates - this is the same for any neighbouring polygons, all those shared boundaries and not “shared”, they are stored explicitly.</p>
+<p>Finally, show that sp plots the hole just fine without any effort.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+sp_afr &lt;-<span class="st"> </span><span class="kw">fortify</span>(afr) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">transmute</span>(<span class="dt">x_ =</span> x, <span class="dt">y_ =</span> y, <span class="dt">object_ =</span> <span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="kw">strsplit</span>(afr$names[id], <span class="st">&quot;:&quot;</span>), <span class="st">&quot;[&quot;</span>, 1L)), <span class="dt">branch_ =</span> id, 
+         <span class="dt">island_ =</span> !<span class="kw">grepl</span>(<span class="st">&quot;hole&quot;</span>, afr$names[id]), <span class="dt">order_ =</span> <span class="kw">row_number</span>()) %&gt;%<span class="st"> </span>
+<span class="st">  </span>spbabel::<span class="kw">sp</span>()
+
+<span class="kw">plot</span>(sp_afr, <span class="dt">col =</span> <span class="kw">rainbow</span>(<span class="kw">nrow</span>(sp_afr)))</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAADFBMVEUAAAAA////AAD///9l7vaeAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADuUlEQVR4nO3b0VbaQBRA0VD//59bUUuowAm2nQmyz5tPc9lrnEACy4tutsweYO8BigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQ9FtCEaR8IaFmWw/LWyFUHrvVXvfJ8BOhTKx1AFzr3GSr0EEB/+gA66xMPoPM++xwGXsf2D3TBZ+QWelSgYXPvHuiiz8AttA+ga1MsFw7o5wS6MsY1nucDWr/glRag99ZAy+kIvu7zfECnV7wcL1K/jG4cQE93FVsBLSeF67tn4B2PvQFd3TUrn6Ez7wyoecbe7NgP0HFbXD91AL3dTN3A8w407MbrboDuaHk5v+7939GGrFLdB3R422yANmykAaMNWaX6CtCgyacBnZ2xgC4svBb6AtCowScBnR2ym67vs578zAI6HH4/Rt6ks/w4E/r+n8VWz5G3+Px47UT0DE817jl23nx+CX38PXLOgWudL7yd57fPMt5n4vugzULLzA30CECHjxPoYwMBurCFTm8FBk888aPGXUJzvj318iBA6/cCowee+WH1S5/AAN32GT/k8BXXi+9+/8y+H3TvncQZI05Yc7X67n1m31G860o2Z8Ipq56Wv8PnCYG2PgmbxzMdaN//XscZp638cgfQtP0z+wzaJjSRZzZQHtLHH0DNnXDq6je30PErH5N5dgB0/jundfNxXpsP9E40+peEW9vBTMvsc/hmexhsn1vnvR2Pto8ARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYq+GdC//+3iNwP69wGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoOgnBKa6mSF/p5cAAAAASUVORK5CYII=" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sp_afr[<span class="dv">2</span>, ], <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAACVBMVEUAAAC+vr7////xRzILAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADvklEQVR4nO3b7VLaQBiA0eD9X3Rb/CAo8ATb7gY5zz+dcfb1zLohQZYX3WyZPcDeAxQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoAhQBigBFgCJAEaAIUAQoeiygCdM+ENCyLIfltZGrDlzrr/rD8x6gL610AF3o3Geo0EMAffYBdNYXHkDnffU5DLyO7R/ogs/ILfSoQMPm3j3QRZ+BW2gfQNemWC4c0M8JdGWMazzPB7T+hVdagN5aAy2nI/i6z/MBnX7j5XiR+m104wB6uqvYCmg5KVzfPQOfeOwN6OquWfkMnXlnQM0z9mHHfoCO2+L6qQPo9WHqBp43oGEPXncDdEfLy/l17/+ONmSV6j6gw+tmA7RhIw0Ybcgq1XeABk0+DejsjAV0YeG10DeARg0+CejskN10fZ/1zs8soMPh423kTTrL+U3Iz78XW72PvMXn9WeWT98YMuiwlT4v3C5f/pyWT18PmXPgWucLb+f58FnG+0x8HbRZaJm5gR4B6P1JyMcGAnRhC51eCgyeeOKtxl1Cc/576uVBgNavBUYPPPNm9Vt3YIBu+4wfcviK68V3v39mPw+690nijBEnrLlaffc+s58ofueObPCEU1Y9LX+HzxMCbX0nbB7PdKB9/3kdZ5y28ssdQNP2z+wzaJvQRJ7ZQHlIHz8ANXfCqavf3ELHf/mYzLMDoPPPOa2bj/On+UBvRKM/Sbi1Hcy0zD6Hb7aHwfa5dd7a8Wj7CFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGg6IcB/fvPLv4woH8foAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKfgHbIX7ZOMvyOQAAAABJRU5ErkJggg==" /><!-- --></p>
+</div>
+</div>
+<div id="spbabel" class="section level2">
+<h2>spbabel</h2>
+<p>There are theree functions in <code>spbabel</code> to transfer between ‘sp’ and ‘ggplot2’.</p>
+<ol style="list-style-type: decimal">
+<li>**sptable* - decomposes the geometry to a single table (like <code>fortify</code> but with different column names)</li>
+<li><strong>sp</strong> - a driver function to produce Spatial objects, in this case a ‘sp.data.frame’ method</li>
+<li><strong>sptable&lt;-</strong> - a replacement version of ‘sptable’ to do the changes “in place”</li>
+</ol>
+<p>In simplest form, the journey goes like this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spbabel)
+wrld_geom &lt;-<span class="st"> </span><span class="kw">sptable</span>(wrld_simpl)
+wrld_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(wrld_simpl) ## make clear that we need two tables
+
+(sp_rtrip &lt;-<span class="st"> </span><span class="kw">sp</span>(wrld_geom, <span class="dt">attr_tab =</span> wrld_data))</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 246 
+## extent      : -180, 180, -90, 83.57027  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 11
+## # A tibble: 246 × 11
+##      FIPS   ISO2   ISO3    UN                NAME   AREA  POP2005 REGION
+##    &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;              &lt;fctr&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;int&gt;
+## 1      AC     AG    ATG    28 Antigua and Barbuda     44    83039     19
+## 2      AG     DZ    DZA    12             Algeria 238174 32854159      2
+## 3      AJ     AZ    AZE    31          Azerbaijan   8260  8352021    142
+## 4      AL     AL    ALB     8             Albania   2740  3153731    150
+## 5      AM     AM    ARM    51             Armenia   2820  3017661    142
+## 6      AO     AO    AGO    24              Angola 124670 16095214      2
+## 7      AQ     AS    ASM    16      American Samoa     20    64051      9
+## 8      AR     AR    ARG    32           Argentina 273669 38747148     19
+## 9      AS     AU    AUS    36           Australia 768230 20310208      9
+## 10     BA     BH    BHR    48             Bahrain     71   724788    142
+## # ... with 236 more rows, and 3 more variables: SUBREGION &lt;int&gt;,
+## #   LON &lt;dbl&gt;, LAT &lt;dbl&gt;</code></pre>
+<p>The table ‘wrld_geom’ carried its map projection string with it as an ‘attribute’, but this is not reliable without creating methods for a special class. We can make sure it’s carried using a manual step.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wrld_geom &lt;-<span class="st"> </span><span class="kw">sptable</span>(wrld_simpl)
+wrld_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(wrld_simpl) ## make clear that we need two tables
+wrld_prj &lt;-<span class="st"> </span><span class="kw">proj4string</span>(wrld_simpl)
+(sp_rtrip &lt;-<span class="st"> </span><span class="kw">sp</span>(wrld_geom, <span class="dt">attr_tab =</span> wrld_data, <span class="dt">crs =</span> wrld_prj))</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 246 
+## extent      : -180, 180, -90, 83.57027  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 11
+## # A tibble: 246 × 11
+##      FIPS   ISO2   ISO3    UN                NAME   AREA  POP2005 REGION
+##    &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;              &lt;fctr&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;int&gt;
+## 1      AC     AG    ATG    28 Antigua and Barbuda     44    83039     19
+## 2      AG     DZ    DZA    12             Algeria 238174 32854159      2
+## 3      AJ     AZ    AZE    31          Azerbaijan   8260  8352021    142
+## 4      AL     AL    ALB     8             Albania   2740  3153731    150
+## 5      AM     AM    ARM    51             Armenia   2820  3017661    142
+## 6      AO     AO    AGO    24              Angola 124670 16095214      2
+## 7      AQ     AS    ASM    16      American Samoa     20    64051      9
+## 8      AR     AR    ARG    32           Argentina 273669 38747148     19
+## 9      AS     AU    AUS    36           Australia 768230 20310208      9
+## 10     BA     BH    BHR    48             Bahrain     71   724788    142
+## # ... with 236 more rows, and 3 more variables: SUBREGION &lt;int&gt;,
+## #   LON &lt;dbl&gt;, LAT &lt;dbl&gt;</code></pre>
+<p>What is the point of doing this? We can modify the data using standard table tools.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wrld_geom &lt;-<span class="st"> </span><span class="kw">sptable</span>(wrld_simpl[<span class="dv">9</span>, ])
+wrld_prj &lt;-<span class="st"> </span><span class="kw">proj4string</span>(wrld_simpl)
+<span class="kw">sp</span>(wrld_geom, <span class="dt">crs =</span> wrld_prj)</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 1 
+## extent      : 112.9511, 159.1019, -54.74973, -10.05167  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 1
+## # A tibble: 1 × 1
+##   rownumber_
+##        &lt;int&gt;
+## 1          1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wrld_geom$object_ &lt;-<span class="st"> </span>wrld_geom$branch_
+<span class="kw">sp</span>(wrld_geom, <span class="dt">crs =</span> wrld_prj)</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 97 
+## extent      : 112.9511, 159.1019, -54.74973, -10.05167  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 1
+## # A tibble: 97 × 1
+##    rownumber_
+##         &lt;int&gt;
+## 1           1
+## 2           2
+## 3           3
+## 4           4
+## 5           5
+## 6           6
+## 7           7
+## 8           8
+## 9           9
+## 10         10
+## # ... with 87 more rows</code></pre>
+<p>See how we decomposed all the parts into their own object, and once we return to <code>Spatial</code> that is reflected in the number of objects.</p>
+<p>The replacement method allows this to be done without breaking anything apart, so this is the more “user-level” function, where ‘sp’ and ‘sptable’ are for developers. With this version we can very easily pipe our geometry modifications in convenient syntax.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wrld &lt;-<span class="st"> </span>wrld_simpl[<span class="dv">9</span>:<span class="dv">10</span>, ] ## pick two objects this time
+<span class="kw">sptable</span>(wrld) &lt;-<span class="st"> </span><span class="kw">sptable</span>(wrld) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">object_ =</span> branch_)
+wrld</code></pre></div>
+<p>There is a gotcha here in that if we had any “holes” they would now be “non-hole” objects, but with that caveat in mind it’s a powerful way to work with these data.</p>
+<p>Note that the attribute data were dropped as it is now ambiguous as to what values corresponde to which objects, and that information is external to the replacement methods. (The ‘sp::disaggregate’ function is really a better way to do that particular task.)</p>
+<p>This is not done with a single object with a special class, but it could be. See document on an S3 class for fortified, single-nested, and double-nested forms.</p>
+<p>Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly.</p>
+<p>Let’s send a fortified copy of the maps “county” data set to someone in a ‘SQLite’ database.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tibble)
+<span class="kw">library</span>(maps)
+<span class="kw">library</span>(ggplot2)
+db &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="st">&quot;data-raw/maps_county.sqlite3&quot;</span>, <span class="dt">create =</span> <span class="ot">TRUE</span>)
+mp &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="st">&quot;county&quot;</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
+## todo make sure the object ids are right 
+## and that these are sp()-able - add interpreters for the fortify form (?)
+geom &lt;-<span class="st"> </span><span class="kw">copy_to</span>(db, <span class="kw">fortify</span>(mp), <span class="dt">name =</span> <span class="st">&quot;geom&quot;</span>, <span class="dt">temporary =</span> <span class="ot">FALSE</span>)
+## I can be a bit old-fashioned
+statename &lt;-<span class="st"> </span><span class="kw">substr</span>(mp$name, <span class="dv">1</span>, <span class="kw">unlist</span>(<span class="kw">gregexpr</span>(<span class="st">&quot;,&quot;</span>, mp$name)) -<span class="st"> </span>1L)
+countyname &lt;-<span class="st"> </span><span class="kw">substr</span>(mp$name, <span class="kw">unlist</span>(<span class="kw">gregexpr</span>(<span class="st">&quot;,&quot;</span>, mp$name)) +<span class="st"> </span><span class="dv">1</span>, <span class="kw">nchar</span>(mp$name))
+dat &lt;-<span class="st"> </span><span class="kw">copy_to</span>(db, <span class="kw">tibble</span>(<span class="dt">county =</span> countyname, 
+                          <span class="dt">state =</span> statename, <span class="dt">group =</span> <span class="kw">seq_along</span>(statename)), <span class="dt">name =</span> <span class="st">&quot;metadata&quot;</span>, <span class="dt">temporary =</span> <span class="ot">FALSE</span>)
+geom
+dat
+<span class="kw">rm</span>(geom, dat, db)</code></pre></div>
+<p>Another document that receives this database and explores nesting, demand-read.</p>
+</div>
+<div id="tidy-tables" class="section level2">
+<h2>Tidy tables</h2>
+<p>We have tidied up in one sense, we’ve removed a complicated object with specialist requirements and created two tables that can be plotted and manipulated with generic tools.</p>
+<p>There is redundancy in the geometry table. ‘Tidy’ means ‘3NF’ or ‘third-normal-form’, and 3NF means that we remove the repeated values that could be stored just once.</p>
+<p>Notice what we actually have in the “fortified” version of an sp object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allnumbers &lt;-<span class="st"> </span>function(x) {x[] &lt;-<span class="st"> </span><span class="kw">lapply</span>(x, function(a) if(<span class="kw">is.character</span>(a)) <span class="kw">as.integer</span>(<span class="kw">factor</span>(a)) else <span class="kw">as.numeric</span>(a)); x}
+
+oz &lt;-<span class="st"> </span><span class="kw">subset</span>(wrld_simpl, NAME ==<span class="st"> &quot;Australia&quot;</span>)
+<span class="kw">plot</span>(<span class="kw">allnumbers</span>(<span class="kw">fortify</span>(oz)), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.2</span>)</code></pre></div>
+<pre><code>## Regions defined for each Polygons</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Clearly there’s really not much information in the fortified table after you have dealt with the x and y coordinates, there’s a lot of wasted storage here.</p>
+<p>‘Spatial’ classes avoid this wastage by not exploring the encoding explicitly on every coordinate, but in one of two ways, either</p>
+<ul>
+<li>implicitly, or</li>
+<li>just once as a sort of “label” attribute</li>
+</ul>
+<p>The implicit examples are ‘order’, the right order for the coordinates is just the order they come in, the ‘piece’ value is either 1, or 2+ depending on a list of length 1 or more, and id and group are the same. Group and piece are really aliases, just one is absolute (to the entire set) the other relative (to position within a geometry) .</p>
+<p>Tags such whether it is a hole or not is an “attribute” tagged onto the object that holds the matrix of coordinates. We don’t see the “comments” attribute here, which in sp (if present) tells us which piece ‘belongs’ to which other piece (i.e. when it’s a hole, what island is it a hole of?).</p>
+<p>Again, this is discussed [elsewhere] but the crux is the need for comments is a legacy of the “shapefile” era, no longer necessary in this the “simple features” era. More on that later.</p>
+<p>(There are subtle rules and conventions about ordering and holes, which is discussed [elsewhere]).</p>
+<p>How do we remove this redundancy?</p>
+<ul>
+<li>Create complex nested objects (we already have sp, maps, and other examples).</li>
+<li>Create “tidy(-ish)” tables using nesting, there are at least three ways to do this (gggeom, single, double nesting)</li>
+<li>Create normalized tables and put like with like.</li>
+</ul>
+<p>TABLES</p>
+<p>First identify the entities that exist.</p>
+<p>Objects, parts, coordinates.</p>
+<p>If we create a “parts” table, we will have three tables, one with all the x/y coordinates and their part ID and order within part, the parts table with attributes part ID, island status, and the object metadata table.</p>
+<p>Benefit is size of data is reduced.</p>
+</div>
+<div id="four-tables" class="section level2">
+<h2>Four tables</h2>
+<p>Further normalization inserts a partXcoord table, and puts the order and vertex id on this. Benefit is</p>
+<ul>
+<li>further data reduction</li>
+<li>removal of duplicated coordinates</li>
+<li>ability to demand page</li>
+<li>ready for topology</li>
+</ul>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

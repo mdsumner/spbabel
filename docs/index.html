@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Home. spbabel 0.4.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">spbabel 0.4.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <div class="row">
+  <div class="span8">
+    <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<p><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."/></a></p>
+
+<p><a href="https://travis-ci.org/mdsumner/spbabel"><img src="https://travis-ci.org/mdsumner/spbabel.svg?branch=master" alt="Travis-CI Build Status"/></a></p>
+
+<p><a href="https://ci.appveyor.com/project/mdsumner/spbabel"><img src="https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&amp;svg=true" alt="AppVeyor Build Status"/></a></p>
+
+<p><a href="http://www.r-pkg.org/pkg/spbabel"><img src="http://www.r-pkg.org/badges/version/spbabel" alt=""/></a></p>
+
+<p><a href="http://www.r-pkg.org/pkg/spbabel"><img src="http://cranlogs.r-pkg.org/badges/spbabel" alt="CRAN RStudio mirror downloads"/></a></p>
+
+<p><a href="https://codecov.io/github/mdsumner/spbabel?branch=master"><img src="https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg" alt="Coverage Status"/></a></p>
+
+<h1>spbabel: a tidy view of Spatial</h1>
+
+<p>Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes.</p>
+
+<p>This framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables that can be transferred from and to R in many different ways.</p>
+
+<p>Currently supported are</p>
+
+<ul>
+<li>  sp</li>
+<li>  ggplot2</li>
+<li>  gris</li>
+</ul>
+
+<p>In progress are</p>
+
+<ul>
+<li>  graphics</li>
+<li>  rgl</li>
+<li>  maps</li>
+<li>  spatstat</li>
+<li>  sf</li>
+<li>  trip</li>
+</ul>
+
+<p>Planned are</p>
+
+<ul>
+<li>  PBSmapping</li>
+<li><p>lawn</p></li>
+<li><p>the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others</p></li>
+</ul>
+
+<p>If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.</p>
+
+<p>There already are converters for Spatial classes, why do this? There are converters, but the sp classes reflect modern GIS standards and thes are quite restrictive. There are many spatial data structures in R that cannot be represented in sp, and that cannot be represented by extending the existing classes. To do so requires a more fundamental re-write.</p>
+
+<p>Conversions between existing forms is simply a side-benefit of having a more general framework. The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation.</p>
+
+<p>Not all pairwise combinations are of interest, but most importantly some of the representations are more general than others. The only one that can be used to represent all others is a set of relational tables, and &#39;gris&#39; does most of this, but &#39;ggplot2&#39; also comes pretty close. Neither have been used extensively to do this though!</p>
+
+<h2>Installation</h2>
+
+<p>Install the package from CRAN:</p>
+
+<pre><code class="r">install.packages(&quot;spbabel&quot;)
+</code></pre>
+
+<p>The development version can be installed directly from github:</p>
+
+<pre><code class="r">devtools::install_github(&quot;mdsumner/spbabel&quot;)
+</code></pre>
+
+<h2>Formal and informal spatial data in R</h2>
+
+<p>Spatial data in the <code>sp</code> package have a formal definition (extending class <code>Spatial</code>) that is modelled on shapefiles, and close at least in spirit to the <a href="https://github.com/edzer/sfr">Simple Features definition</a>. See <a href="https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R">What is Spatial in R?</a> for more details. Spatial data in the <code>ggplot2</code> package has no formal definition and there&#39;s not a lot of guidance for how to switch between these two worlds, or the opportunities that exist for other options.</p>
+
+<p>The <code>spbabel</code> package tries to help by providing a more systematic encoding into the long-form with consistent naming and lossless ways to re-compose the original (or somewhat modified) objects.</p>
+
+<p>The long-form version is similar to that implemented in:</p>
+
+<ul>
+<li>  sp&#39;s <code>as()</code> coercion for <code>SpatialLinesDataFrame</code> to <code>SpatialPointsDataFrame</code></li>
+<li>  rasters&#39;s <code>geom()</code></li>
+<li>  ggplot2&#39;s <code>fortify()</code></li>
+<li>  gris&#39; normalized tables</li>
+</ul>
+
+<h1>How does spbabel work</h1>
+
+<p>The <code>sptable</code> function decomposes a Spatial object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.</p>
+
+<p>The <code>sp</code> function re-composes a Spatial object from a table, it auto-detects the topology by the matching column names:</p>
+
+<ul>
+<li>  SpatialPolygons: object_, branch_, island_, order_</li>
+<li>  SpatialLines: object_, branch_, order_</li>
+<li>  SpatialPoints: object_</li>
+<li>  SpatialMultiPoints: object_, branch_</li>
+</ul>
+
+<p>After quite a lot of experimentation the long-form single table of all coordinates, with object, branch, island-status, and order provides the best middle-ground for transferring between different representations of Spatial data. Tables are always based on the &ldquo;tibble&rdquo; since it&#39;s a much better data frame.</p>
+
+<p>The <code>sptable</code> function creates the table of coordinates with identifiers for object and branch, which is understood by <code>sptable&lt;-</code> to &ldquo;fortify&rdquo; and <code>sp</code> for the reverse.</p>
+
+<p>The long-form table may seem like soup, but it&#39;s not meant to be seen for normal use. It&#39;s very easy to dump this to databases, or to ask spatial databases for this form. There are other more normalized multi-table approaches as well - this is just a powerful lowest common denominator.</p>
+
+<p>We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames, or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible.</p>
+
+<h1>Why do this?</h1>
+
+<p>I want these things, and spbabel is the right compromise for where to start:</p>
+
+<ul>
+<li>  flexibility in the number and type/s of attribute stored as &ldquo;coordinates&rdquo;, x, y, lon, lat, z, time, temperature, etc.</li>
+<li>  ability to store attributes on parts (!) i.e. the state is the object, the county is the part</li>
+<li>  shared vertices</li>
+<li>  ability to store points, lines and areas together, sharing topology where appropriate</li>
+<li>  provide a flexible basis for conversion between other formats.</li>
+<li>  flexibility and ease of use</li>
+<li>  integration with database engines and other systems</li>
+<li>  integration with D3 via htmlwidgets, with shiny, and with gggeom ggvis or similar</li>
+<li>  data-flow with dplyr piping as the engine behind a D3 web interface</li>
+</ul>
+
+<p>Flexibility in attributes generally is the key to breaking out of traditional GIS constraints that don&#39;t allow clear continuous / discrete distinctions, or time-varying objects/events, 3D/4D geometry, or clarity on topology versus geometry. When everything is tables this becomes natural, and we can build structures like link-relations between tables that transfer data only when required.</p>
+
+<p>The ability to use <a href="http://www.georeference.org/doc/manifold.htm">Manifold System</a> seamlessly with R is a particular long-term goal, and this will be best done&trade; via dplyr &ldquo;back-ending&rdquo;.</p>
+
+  </div>
+
+  <div class="span3 offset1 sidebar">
+    <h2>Vignettes</h2>
+    <ul>
+      <li><a href="vignettes/geometry-tables.html">Geometry in Tables</a></li>
+      <li><a href="vignettes/geometry-tables_demand-read.html">Geometry tables read on-demand</a></li>
+      <li><a href="vignettes/spbabel.html">spbabel</a></li>
+    </ul>
+        <h2>Authors</h2>
+    <ul>
+      <li><a href='mailto:mdsumner@gmail.com'>Michael D. Sumner</a> [aut, cre]</li>
+    </ul>
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
