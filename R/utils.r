@@ -43,8 +43,7 @@ function (x, ...)
     cs <- x@grid@cellsize
     cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
         sep = "")
-  }
-  else if (inherits(x, "SpatialGrid")) {
+  } else if (inherits(x, "SpatialGrid")) {
     isRaster <- TRUE
     cr <- x@grid@cells.dim
     cat("dimensions  : ", cr[2], ", ", cr[1], ", ", prod(cr), 
@@ -52,8 +51,8 @@ function (x, ...)
     cs <- x@grid@cellsize
     cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
         sep = "")
-  }
-  else {
+  } else 
+    {
     ln <- length(x)
     cat("features    :", ln, "\n")
   }
