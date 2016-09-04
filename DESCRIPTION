@@ -9,7 +9,7 @@ Description: Tools to convert from specific formats to more general forms of
     applications. Includes round-trip for 'Spatial' classes and long-form 
     tables, analogous to 'ggplot2::fortify'. 
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
-URL: https://github.com/mdsumner/spbabel
+URL: https://mdsumner.github.io/spbabel
 BugReports: https://github.com/mdsumner/spbabel/issues
 Depends:
     R (>= 3.2.3)
