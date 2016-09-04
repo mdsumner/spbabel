@@ -151,9 +151,10 @@ map_table_From2 <- function(dat1, map1) {
   ## could tidy this up some more . . .
   #fpaste <- function(...) paste(..., sep = "_")
   map1 <- #map1 %>%
-    mutate(map1, vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts)))))  
-  #mutate(vertex_ = id_n(length(unique(vertex_)))[vertex_])
-  map1$vertex_ <- id_n(length(unique(map1$vertex_)))[map1$vertex_]
+    mutate(map1, vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) 
+  #vertex_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
+  map1 <- mutate(map1, vertex_ = id_n(length(unique(vertex_)))[vertex_])
+  #map1[["vertex_"]] <- id_n(length(unique(vertex_)))[vertex_]
   
   branchV_to_segmentV <- function(x) {
     head(matrix(x, ncol = 2, nrow = length(x) + 1L), -1L)
