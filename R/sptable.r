@@ -132,13 +132,6 @@ mat2d_f <- function(x) {
          poly = x@polygons[[i]]@Polygons)
 )
 }
-.holes <- function(x, i, j, type) {
-  switch(type, 
-         line = NULL, 
-         ## negate here since it will be NULL outside for lines
-         poly = !x@polygons[[i]]@Polygons[[j]]@hole
-         )
-}
 
 .island <- function(x, i, j, type) {
   switch(type, 
@@ -172,14 +165,14 @@ mat2d_f <- function(x) {
                                  order_ = seq(nr),
                                  x_ = coords[,1], 
                                  y_ = coords[,2])
-                     as_tibble(lst[!sapply(lst, is.null)])
+                     lst[!unlist(lapply(lst, is.null))]
                    }
       )
-      psd <- do.call(bind_rows, ps)
+      psd <- bind_rows(ps)
       objlist[[i]] <- bind_cols(tibble(object_ = rep(i, nrow(psd))), psd)
       cnt <- cnt + nsubobs
     }
-  obs <- do.call(bind_rows, objlist)
+  obs <- bind_rows(objlist) ## do.call(bind_rows, objlist)
   
   rownames(obs) <- NULL
 

@@ -45,7 +45,7 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
   if (is.null(topol_)) target <- detectSpClass(x)
-  dat <- x %>% distinct_("object_", .keep_all = TRUE)
+  dat <- distinct_(x, "object_", .keep_all = TRUE)
 
    n_object <- nrow(dat)
    n_attribute <- nrow(attr_tab)

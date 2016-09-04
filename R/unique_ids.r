@@ -20,13 +20,13 @@ id_n <- function(x = 1) {
 
 
 ## reclassify input ids
-id_rec <- function(x) {
-  x <- factor(x)
-  levels(x) <- id_n(nlevels(x))
-  levels(x)[x]
-}
-
-
-make_unq <- function(x) {
-  id_rec(do.call(paste, as.list(x)))
-}
+# id_rec <- function(x) {
+#   x <- factor(x)
+#   levels(x) <- id_n(nlevels(x))
+#   levels(x)[x]
+# }
+# 
+# 
+# make_unq <- function(x) {
+#   id_rec(do.call(paste, as.list(x)))
+# }
