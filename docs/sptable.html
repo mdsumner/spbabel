@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>sptable. spbabel 0.4.0</title>
+<title>sptable. spbabel 0.4.0.9001</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="index.html">spbabel 0.4.0</a>
+      <a class="brand" href="index.html">spbabel 0.4.0.9001</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html">Home</a></li>
@@ -138,11 +138,14 @@ and that the type of topology is identified by which of these are present.</p>
     <pre class="examples"><div class='input'><span class="comment">## holey is a decomposed SpatialPolygonsDataFrame</span>
 <span class="symbol">spdata</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='sp.html'>sp</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">)</span>
 <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">sp</span><span class="keyword">)</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/raster/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">spdata</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>rainbow</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/raster/topics/ncell'>nrow</a></span><span class="keyword">(</span><span class="symbol">spdata</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">alpha</span> <span class="argument">=</span> <span class="number">0.4</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">spdata</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>rainbow</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span><span class="keyword">(</span><span class="symbol">spdata</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">alpha</span> <span class="argument">=</span> <span class="number">0.4</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<strong class='error'>Error in plot.new(): figure margins too large</strong>
 <div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/points'>points</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">$</span><span class="symbol">x_</span><span class="keyword">,</span> <span class="symbol">holey</span><span class="keyword">$</span><span class="symbol">y_</span><span class="keyword">,</span> <span class="argument">cex</span> <span class="argument">=</span> <span class="number">4</span><span class="keyword">)</span></div>
-<div class='input'><span class="symbol">holes</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/raster/topics/subset'>subset</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">,</span> <span class="keyword">!</span><span class="symbol">island_</span><span class="keyword">)</span>
+<strong class='error'>Error in plot.xy(xy.coords(x, y), type = type, ...): plot.new has not been called yet</strong>
+<div class='input'><span class="symbol">holes</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span><span class="keyword">(</span><span class="symbol">holey</span><span class="keyword">,</span> <span class="keyword">!</span><span class="symbol">island_</span><span class="keyword">)</span>
 <span class="comment">## add the points that only belong to holes</span>
 <span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/points'>points</a></span><span class="keyword">(</span><span class="symbol">holes</span><span class="keyword">$</span><span class="symbol">x_</span><span class="keyword">,</span> <span class="symbol">holes</span><span class="keyword">$</span><span class="symbol">y_</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="string">"+"</span><span class="keyword">,</span> <span class="argument">cex</span> <span class="argument">=</span> <span class="number">2</span><span class="keyword">)</span></div>
+<strong class='error'>Error in plot.xy(xy.coords(x, y), type = type, ...): plot.new has not been called yet</strong>
 <div class='input'>
 <span class="comment">## manipulate based on topology</span>
 <span class="comment">## convert to not-holes</span>
@@ -151,16 +154,17 @@ and that the type of topology is identified by which of these are present.</p>
 <span class="comment">#also convert to singular objects - note that this now means we have an overlapping pair of polys</span>
 <span class="comment">#because the door had a hole filled by another object</span>
 <span class="symbol">notahole</span><span class="keyword">$</span><span class="symbol">object_</span> <span class="assignement">&lt;-</span> <span class="symbol">notahole</span><span class="keyword">$</span><span class="symbol">branch_</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/raster/topics/plot'>plot</a></span><span class="keyword">(</span><span class="functioncall"><a href='sp.html'>sp</a></span><span class="keyword">(</span><span class="symbol">notahole</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">"red"</span><span class="keyword">)</span></div>
-<p><img src='sptable-5.png' alt='' width='540' height='400' /></p>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="functioncall"><a href='sp.html'>sp</a></span><span class="keyword">(</span><span class="symbol">notahole</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">"red"</span><span class="keyword">)</span></div>
+<strong class='error'>Error in polypath(x = mcrds[, 1], y = mcrds[, 2], border = border, col = col,     lty = lty, rule = rule, xpd = xpd, ...): plot.new has not been called yet</strong>
 <div class='input'>
 <span class="comment">## example using in-place modification with sptable&lt;-</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">maptools</span><span class="keyword">)</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/data'>data</a></span><span class="keyword">(</span><span class="symbol">wrld_simpl</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">maptools</span><span class="keyword">)</span></div>
+<strong class='message'>Checking rgeos availability: TRUE</strong>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/data'>data</a></span><span class="keyword">(</span><span class="symbol">wrld_simpl</span><span class="keyword">)</span>
 <span class="symbol">spdata2</span> <span class="assignement">&lt;-</span> <span class="symbol">spdata</span>
 <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">dplyr</span><span class="keyword">)</span>
 <span class="comment">## modify the geometry on this object without separating the vertices from the objects</span>
-<span class="functioncall"><a href='sptable.html'>sptable</a></span><span class="keyword">(</span><span class="symbol">spdata2</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='sptable.html'>sptable</a></span><span class="keyword">(</span><span class="symbol">spdata2</span><span class="keyword">)</span> <span class="keyword">%&gt;%</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/plyr/topics/mutate'>mutate</a></span><span class="keyword">(</span><span class="argument">x_</span> <span class="argument">=</span> <span class="symbol">x_</span> <span class="keyword">+</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">y_</span> <span class="argument">=</span> <span class="symbol">y_</span> <span class="keyword">+</span> <span class="number">5</span><span class="keyword">)</span></div></pre>
+<span class="functioncall"><a href='sptable.html'>sptable</a></span><span class="keyword">(</span><span class="symbol">spdata2</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='sptable.html'>sptable</a></span><span class="keyword">(</span><span class="symbol">spdata2</span><span class="keyword">)</span> <span class="keyword">%&gt;%</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span><span class="keyword">(</span><span class="argument">x_</span> <span class="argument">=</span> <span class="symbol">x_</span> <span class="keyword">+</span> <span class="number">10</span><span class="keyword">,</span> <span class="argument">y_</span> <span class="argument">=</span> <span class="symbol">y_</span> <span class="keyword">+</span> <span class="number">5</span><span class="keyword">)</span></div></pre>
   </div>
   <div class="span4 sidebar">
     <!-- <ul>
