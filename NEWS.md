@@ -1,5 +1,7 @@
 # spbabel dev
 
+* sped up sptable by using old raster code, after generalizing to the all types
+
 * new map_table method for 'trip' objects
 
 * workarounds for SpatialPoints, SpatialMultiPoints (removed problematic high-level use of as_tibble, which
