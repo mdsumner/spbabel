@@ -54,16 +54,40 @@ sptable <- function(x, ...) {
 }
 
 #' @export
+#' @importFrom stats setNames
 #' @rdname sptable
-sptable.SpatialPolygonsDataFrame <- function(x, ...) {
-  .gobbleGeom(x, ...)
-}
+sptable.SpatialPolygons <- function(x, ...) {
+  x <- setNames(as_tibble(rasterpoly(x)), 
+c("object_",  "part_", "branch_", "island_", "x_", "y_"))
+  x[["part_"]] <- NULL
+  x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along))
+  x[["island_"]] <- x[["island_"]] == 0
+  x[["object_"]] <- as.integer(x[["object_"]])
+  x[["branch_"]] <- as.integer(x[["branch_"]])
+  x[["order_"]] <- as.integer(x[["order_"]])
+x[, c("object_", "branch_", "island_", "order_", "x_", "y_")]
+  }
+# sptable.SpatialPolygonsDataFrame <- function(x, ...) {
+#   .gobbleGeom(x, ...)
+# }
 
 #' @export
 #' @rdname sptable
-sptable.SpatialLinesDataFrame <- function(x, ...) {
-  mat2d_f(.gobbleGeom(x, ...))
+#' @importFrom stats setNames
+sptable.SpatialLines <- function(x, ...) {
+  x <- setNames(as_tibble(rasterline(x)), 
+                c("object_",  "part_", "branch_", "x_", "y_"))
+  x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along))
+  x[["part_"]] <- NULL
+  x[["object_"]] <- as.integer(x[["object_"]])
+  x[["branch_"]] <- as.integer(x[["branch_"]])
+  x[["order_"]] <- as.integer(x[["order_"]])
+  x[, c("object_", "branch_", "order_", "x_", "y_")]
+
 }
+# sptable.SpatialLinesDataFrame <- function(x, ...) {
+#   mat2d_f(.gobbleGeom(x, ...))
+# }
 
 #' @export
 #' @rdname sptable

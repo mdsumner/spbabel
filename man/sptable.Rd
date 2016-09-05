@@ -3,18 +3,18 @@
 \name{sptable}
 \alias{map_table.trip}
 \alias{sptable}
-\alias{sptable.SpatialLinesDataFrame}
+\alias{sptable.SpatialLines}
 \alias{sptable.SpatialMultiPointsDataFrame}
 \alias{sptable.SpatialPointsDataFrame}
-\alias{sptable.SpatialPolygonsDataFrame}
+\alias{sptable.SpatialPolygons}
 \alias{sptable<-}
 \title{Convert from sp package 'Spatial' classes to a table.}
 \usage{
 sptable(x, ...)
 
-\method{sptable}{SpatialPolygonsDataFrame}(x, ...)
+\method{sptable}{SpatialPolygons}(x, ...)
 
-\method{sptable}{SpatialLinesDataFrame}(x, ...)
+\method{sptable}{SpatialLines}(x, ...)
 
 \method{sptable}{SpatialPointsDataFrame}(x, ...)
 
