@@ -12,9 +12,9 @@
 \usage{
 sptable(x, ...)
 
-\method{sptable}{SpatialPolygons}(x, ...)
+\method{sptable}{SpatialPolygons}(x, ..., userastergeom = TRUE)
 
-\method{sptable}{SpatialLines}(x, ...)
+\method{sptable}{SpatialLines}(x, ..., userastergeom = TRUE)
 
 \method{sptable}{SpatialPointsDataFrame}(x, ...)
 
