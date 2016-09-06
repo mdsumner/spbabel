@@ -1,5 +1,7 @@
 # spbabel dev
 
+* primitives generic, because polygons are just lines
+
 * sped up sptable by using old raster code, after generalizing to the all types
 
 * new map_table method for 'trip' objects
