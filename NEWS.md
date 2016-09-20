@@ -1,5 +1,7 @@
 # spbabel dev
 
+* fixed bug in sp() logic that recreates a SpatialLines (it was using a Polygon under the hood)
+
 * sped up sptable by using old raster code, after generalizing to the all types
 
 * new map_table method for 'trip' objects
