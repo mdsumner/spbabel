@@ -94,7 +94,7 @@ reverse_geomLine <- function(x, d, proj) {
   SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d)
 }
 dropZeroRowFromList <- function(x) x[unlist(lapply(x, nrow)) > 0L]
-loopBranchLine<- function(a) Lines(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Polygon(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
+loopBranchLine<- function(a) Lines(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Line(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
 
 reverse_geomPoint <- function(a, d, proj) {
   # stop("not implemented")
