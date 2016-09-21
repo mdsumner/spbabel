@@ -57,8 +57,7 @@ sptable <- function(x, ...) {
 #' @export
 #' @importFrom stats setNames
 #' @rdname sptable
-sptable.SpatialPolygons <- function(x, ..., userastergeom = TRUE) {
-  if (userastergeom) {
+sptable.SpatialPolygons <- function(x, ...) {
     x <- setNames(as_tibble(rasterpoly(x)), 
                   c("object_",  "part_", "branch_", "island_", "x_", "y_"))
     x[["part_"]] <- NULL
@@ -68,9 +67,7 @@ sptable.SpatialPolygons <- function(x, ..., userastergeom = TRUE) {
     x[["branch_"]] <- as.integer(x[["branch_"]])
     x[["order_"]] <- as.integer(x[["order_"]])
     x[, c("object_", "branch_", "island_", "order_", "x_", "y_")]
-  } else {
-    .gobbleGeom(x, ...)
-  }
+  
 }
 # sptable.SpatialPolygonsDataFrame <- function(x, ...) {
 #   .gobbleGeom(x, ...)
@@ -79,8 +76,8 @@ sptable.SpatialPolygons <- function(x, ..., userastergeom = TRUE) {
 #' @export
 #' @rdname sptable
 #' @importFrom stats setNames
-sptable.SpatialLines <- function(x, ..., userastergeom = TRUE) {
-  if (userastergeom) {
+sptable.SpatialLines <- function(x, ...) {
+
     x <- setNames(as_tibble(rasterline(x)), 
                   c("object_",  "part_", "branch_", "x_", "y_"))
     x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along))
@@ -89,19 +86,13 @@ sptable.SpatialLines <- function(x, ..., userastergeom = TRUE) {
     x[["branch_"]] <- as.integer(x[["branch_"]])
     x[["order_"]] <- as.integer(x[["order_"]])
     x[, c("object_", "branch_", "order_", "x_", "y_")]
-  } else {
-    mat2d_f(.gobbleGeom(x, ...))
-  }
+  
 }
-# sptable.SpatialLinesDataFrame <- function(x, ...) {
-#   mat2d_f(.gobbleGeom(x, ...))
-# }
 
 #' @export
 #' @rdname sptable
 #' @importFrom dplyr bind_cols
 sptable.SpatialPointsDataFrame <- function(x, ...) {
-  #df <- mat2d_f(.pointsGeom(x, ...))
   df <- .pointsGeom(x, ...)
   df$object_ <- as.integer(df$object_) ## not needed once .pointsGeom uses tbl_df
   df
@@ -111,17 +102,16 @@ sptable.SpatialPointsDataFrame <- function(x, ...) {
 #' @rdname sptable
 #' @importFrom dplyr bind_cols
 sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
-  #df <- mat2d_f(.pointsGeom(x))
   df <- .pointsGeom(x, ...)
   df$object_ <- as.integer(df$object_) 
   df$branch_ <- as.integer(df$branch_) 
   df
 }
-## TODO multipoints
-#' @importFrom tibble as_tibble
-mat2d_f <- function(x) {
-  as_tibble(as.data.frame((x)))
-}
+# ## TODO multipoints
+# #' @importFrom tibble as_tibble
+# mat2d_f <- function(x) {
+#   as_tibble(as.data.frame((x)))
+# }
 
 
 #' @rdname sptable
