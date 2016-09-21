@@ -11,14 +11,6 @@ has_names <- function(x) {
 has_data <- function(x) .hasSlot(x, "data")
 
 
-#' @importFrom sp SpatialMultiPointsDataFrame
-.detectSpatial <- function(x) {
-  switch(x, 
-         SpatialPoints = SpatialPointsDataFrame,
-         SpatialMultipoints = SpatialMultiPointsDataFrame,
-         SpatialLines = SpatialLinesDataFrame, 
-         SpatialPolygons = SpatialPolygonsDataFrame)
-}
 
 
 #' @importFrom methods .hasSlot
