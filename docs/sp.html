@@ -88,19 +88,8 @@ Spatial*
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">dplyr</span><span class="keyword">)</span></div>
-<strong class='message'>
-Attaching package: ‘dplyr’
-</strong>
-<strong class='message'>The following objects are masked from ‘package:stats’:
-
-    filter, lag
-</strong>
-<strong class='message'>The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-</strong>
-<div class='input'><span class="symbol">semap1</span> <span class="assignement">&lt;-</span> <span class="symbol">semap</span>  <span class="keyword">%&gt;%</span> <span class="package">dplyr</span><span class="keyword">::</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span><span class="keyword">(</span><span class="symbol">y_</span> <span class="keyword">&gt;</span> <span class="keyword">-</span><span class="number">89.9999</span><span class="keyword">)</span>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">dplyr</span><span class="keyword">)</span>
+<span class="symbol">semap1</span> <span class="assignement">&lt;-</span> <span class="symbol">semap</span>  <span class="keyword">%&gt;%</span> <span class="package">dplyr</span><span class="keyword">::</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span><span class="keyword">(</span><span class="symbol">y_</span> <span class="keyword">&gt;</span> <span class="keyword">-</span><span class="number">89.9999</span><span class="keyword">)</span>
 <span class="symbol">sp_obj</span> <span class="assignement">&lt;-</span> <span class="functioncall"><a href='sp.html'>sp</a></span><span class="keyword">(</span><span class="symbol">semap1</span><span class="keyword">,</span> <span class="argument">attr_tab</span> <span class="argument">=</span> <span class="symbol">seatt</span><span class="keyword">,</span> <span class="argument">crs</span> <span class="argument">=</span> <span class="string">"+proj=longlat +ellps=WGS84"</span><span class="keyword">)</span>
 <span class="comment">## look, seamless Antarctica!</span>
 <span class="comment">## library(rgdal); plot(spTransform(sp_obj, "+proj=laea +lat_0=-70"))</span></div></pre>

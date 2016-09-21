@@ -1,8 +1,11 @@
 ---
-title: "Geometry in tables"
+title: "Geometry in tables: the gris model"
 author: "Michael D. Sumner"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig_width: 7
+    fig_height: 7
 vignette: >
   %\VignetteIndexEntry{Geometry in Tables}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,18 +15,16 @@ vignette: >
 ## Abstract
 
 
-This package is a response to the missing use-cases in GIS (geographic information systems) using R. It's an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds. 
+This package is a response to some missing use-cases in GIS (geographic information systems) using R. It is an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds. 
 
-Gris is not a replacement for the *very powerful* existing tools for traditional 
-GIS is R. If there's a better tool for the job, the 'gris' philosophy is to convert to the structures needed by that tool and do it, then return the result to gris world. 
+With some reservation, I call this the **gris model**. 
 
-Gris provides
+The model provides: 
 
 - a general, tidy, table-based framework for storing spatial data
 - a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
 - a unified and general data model that can be used to store any spatial data, and  
 - a common framework for conversions from and to other formats
-
 
 Gris can be used to
 
@@ -35,23 +36,26 @@ mesh of 2D triangles and 1D line segments with X, Y, Z geometry, while maintaini
 Gris relies on 
 
 - dplyr and tibble for sensible and powerful data frames
-- spbabel for conversion drivers from and to other formats
+- spbabel for conversion from and to other formats
 
 Gris does not
 
--use nested tables, though see ...
-- 
+- use nested tables, though see worked discussions on how to do this ...
+
+The approach is not a drop-in replacement for existing tools for traditional 
+GIS is R. If there's a better tool for the job, the recommended approach is to convert to the structures needed by that tool and do it, then return the result to the approach used here as needed. 
 
 
 ## Introduction
 
-The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map data are usually stored. The tools and data structure tools for `sp` are very powerful and can be used for a wide variety of map-data manipulations and visualizations, but they are not inherently extensible. 
+The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The visualization tools in `ggplot2` are very general and can be used for plotting a very wide variety of data visualizations as well as maps, but the data structures used are not aligned with how map data are usually stored. The tools and data structure for `sp` are aligned with traditional GIS approaches and can be used for a wide variety of map-data manipulations and visualizations, but they are not inherently extensible. 
 
-This document aims to show that there are opportunities to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. 
+This work aims to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. I don't have a particular problem with either 'sp' or 'ggplot2' in terms of traditional GIS, but I do have a problem with traditional GIS. It is surprising to me that the limitations, baked-in in the 1990s for *understandable reasons*(need link to arc-node topology description, complexity of constrained triangulations), are now generally accepted with very little discussion. There are murmurings out there (cf. list elsewhere but include qgis geolife tracks, postgis topology, eonfusion, cgal, whuber, and other simplicial complex examples, )
 
+First we need to explain the key differences between `ggplot2
 ## Two worlds and two tables 
 
-A `Spatial` object is a complex S4 classed structure composed of lists of coordinates, values, and metadata. It has
+The 'sp' package starts with an abstract `Spatial` class and all other objects extend this base. A `Spatial` object is a complex S4 classed structure composed of lists of coordinates, values, and metadata. It has
 
 * a data frame of attributes for each individual map object
 * a complex hierarchical list of matrices of coordinates (x and y, or longitude and latitude)
@@ -60,7 +64,9 @@ A `Spatial` object is a complex S4 classed structure composed of lists of coordi
 
 The geometry is in the complex list, and this is defined *just-so* by S4 classes with rigourous constraints to conform to spatial standards. This includes determined details such as the "winding" order for rings defining polygon islands or holes, and the details of which hole belongs to which island. 
 
-A `ggplot2` 'object' is a data frame, and---ok---it's not really an object. It has columns: 
+So 'sp' objects include three kinds of thing: a data frame, a complex geometry object, and everything else. 
+
+A `ggplot2` 'object' is a data frame, and, ok: it's not really an object.  It has columns: 
 
 * "long" and "lat" to store the 'x' and 'y' coordinates (or longitude and latitude)
 * "id" to identify each map object
@@ -69,21 +75,17 @@ A `ggplot2` 'object' is a data frame, and---ok---it's not really an object. It h
 * "order" to record the correct winding order, or path order 
 * "hole" to denote if a polygon ring was a hole or an island
 
-There's one major thing missing still, the `ggplot2` case is really two data frames, and the list neglects the exact same data frame that we listed first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
+One thing is still missing, since the `ggplot2` case is really two data frames. The description above neglects the same data frame of attributes mentioned first for 'sp'. This table is rarely mentioned explicitly, since in all ggplot2 examples it only gets used in a merge step, to copy its attribute metadata on id to all the coordinates. 
 
+The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. These things are either computed on the fly (the bounding box) or passed around in an ad hoc way. This is sometimes fine for map data since many systems use "only" longitude-latitude, or an assumed local map projection. 
 
-The other parts missing from ggplot2 is the details about which hole belongs to which island, the projection metadata, and the bounding box. T
-(I'm only talking about sp Spatial classes here, but the same scheme is used by gg tools for the maps package, and c. ...).
+So, 'ggplot2' is three things as well: a data frame, the geometry in another data frame, and everything else. 
 
-What else is missing? 
-
-- identifiers on parts, ggplot understands this and maps provides it (with limitations)
-- identifiers on coordinates 
-- topology
+I said that sp objects are "just-so" with "determined details", but ggplot2 needs exactly the same rigour, it's just less strict with how you go about it, and is less focussed on stopping you shooting yourself in the foot, or making fish soup. 
 
 ## Specific example
 
-To illustrate the relation between `sp` and `ggplot2`, read in a polygon layer from the `maps` package and convert, and plot. 
+To illustrate the difference between `sp` and `ggplot2`, read in a polygon layer from the `maps` package and convert, and plot. 
 
 ```{r,eval=TRUE}
 library(maps)
@@ -117,17 +119,17 @@ ggplot(amaptab) + aes(x = x, y = y, group = group, fill = group) + geom_polygon(
 
 ### Problem 1
 
-If you look carefully there are two big problems, there's an awkward polygon catastrophe a the "southern boundary" of Antarctica - it becomes clearer if we zoom in. 
+If you look carefully there are two big problems, there's an awkward polygon catastrophe at the "southern boundary" of Antarctica - it becomes clearer if we zoom in. 
 
 ```{r}
 ## for now, it's easier to subset by re-reading
 ant <- map("world", regions = "Antarctica", plot = FALSE, fill = TRUE)
-ggplot(fortify(ant)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path()
+ggplot(fortify(ant)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path() 
 ```
 
-The problem is that in this coordinate system, there's no extension of the continent to the "south pole", and so the polygon wraps around awkwardly, leaving a dangle in the west. The issue is more apparent by including the boundary, with 'geom_path'. 
+What is happening in the western corner at 85S? The problem is that in this coordinate system, there's no extension of the continent to the "south pole", and so the polygon wraps around awkwardly from the westernmost coordinate to the easternmost, and since the westernmost is not also the southernmost coordinate it is leaving a dangle incorrectly joining the west to the east. The issue is more apparent by including the boundary, with 'geom_path', but also consider that this is really a problem created by our choice of map projection. The easternmost and westernmost coordinates in this map *are exactly the same place*, so it is no surprise that things are a bit funny. 
 
-There's no "fixing" this without putting on the dummy coordinates at [-180, -90] and [180, -90] - but we are stuck since when we do that we then get the funny boundary dangle when plotted in a reasonable projection. 
+We can "fix" this by putting in dummy coordinates at [-180, -90] and [180, -90] - but this simply patches a symptom rather than solving the problem correctly. We would then get the funny boundary dangle when plotted in a reasonable projection. 
 
 Here's a plot *without* the extra coordinates at the poles. 
 
@@ -148,10 +150,11 @@ rownames(ant2) <- NULL
 ggplot(fortify(ant2)) + aes(x = long, y = lat, group = group, fill = group) + geom_polygon() + geom_path() + coord_proj(prj) + guides(fill = FALSE)
 ```
 
+The *right answer* is to accept that our map extending from 180W to 180E is really bizarre, and we should make a better choice. The 'maps' package does not include these dummy coordinates. Many other data sets just put them in. There's actually a long history about the birth and long dusk of the 'shapefile' specification and what was intended that is relevant here. 
 
 ### Problem 2 
 
-The second problem is that we are not drawing holes correctly. To see this zoom in on southern Africa, where the country of Lesotho punches out a hole in South Africa. 
+The second problem is that we are not drawing holes correctly. To see this zoom in on southern Africa, where the Kingdom of Lesotho punches out a hole in South Africa. 
 
 ```{r}
 ## for now, it's easier to subset by re-reading
@@ -159,7 +162,7 @@ afr <- map("world", regions = c("South Africa", "Lesotho"), plot = FALSE, fill =
 ggplot(fortify(afr)) + aes(x = x, y = y, group = group, fill = group) + geom_polygon() + geom_path()
 ```
 
-That looks ok, but see what happens when we take just South Africa. 
+That looks good, but see what happens when we plot just South Africa. 
 
 ```{r}
 ## for now, it's easier to subset by re-reading
@@ -168,12 +171,9 @@ safr <- map("world", regions = "South Africa", plot = FALSE, fill = TRUE)
 ggplot(fortify(safr)) + aes(x = x, y = y, group =group, col = factor(group)) + geom_polypath() + geom_path() 
 ```
 
-The data for South Africa is literally stored with the hole it needs to be plotted on its own, as well as the same "island" needed for Lesotho. 
+The data for South Africa is literally stored with the hole it needs to be plotted on its own, as well as the same "island" needed for Lesotho. Is this good? Is it what we want? (Think about it, I challenge you to not answer with "it depends"). 
 
-We can get the hole with polypath, but this reminds us that we are double-storing a lot of coordinates - this is the same for any neighbouring polygons, all those shared boundaries and not "shared", they are stored explicitly. 
-
-
-
+We can get the hole with polypath, but this reminds us that we are double-storing a lot of coordinates - this is the same for any neighbouring polygons, all those shared boundaries are not "shared", they are stored explicitly. 
 
 Finally, show that sp plots the hole just fine without any effort. 
 
@@ -191,9 +191,18 @@ plot(sp_afr[2, ], col = "grey")
 
 ## spbabel
 
-There are theree functions in `spbabel` to transfer between 'sp' and 'ggplot2'. 
 
-1. **sptable* - decomposes the geometry to a single table (like `fortify` but with different column names)
+What else is missing? 
+
+- identifiers on parts, ggplot understands this and maps provides it (with limitations)
+- identifiers on coordinates 
+- topology
+
+
+
+There are three functions in `spbabel` to transfer between 'sp' and 'ggplot2'. 
+
+1. **sptable** - decomposes the geometry to a single table (like `fortify` but with different column names)
 2. **sp** - a driver function to produce Spatial objects, in this case a 'sp.data.frame' method
 3. **sptable<-** - a replacement version of 'sptable' to do the changes "in place"
 
@@ -290,7 +299,7 @@ There is redundancy in the geometry table. 'Tidy' means '3NF' or 'third-normal-f
 
 Notice what we actually have in the "fortified" version of an sp object. 
 
-```{r}
+```{r, fig.width = 9, fig.height = 9}
 allnumbers <- function(x) {x[] <- lapply(x, function(a) if(is.character(a)) as.integer(factor(a)) else as.numeric(a)); x}
 
 oz <- subset(wrld_simpl, NAME == "Australia")
