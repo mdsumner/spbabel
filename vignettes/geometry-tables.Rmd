@@ -38,13 +38,16 @@ Gris relies on
 - dplyr and tibble for sensible and powerful data frames
 - spbabel for conversion from and to other formats
 
-Gris does not
-
-- use nested tables, though see worked discussions on how to do this ...
+Gris does not use nested tables, though see worked discussions on how to do this (in the partner vignettes). 
 
 The approach is not a drop-in replacement for existing tools for traditional 
 GIS is R. If there's a better tool for the job, the recommended approach is to convert to the structures needed by that tool and do it, then return the result to the approach used here as needed. 
 
+### Implementations
+
+This is an ongoing development. The `spbabel` package is on CRAN and will be a base package for exploration in the area. Using `spbabel` I have created the package `rangl` and that keeps things simple by only providing plotting methods and the right data structures. There is limited support for manipulation and subsetting objects, but most of this uses generic table indexing techniques. It's not yet clear how much this will be formalized. 
+
+The model was originally implemented in the `gris` package, but that made a number of false starts and over-complicated some apsects. A version of the model is also used in the `AustralianAntarcticDivision/rbgm` package, but that does not yet have the full `rangl` lessons. While I was figuring out the next steps from `gris` I explored nested data frames (from `tidyr`) and created a package to provide proper holes for `ggplot2` polygons in `ggpolypath`. 
 
 ## Introduction
 
@@ -52,7 +55,8 @@ The `sp` and `ggplot2` packages are both widely used in R for plotting maps. The
 
 This work aims to bridge these seemingly disparate domains, and bring the general, data frame table-based idioms of `ggplot2` into the specialized domain of spatial data. I don't have a particular problem with either 'sp' or 'ggplot2' in terms of traditional GIS, but I do have a problem with traditional GIS. It is surprising to me that the limitations, baked-in in the 1990s for *understandable reasons*(need link to arc-node topology description, complexity of constrained triangulations), are now generally accepted with very little discussion. There are murmurings out there (cf. list elsewhere but include qgis geolife tracks, postgis topology, eonfusion, cgal, whuber, and other simplicial complex examples, )
 
-First we need to explain the key differences between `ggplot2
+First we need to explain the key differences between `ggplot2` and `sp`. 
+
 ## Two worlds and two tables 
 
 The 'sp' package starts with an abstract `Spatial` class and all other objects extend this base. A `Spatial` object is a complex S4 classed structure composed of lists of coordinates, values, and metadata. It has
