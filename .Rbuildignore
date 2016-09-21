@@ -9,3 +9,5 @@
 ^codecov\.yml$
 ^revdep$
 ^docs$
+^CONDUCT\.md$
+^prepare_package.r$
