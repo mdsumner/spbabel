@@ -306,7 +306,7 @@ oz <- subset(wrld_simpl, NAME == "Australia")
 plot(allnumbers(fortify(oz)), pch = 19, cex = 0.2)
 ```
 
-Clearly there's really not much information in the fortified table after you have dealt with the x and y coordinates, there's a lot of wasted storage here. 
+Clearly there's really not much information in the fortified table after you have dealt with the x and y coordinates, there's a lot of wasted storage here. It gets worse if we copy on attributes from the "id" attribute table, we simply copy out more redundant data. 
 
 'Spatial' classes avoid this wastage by not exploring the encoding explicitly on every coordinate, but in one of two ways,  either 
 
