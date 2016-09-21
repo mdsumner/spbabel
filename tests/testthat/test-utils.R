@@ -6,11 +6,14 @@ library(spbabel)
 data(holey)
 sph <- sp(holey)
 x <- c(1L)
+r <- raster::setValues(raster::raster(sph), 1)
 test_that("utils tests work", {
   expect_that(spbabel:::has_data(sph), is_true())
   expect_that(spbabel:::has_names(sph), is_true())
   expect_that(spbabel:::has_names(x), is_false())
- # expect_that(spbabel:::.detectSpatial(class(sp::geometry(sph))), is_a("function"))
-  print(sph)
-
+  expect_output(print(sph))
+  expect_output(print(as(sph, "SpatialLinesDataFrame")))
+  expect_output(print(as(as(sph, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")))
+  expect_output(print(as(as(sph, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")))
+  
 })

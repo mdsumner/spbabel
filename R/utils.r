@@ -10,9 +10,6 @@ has_names <- function(x) {
 
 has_data <- function(x) .hasSlot(x, "data")
 
-
-
-
 #' @importFrom methods .hasSlot
 #' @importFrom sp bbox proj4string 
 #' @importFrom dplyr tbl_df group_by
@@ -27,27 +24,27 @@ function (x, ...)
     nc <- ncol(x@data)
   }
   ln <- 1
-  if (inherits(x, "SpatialPixels")) {
-    isRaster <- TRUE
-    cr <- x@grid@cells.dim
-    cat("dimensions  : ", cr[2], ", ", cr[1], ", ", nrow(x@coords), 
-        ", ", nc, "  (nrow, ncol, npixels, nlayers)\n", sep = "")
-    cs <- x@grid@cellsize
-    cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
-        sep = "")
-  } else if (inherits(x, "SpatialGrid")) {
-    isRaster <- TRUE
-    cr <- x@grid@cells.dim
-    cat("dimensions  : ", cr[2], ", ", cr[1], ", ", prod(cr), 
-        ", ", nc, "  (nrow, ncol, ncell, nlayers)\n", sep = "")
-    cs <- x@grid@cellsize
-    cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
-        sep = "")
-  } else 
-    {
+  # if (inherits(x, "SpatialPixels")) {
+  #   isRaster <- TRUE
+  #   cr <- x@grid@cells.dim
+  #   cat("dimensions  : ", cr[2], ", ", cr[1], ", ", nrow(x@coords), 
+  #       ", ", nc, "  (nrow, ncol, npixels, nlayers)\n", sep = "")
+  #   cs <- x@grid@cellsize
+  #   cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
+  #       sep = "")
+  # } else if (inherits(x, "SpatialGrid")) {
+  #   isRaster <- TRUE
+  #   cr <- x@grid@cells.dim
+  #   cat("dimensions  : ", cr[2], ", ", cr[1], ", ", prod(cr), 
+  #       ", ", nc, "  (nrow, ncol, ncell, nlayers)\n", sep = "")
+  #   cs <- x@grid@cellsize
+  #   cat("resolution  : ", cs[1], ", ", cs[2], "  (x, y)\n", 
+  #       sep = "")
+  # } else 
+  # 
     ln <- length(x)
     cat("features    :", ln, "\n")
-  }
+  
   e <- bbox(x)
   if (ln > 0) {
     cat("extent      : ", e[1, 1], ", ", e[1, 2], ", ", e[2, 
