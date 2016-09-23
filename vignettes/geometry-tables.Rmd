@@ -259,13 +259,11 @@ There is a gotcha here in that if we had any "holes" they would now be "non-hole
 Note that the attribute data were dropped as it is now ambiguous as to what values corresponde to which objects, and that information is external to the replacement methods. (The 'sp::disaggregate' function is really a better way to do that particular task.)
 
 
-This is not done with a single object with a special class, but it could be. See
-document on an S3 class for fortified, single-nested, and double-nested forms. 
+This is not done with a single object with a special class, but it could be. See document on an S3 class for fortified, single-nested, and double-nested forms. 
 
 
 
-Perhaps the best thing about having everything stored in two tables is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
-
+Perhaps the best thing about having *everything stored tables* is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
 
 Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
 
@@ -289,6 +287,30 @@ dat <- copy_to(db, tibble(county = countyname,
 geom
 dat
 rm(geom, dat, db)
+```
+
+Our friend in the other vignette just called an made some interesting suggestions, one is to store only the unique long lat pairs, and the other to properly store counties as parts of a state. 
+
+Being skilled in database normal form we apply these principles to get four separate tables. 
+
+```{r}
+object <- distinct(metadata, state)
+object <- object %>% mutate(object_ = spbabel:::id_n(nrow(object)))
+
+branch <- metadata %>% select(-state) %>% mutate(object_ = object$object_[group], branch_ = spbabel:::id_n(nrow(metadata)))
+branch$group <- NULL
+
+
+
+branchXvertex <- geom %>% inner_join(branch[, c("county", "branch_")], c("subregion" = "county")) %>% select(branch_, order)
+branchXvertex <- branchXvertex %>% rename(order_ = order)
+
+vertex <- geom %>% mutate(vertex_ = as.integer(factor(paste(geom$long, geom$lat, sep = "_"))))
+vertex$vertex_ <- spbabel:::id_n(max(vertex$vertex_))[vertex$vertex_]
+branchXvertex$vertex_ <- vertex$vertex_
+vertex <- vertex %>%  transmute(x_ = long, y_ = lat, vertex_ = vertex_) %>% distinct(vertex_)
+
+branchXvertex$vertex_ 
 ```
 
 
