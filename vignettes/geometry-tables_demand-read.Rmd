@@ -67,12 +67,28 @@ Can we go the full distance and create a Spatial object?
 
 ```{r,eval=FALSE}
 library(spbabel)
-  tbl(db, "metadata") %>% filter(state == "wyoming") %>% 
+spwyoming <-   tbl(db, "metadata") %>% filter(state == "wyoming") %>% 
   select(county, group) %>% inner_join(tbl(db, "geom")) %>% 
     collect() %>% transmute(x_ = long, y_ = lat, branch_ = group, object_ = group, order_ = row_number(), island_ = TRUE, county = subregion, state = region) %>% sp(crs = "+proj=longlat +ellps=WGS84")
 
 ```
 
+what did we get out the database? 
+
+```{r}
+geom <- tbl(db, "geom") %>% collect()
+metadata <- tbl(db, "metadata") %>% collect()
+
+nrow(geom)
+nrow(metadata)
+```
+
+There are more than 85K rows for geometry, and 3000 rows for the metadata.  We could save quite a bit by storing only the unique coordinates. There's also another opportunity, since we have to store the state many times for all out counties. Can't we store the states as an object, the county as a part, and store the name of the county on each county and the name of the state on each state? We ring our friend and tell them this great suggestion. 
+
+```{r}
+distinct(geom, long, lat)
+distinct(metadata, state)
+```
 
 Obviously there's a lot of wasted coordinates here, so hopefully our friend figures out a more efficient storage in the db. 
 
