@@ -91,7 +91,7 @@ reverse_geomLine <- function(x, d, proj) {
   objects <- split(x, x$object_)
   d$branch_ <- d$object_ <- d$order_ <- d$x_ <- d$y_ <- NULL
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
-  SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d)
+  SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
 dropZeroRowFromList <- function(x) x[unlist(lapply(x, nrow)) > 0L]
 loopBranchLine<- function(a) Lines(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Line(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
