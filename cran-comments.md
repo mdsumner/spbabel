@@ -1,4 +1,4 @@
-spbabel 0.4.0 update
+spbabel 0.4.5 update
 
 ## Test environments
 * local Windows 10 install (R 3.3.1)
