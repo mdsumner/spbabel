@@ -44,7 +44,10 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
-  if (is.null(topol_)) target <- detectSpClass(x)
+  if (is.null(topol_)) target <- detectSpClass(x) else target <- topol_
+  ## check for minimum sensible number of coordinates
+  minc <- c(SpatialPolygonsDataFrame = 3, SpatialLinesDataFrame = 2, SpatialMultiPointsDataFrame = 1, SpatialPointsDataFrame = 1)[target]
+  if (nrow(x) < minc) stop(sprintf("target is %s but input table has  %i %s", target, nrow(x), c("rows", "row")[(nrow(x) ==1)+1]))
   dat <- distinct_(x, "object_", .keep_all = TRUE)
 
    n_object <- nrow(dat)
