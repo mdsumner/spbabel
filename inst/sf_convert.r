@@ -21,10 +21,20 @@ mp <- st_as_sf(mpdf)
   }
   x
 }
+
+.xyzmNames <- function(x) {
+  names <- c(X = "x_", Y = "y_", Z = "z_", M = "m_")
+  names[unlist(strsplit(x, ""))]
+}
 ## matrix to tibble
 .mat2df <- function(x) {
-  tibble::as_tibble(.mat(unclass(x)))
+  
+  cnames <- class(x)[1L]
+  
+  setNames(tibble::as_tibble(.mat(unclass(x))), .xzymNames(cnames))
 }
+
+
 ## list to df
 ## marker denotes the first as the island
 
@@ -46,20 +56,20 @@ mp <- st_as_sf(mpdf)
   ##%>% ggplot() ) + aes(x = V1, y = V2, group = branch, fill = object) + spbabel:::geom_polygon()
 sptable.sf <- function(x, ...) {
   if (inherits(st_geometry(x), "sfc_POINT")) {
-    dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_")
+    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_")
   }
   if (inherits(st_geometry(x), "sfc_MULTIPOINT")) {
-    dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_") %>% mutate(branch_ = row_number())
+    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_") %>% mutate(branch_ = row_number())
   }
   if (inherits(st_geometry(x), "sfc_LINESTRING")) {
-    dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_") %>% mutate(branch_ = row_number())
+    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), .mat2df), .id = "object_") %>% mutate(branch_ = row_number())
   }
   
   if (inherits(st_geometry(x), "sfc_MULTIPOLYGON")) {
-    dplyr::bind_rows(lapply(sf::st_geometry(x), function(p) dplyr::bind_rows(lapply(p, .list2df), .id = "branch")), .id = "object") 
+    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), function(p) dplyr::bind_rows(lapply(p, .list2df), .id = "branch")), .id = "object") 
     
   }
-  
+  return(y)
 }
 map_table.sf <- function(x, ...) {
   dat <- x
