@@ -10,7 +10,7 @@
 #' \itemize{
 #'  \item \code{\link[broom]{sp_tidiers}} (replacement of 'ggplot2::fortify').
 #'  \item \code{\link[raster]{geom}}
-#'  \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' workflow. 
+#'  \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' work flow. 
 #' }
 #' 
 #' @param x \code{\link[sp]{Spatial}} object
