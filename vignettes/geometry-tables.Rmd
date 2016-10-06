@@ -17,28 +17,28 @@ vignette: >
 
 This package is a response to some missing use-cases in GIS (geographic information systems) using R. It is an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds. 
 
-With some reservation, I call this the **gris model**, and it's being used in the rangl package and in the rbgm package. 
+With some reservation, I call this the **gris model**, and it's being used in the [rangl](https://github.com/r-gris/rangl) and [rbgm](https://github.com/AustralianAntarcticDivision/rbgm) packages. 
 
 The model provides: 
 
-- a general, tidy, table-based framework for storing spatial data
-- a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
-- a unified and general data model that can be used to store any spatial data, and  
-- a common framework for conversions from and to other formats
+* a general, tidy, table-based framework for storing spatial data
+* a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
+* a unified and general data model that can be used to store any spatial data, and  
+* a common framework for conversions from and to other formats.
 
-Gris can be used to
+The model can be used to
 
-- convert a flat vector drawing of polygons into a topological 
+* convert a flat vector drawing of polygons into a topological 
 mesh of 2D triangles and 1D line segments with X, Y, Z geometry, while maintaining the identity of the original polygons and its discrete attributes. 
-- to store and transmit complex spatial data via generic storage of tables in databases
-- store multi-dimensional geo-spatial data, such as 3d box models with "face" topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path. 
+* store and transmit complex spatial data via generic storage of tables in databases
+* store multi-dimensional geo-spatial data, such as 3d box models with "face" topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path. 
 
-Gris relies on 
+The model relies on 
 
-- dplyr and tibble for sensible and powerful data frames
-- spbabel for conversion from and to other formats
+* `dplyr` and `tibble` for sensible and powerful data frames
+* `spbabel` for conversion from and to other formats.
 
-Gris does not use nested tables, though see worked discussions on how to do this (in the partner vignettes). 
+Gris does not use nested tables, though see worked discussions on how to do this (in the vignettes). 
 
 The approach is not a drop-in replacement for existing tools for traditional 
 GIS is R. If there's a better tool for the job, the recommended approach is to convert to the structures needed by that tool and do it, then return the result to the approach used here as needed. 
@@ -198,9 +198,9 @@ plot(sp_afr[2, ], col = "grey")
 
 What else is missing? 
 
-- identifiers on parts, ggplot understands this and maps provides it (with limitations)
-- identifiers on coordinates 
-- topology
+* identifiers on parts, ggplot understands this and maps provides it (with limitations)
+* identifiers on coordinates 
+* topology
 
 
 
@@ -271,7 +271,6 @@ Perhaps the best thing about having everything stored in two tables is that we c
 Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
 
 
-
 ```{r,eval=FALSE}
 library(dplyr)
 library(tibble)
@@ -293,7 +292,7 @@ rm(geom, dat, db)
 ```
 
 
-Another document that receives this database and explores nesting, demand-read. 
+Another vignette that receives this database and explores nesting, demand-read is in progress "Geometry tables read on-demand". 
 
 
 ## Tidy tables
@@ -302,7 +301,7 @@ We have tidied up in one sense, we've removed a complicated object with speciali
 
 There is redundancy in the geometry table. 'Tidy' means '3NF' or 'third-normal-form', and 3NF means that we remove the repeated values that could be stored just once. 
 
-Notice what we actually have in the "fortified" version of an sp object. 
+Notice what we actually have in the "fortified" version of an `sp` object. 
 
 ```{r, fig.width = 9, fig.height = 9}
 allnumbers <- function(x) {x[] <- lapply(x, function(a) if(is.character(a)) as.integer(factor(a)) else as.numeric(a)); x}
@@ -322,10 +321,10 @@ The implicit examples are 'order', the right order for the coordinates is just t
 
 Tags such whether it is a hole or not is an "attribute" tagged onto the object that holds the matrix of coordinates. We don't see the "comments" attribute here, which in sp (if present) tells us which piece 'belongs' to which other piece (i.e. when it's a hole, what island is it a hole of?). 
 
-Again, this is discussed [elsewhere] but the crux is the need for comments is a legacy of the "shapefile" era, no longer necessary in this the "simple features" era. More on that later. 
+Again, this is discussed elsewhere but the crux is the need for comments is a legacy of the "shapefile" era, no longer necessary in this the "simple features" era. More on that later. 
 
 
-(There are subtle rules and conventions about ordering and holes, which is discussed [elsewhere]). 
+(There are subtle rules and conventions about ordering and holes, which is discussed elsewhere). 
 
 
 How do we remove this redundancy? 
