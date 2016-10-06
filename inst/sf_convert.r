@@ -66,7 +66,7 @@ sptable.sf <- function(x, ...) {
   }
   
   if (inherits(st_geometry(x), "sfc_MULTIPOLYGON")) {
-    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), function(p) dplyr::bind_rows(lapply(p, .list2df), .id = "branch")), .id = "object") 
+    y <- dplyr::bind_rows(lapply(sf::st_geometry(x), function(p) dplyr::bind_rows(lapply(p, .Plist2df), .id = "branch")), .id = "object") 
     
   }
   return(y)
@@ -74,7 +74,8 @@ sptable.sf <- function(x, ...) {
 map_table.sf <- function(x, ...) {
   dat <- x
   dat$geometry <- NULL
-  map_table_From2(dat, sptable(x))
+  dat <- tibble::as_tibble(dat)
+  spbabel:::map_table_From2(dat, sptable(x))
 }
 
 
