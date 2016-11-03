@@ -69,3 +69,20 @@ test_that("mismatched attributes and object number is an error", {
 })
 
 
+library(sp)
+library(dplyr)
+library(raster)
+cl <- spbabel::sptable(rasterToContour(raster(volcano)))
+
+cl0 <- cl %>% filter(object_ == -1) #%>% mutate(object_ = as.character(i)) #%>% slice(2:(n()-1))
+
+test_that("dud inputs caught", {
+  expect_error(spbabel::sp(cl0))  #error
+  
+  expect_error(spbabel::sp(cl0, topol_ = "SpatialPointsDataFrame"))
+  
+  
+  expect_silent(spbabel::sp(cl, topol_  = "SpatialLinesDataFrame"))  ## ok)
+  
+})
+

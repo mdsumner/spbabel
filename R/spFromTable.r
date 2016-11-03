@@ -44,7 +44,10 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
   ## raster::geom form
-  if (is.null(topol_)) target <- detectSpClass(x)
+  if (is.null(topol_)) target <- detectSpClass(x) else target <- topol_
+  ## check for minimum sensible number of coordinates
+  minc <- c(SpatialPolygonsDataFrame = 3, SpatialLinesDataFrame = 2, SpatialMultiPointsDataFrame = 1, SpatialPointsDataFrame = 1)[target]
+  if (nrow(x) < minc) stop(sprintf("target is %s but input table has  %i %s", target, nrow(x), c("rows", "row")[(nrow(x) ==1)+1]))
   dat <- distinct_(x, "object_", .keep_all = TRUE)
 
    n_object <- nrow(dat)
@@ -93,7 +96,7 @@ reverse_geomLine <- function(x, d, proj) {
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
   SpatialLinesDataFrame(SpatialLines(lapply(objects, loopBranchLine), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
-dropZeroRowFromList <- function(x) x[unlist(lapply(x, nrow)) > 0L]
+dropZeroRowFromList <- function(x) x[unlist(lapply(x, nrow), use.names = FALSE) > 0L]
 loopBranchLine<- function(a) Lines(lapply(dropZeroRowFromList(split(a, a$branch_)), function(b) Line(as.matrix(b[, c("x_", "y_")]))), as.character(a$object_[1L]))
 
 reverse_geomPoint <- function(a, d, proj) {

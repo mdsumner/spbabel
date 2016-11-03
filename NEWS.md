@@ -1,4 +1,4 @@
-# spbabel dev
+# spbabel 0.4.5
 
 * fixed bug in sp() logic that recreates a SpatialLines (it was using a Polygon under the hood)
 

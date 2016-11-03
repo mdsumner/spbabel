@@ -10,7 +10,7 @@
 #' \itemize{
 #'  \item \code{\link[broom]{sp_tidiers}} (replacement of 'ggplot2::fortify').
 #'  \item \code{\link[raster]{geom}}
-#'  \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' workflow. 
+#'  \item \code{\link[sp]{SpatialPolygonsDataFrame-class}} with its 'as(as(x, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")' work flow. 
 #' }
 #' 
 #' @param x \code{\link[sp]{Spatial}} object
@@ -61,7 +61,7 @@ sptable.SpatialPolygons <- function(x, ...) {
     x <- setNames(as_tibble(rasterpoly(x)), 
                   c("object_",  "part_", "branch_", "island_", "x_", "y_"))
     x[["part_"]] <- NULL
-    x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along))
+    x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along), use.names = FALSE)
     x[["island_"]] <- x[["island_"]] == 0
     x[["object_"]] <- as.integer(x[["object_"]])
     x[["branch_"]] <- as.integer(x[["branch_"]])
@@ -80,7 +80,7 @@ sptable.SpatialLines <- function(x, ...) {
 
     x <- setNames(as_tibble(rasterline(x)), 
                   c("object_",  "part_", "branch_", "x_", "y_"))
-    x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along))
+    x[["order_"]] <- unlist(lapply(split(x[["branch_"]], x[["branch_"]]), seq_along), use.names = FALSE)
     x[["part_"]] <- NULL
     x[["object_"]] <- as.integer(x[["object_"]])
     x[["branch_"]] <- as.integer(x[["branch_"]])
@@ -150,7 +150,7 @@ sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
   cnames <- c('object_', 'x_', 'y_')
   ##xy <- cbind(1:nrow(xy), xy)
   if (is.list(x@coords)) {
-    br <- rep(seq_along(x@coords), unlist(lapply(x@coords, nrow)))
+    br <- rep(seq_along(x@coords), unlist(lapply(x@coords, nrow), use.names = FALSE))
     cnames <- c('branch_', 'object_', 'x_', 'y_')
     xy <- bind_cols(tibble(br), tibble(br), xy)
   } else {

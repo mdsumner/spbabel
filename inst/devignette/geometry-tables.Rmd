@@ -17,28 +17,28 @@ vignette: >
 
 This package is a response to some missing use-cases in GIS (geographic information systems) using R. It is an attempt to provide a unified framework for doing the things that GIS traditionally cannot do without awkward workarounds. 
 
-With some reservation, I call this the **gris model**. 
+With some reservation, I call this the **gris model**, and it's being used in the [rangl](https://github.com/r-gris/rangl) and [rbgm](https://github.com/AustralianAntarcticDivision/rbgm) packages. 
 
 The model provides: 
 
-- a general, tidy, table-based framework for storing spatial data
-- a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
-- a unified and general data model that can be used to store any spatial data, and  
-- a common framework for conversions from and to other formats
+* a general, tidy, table-based framework for storing spatial data
+* a clear delineation between the *topology* and the *geometry* of spatial data, a distinction that is usually muddled
+* a unified and general data model that can be used to store any spatial data, and  
+* a common framework for conversions from and to other formats.
 
-Gris can be used to
+The model can be used to
 
-- convert a flat vector drawing of polygons into a topological 
+* convert a flat vector drawing of polygons into a topological 
 mesh of 2D triangles and 1D line segments with X, Y, Z geometry, while maintaining the identity of the original polygons and its discrete attributes. 
-- to store and transmit complex spatial data via generic storage of tables in databases
-- store multi-dimensional geo-spatial data, such as 3d box models with "face" topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path. 
+* store and transmit complex spatial data via generic storage of tables in databases
+* store multi-dimensional geo-spatial data, such as 3d box models with "face" topology, or trajectory data with x, y, z, and time positions for the continuous movement along with continuous or discrete measurements made along the path. 
 
-Gris relies on 
+The model relies on 
 
-- dplyr and tibble for sensible and powerful data frames
-- spbabel for conversion from and to other formats
+* `dplyr` and `tibble` for sensible and powerful data frames
+* `spbabel` for conversion from and to other formats.
 
-Gris does not use nested tables, though see worked discussions on how to do this (in the partner vignettes). 
+Gris does not use nested tables, though see worked discussions on how to do this (in the vignettes). 
 
 The approach is not a drop-in replacement for existing tools for traditional 
 GIS is R. If there's a better tool for the job, the recommended approach is to convert to the structures needed by that tool and do it, then return the result to the approach used here as needed. 
@@ -198,9 +198,9 @@ plot(sp_afr[2, ], col = "grey")
 
 What else is missing? 
 
-- identifiers on parts, ggplot understands this and maps provides it (with limitations)
-- identifiers on coordinates 
-- topology
+* identifiers on parts, ggplot understands this and maps provides it (with limitations)
+* identifiers on coordinates 
+* topology
 
 
 
@@ -262,11 +262,11 @@ Note that the attribute data were dropped as it is now ambiguous as to what valu
 This is not done with a single object with a special class, but it could be. See document on an S3 class for fortified, single-nested, and double-nested forms. 
 
 
+## Tables are systematic by default
 
 Perhaps the best thing about having *everything stored tables* is that we can push it out to a database, pass that to someone else and everything is transferred correctly. 
 
 Let's send a fortified copy of the maps "county" data set to someone in a 'SQLite' database. 
-
 
 
 ```{r,eval=FALSE}
@@ -314,7 +314,7 @@ branchXvertex$vertex_
 ```
 
 
-Another document that receives this database and explores nesting, demand-read. 
+Another vignette that receives this database and explores nesting, demand-read is in progress "Geometry tables read on-demand". 
 
 
 ## Tidy tables
@@ -323,7 +323,7 @@ We have tidied up in one sense, we've removed a complicated object with speciali
 
 There is redundancy in the geometry table. 'Tidy' means '3NF' or 'third-normal-form', and 3NF means that we remove the repeated values that could be stored just once. 
 
-Notice what we actually have in the "fortified" version of an sp object. 
+Notice what we actually have in the "fortified" version of an `sp` object. 
 
 ```{r, fig.width = 9, fig.height = 9}
 allnumbers <- function(x) {x[] <- lapply(x, function(a) if(is.character(a)) as.integer(factor(a)) else as.numeric(a)); x}
@@ -343,10 +343,10 @@ The implicit examples are 'order', the right order for the coordinates is just t
 
 Tags such whether it is a hole or not is an "attribute" tagged onto the object that holds the matrix of coordinates. We don't see the "comments" attribute here, which in sp (if present) tells us which piece 'belongs' to which other piece (i.e. when it's a hole, what island is it a hole of?). 
 
-Again, this is discussed [elsewhere] but the crux is the need for comments is a legacy of the "shapefile" era, no longer necessary in this the "simple features" era. More on that later. 
+Again, this is discussed elsewhere but the crux is the need for comments is a legacy of the "shapefile" era, no longer necessary in this the "simple features" era. More on that later. 
 
 
-(There are subtle rules and conventions about ordering and holes, which is discussed [elsewhere]). 
+(There are subtle rules and conventions about ordering and holes, which is discussed elsewhere). 
 
 
 How do we remove this redundancy? 
@@ -355,25 +355,44 @@ How do we remove this redundancy?
 * Create "tidy(-ish)" tables using nesting, there are at least three ways to do this (gggeom, single, double nesting)
 * Create normalized tables and put like with like. 
 
-TABLES
+## Normal form by stages
 
+Storing data in tables without unnessary redundancy is called "normal form". This goes a step further from the basics of tidy data being rows of observations with all columns as variables. 
 
-First identify the entities that exist. 
+To convert spatial vector data to normal form we need the to first identify the entities that exist. These are
 
-Objects, parts, coordinates. 
+* Objects - a.k.a. Features, or specifically polygons, lines, points, multipoints
+* Branches - a.k.a. Parts, or Pieces, specifically individual closed linepaths, line strings, individual coordinates
+* Vertices - a.k.a. coordinates. 
 
+If we create a "Branches" table by normalizing from the geometry table, we will have three tables, one with all the x/y coordinates and their part ID and order within part, the parts table with attributes part ID, island status, and the object metadata table. 
 
-If we create a "parts" table, we will have three tables, one with all the x/y coordinates and their part ID and order within part, the parts table with attributes part ID, island status, and the object metadata table. 
-
-Benefit is size of data is reduced. 
+A benefit here is that the size of data may be reduced, though it depends on how much data we have versus the number of IDs we need to link the tables. 
 
 ## Four tables
 
-Further normalization inserts a partXcoord table, and puts the order and vertex id on this. 
-Benefit is 
+Further normalization inserts a **link** table between branches and vertices, and puts the order and vertex id on this. This table should be thought of as the "instances of vertices", since this is where we explicitly store the use of an indvidual vertex by a branch. We don't need to store the same vertex again and again, just a link to it. This makes it easier to identify which coordinates are shared. 
 
-- further data reduction 
-- removal of duplicated coordinates
-- ability to demand page
-- ready for topology
+Other benefits include
+
+* further data reduction 
+* removal of duplicated coordinates
+* ability to read/query arbitrary elements 
+
+Note that the vertex table by default will be de-duplicated on X and Y, so we can store another pair of these transformed e.g. Longitude and Latitude, but the de-duplication process would be different if performed on three coordinates, or four. By default for now we only discuss doing this on X and Y (which may be Longitude and Latitude), because this is what gives us topology for the most common 2D case, and is absolutely required by the triangulation process in `RTriangle`. 
+
+
+Let's send a **normal form** copy of the maps "county" data set  in a 'SQLite' database. 
+
+
+
+```{r,eval=FALSE}
+library(dplyr)
+library(tibble)
+library(maps)
+library(ggplot2)
+db <- src_sqlite("data-raw/maps_county_nf.sqlite3", create = TRUE)
+mp <- map("county", plot = FALSE, fill = TRUE)
+
+```
 

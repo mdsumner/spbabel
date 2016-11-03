@@ -17,6 +17,8 @@ rmarkdown::render("README.Rmd", "all")
 #devtools::use_appveyor()
 # move the newly created appveyor.yml to the root directory and modify it
 
+devtools::revdep_check()
+
 # Check spelling mistakes
 devtools::spell_check()
 
@@ -25,6 +27,6 @@ devtools::check()
 # The above will also run the unit tests using testthat
 # devtools::test()
 
-staticdocs::build_site()
+pkgdown::build_site()
 # Good practice (@MangoTheCat)
 #goodpractice::gp()
