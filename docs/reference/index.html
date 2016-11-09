@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference. spbabel</title>
+<title>Function reference • spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,10 +34,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-index">
       <header>
-      
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,9 +49,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -62,51 +58,94 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>Function reference <small>version&nbsp;0.4.5</small></h1>
-</div>
-
-<div class="row">
+      <div class="row">
   <div class="col-md-9">
-    <div class="section ">
-      <h2>All functions</h2>
+    <div class="page-header">
+      <h1>Function reference</h1>
+      <h4>version&nbsp;0.4.5.9001</h4>
+    </div>
+
+    <div class="contents">
+      <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
       <p class="section-desc"></p>
 
-      <dl class="dl-horizontal">
-        <dt><a href="holey.html">holey</a></dt>
-        <dd>Multi-part, multi-holed, neighbouring, not completely topological polygons.</dd>
-        <dt><a href="map_table.html">map_table</a></dt>
-        <dd>A decomposition of 'vector' map data structures to tables.</dd>
-        <dt><a href="mpoint1.html">mpoint1</a></dt>
-        <dd>MultiPointsDataFrame data set</dd>
-        <dt><a href="semap.html">seatt</a></dt><dt><a href="semap.html">semap</a></dt>
-        <dd>&quot;South-east&quot; map data.</dd>
-        <dt><a href="sp-methods.html">print,Spatial-method</a></dt><dt><a href="sp-methods.html">show,SpatialLinesDataFrame-method</a></dt><dt><a href="sp-methods.html">show,SpatialPointsDataFrame-method</a></dt><dt><a href="sp-methods.html">show,SpatialPolygonsDataFrame-method</a></dt>
-        <dd>sp methods</dd>
-        <dt><a href="sp.html">sp</a></dt><dt><a href="sp.html">sp.data.frame</a></dt>
-        <dd>Convert from dplyr tbl form to Spatial*DataFrame.</dd>
-        <dt><a href="spbabel-package.html">spbabel-package</a></dt>
-        <dd>Convert between different types of spatial objects.</dd>
-        <dt><a href="sptable.html">map_table.trip</a></dt><dt><a href="sptable.html">sptable</a></dt><dt><a href="sptable.html">sptable.SpatialLines</a></dt><dt><a href="sptable.html">sptable.SpatialMultiPointsDataFrame</a></dt><dt><a href="sptable.html">sptable.SpatialPointsDataFrame</a></dt><dt><a href="sptable.html">sptable.SpatialPolygons</a></dt><dt><a href="sptable.html">sptable&lt;-</a></dt>
-        <dd>Convert from sp package 'Spatial' classes to a table.</dd>
-        <dt><a href="track.html">track</a></dt>
-        <dd>Multi-object track with x, y, z, and time.</dd>
-      </dl>
+      
+      <p><a href="holey.html">Multi-part, multi-holed, neighbouring, not completely topological polygons.</a></p>
+      <ul>
+        <li><code><a href="holey.html">holey</a></code></li>
+      </ul>
+      
+      <p><a href="map_table.html">A decomposition of 'vector' map data structures to tables.</a></p>
+      <ul>
+        <li><code><a href="map_table.html">map_table</a></code></li>
+      </ul>
+      
+      <p><a href="mpoint1.html">MultiPointsDataFrame data set</a></p>
+      <ul>
+        <li><code><a href="mpoint1.html">mpoint1</a></code></li>
+      </ul>
+      
+      <p><a href="semap.html">&quot;South-east&quot; map data.</a></p>
+      <ul>
+        <li><code><a href="semap.html">seatt</a></code></li><li><code><a href="semap.html">semap</a></code></li>
+      </ul>
+      
+      <p><a href="sp-methods.html">sp methods</a></p>
+      <ul>
+        <li><code><a href="sp-methods.html">print,Spatial-method</a></code></li><li><code><a href="sp-methods.html">show,SpatialLinesDataFrame-method</a></code></li><li><code><a href="sp-methods.html">show,SpatialPointsDataFrame-method</a></code></li><li><code><a href="sp-methods.html">show,SpatialPolygonsDataFrame-method</a></code></li>
+      </ul>
+      
+      <p><a href="sp.html">Convert from dplyr tbl form to Spatial*DataFrame.</a></p>
+      <ul>
+        <li><code><a href="sp.html">sp</a></code></li><li><code><a href="sp.html">sp.data.frame</a></code></li>
+      </ul>
+      
+      <p><a href="spbabel-package.html">Convert between different types of spatial objects.</a></p>
+      <ul>
+        <li><code><a href="spbabel-package.html">spbabel-package</a></code></li>
+      </ul>
+      
+      <p><a href="sptable.html">Convert from sp package 'Spatial' classes to a table.</a></p>
+      <ul>
+        <li><code><a href="sptable.html">map_table.trip</a></code></li><li><code><a href="sptable.html">sptable</a></code></li><li><code><a href="sptable.html">sptable.SpatialLines</a></code></li><li><code><a href="sptable.html">sptable.SpatialMultiPointsDataFrame</a></code></li><li><code><a href="sptable.html">sptable.SpatialPointsDataFrame</a></code></li><li><code><a href="sptable.html">sptable.SpatialPolygons</a></code></li><li><code><a href="sptable.html">sptable&lt;-</a></code></li>
+      </ul>
+      
+      <p><a href="track.html">Multi-object track with x, y, z, and time.</a></p>
+      <ul>
+        <li><code><a href="track.html">track</a></code></li>
+      </ul>
+    
     </div>
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#section-all-functions">All functions</a></li>
+    </ul>
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Michael D. Sumner.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 

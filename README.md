@@ -38,7 +38,7 @@ Planned are
 -   PBSmapping
 -   lawn
 
--   the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others
+-   the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others `crawl` and `move` packages contain objects that could be coerced in a straightforward way, see the Spatio Temporal Task View for more (in the Moving Objects / Trajectories section). The hyperframe in spatstat is another example, and to follow up Edzer's work in spacetime.
 
 If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.
 

@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>map_table. spbabel</title>
+<title>A decomposition of &#39;vector&#39; map data structures to tables. — map_table â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,10 +34,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-topic">
       <header>
-      
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,9 +49,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -62,21 +58,23 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>A decomposition of &#39;vector&#39; map data structures to tables.</h1>
-</div>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>A decomposition of &#39;vector&#39; map data structures to tables.</h1>
+    </div>
 
-<div class="row">
-  <div class="col-md-9">
     
     <p>Creates a set of related tables to store the appropriate
 entities in spatial map data.</p>
@@ -84,7 +82,7 @@ entities in spatial map data.</p>
 
     <pre><span class='fu'>map_table</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2>Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
       <dd>object to tidy</dd>
@@ -92,32 +90,32 @@ entities in spatial map data.</p>
       <dd>arguments passed to methods</dd>
     </dl>
     
-    <div class="Value">
-      <h2>Value</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <p>list of tibbles</p>
-    </div>
+    <p>list of tibbles</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class="Details">
-      <h2>Details</h2>
-
-      <p>The basic entities behind spatial data, and hence the &quot;map tables&quot; are: 
+    <p>The basic entities behind spatial data, and hence the &quot;map tables&quot; are: 
 <dl class='dl-horizontal'>
  <dt>vertices</dt><dd>the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.</dd>
  <dt>branches</dt><dd>a single connected chain of vertices, or &quot;parts&quot;</dd>
  <dt>objects</dt><dd>a collection of branches aligned to a row of metadata</dd>
  </dl></p>
-      <p>This is the basic &quot;topology&quot; of traditional GIS vector data, for points, 
+    <p>This is the basic &quot;topology&quot; of traditional GIS vector data, for points, 
  lines, polygons and their multi-counterparts. By default map_tables will 
  produce these tables and also de-duplicated the input vertices, adding a 
  fourth table to link vertices to branches.</p>
-      <p>Other topology types such as triangle or quad meshes can extend this 
+    <p>Other topology types such as triangle or quad meshes can extend this 
  four-entity model, or exist without the branches at all. See &quot;mesh_table&quot; ??</p>
-    </div>
     
-    <h2 id="examples">Examples</h2>
+
+    <h2 class="hasAnchor" id="examples">
+      <a class="anchor" href="#examples"></a>
+      Examples
+    </h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>holey</span>)
-<span class='no'>spholey</span> <span class='kw'>&lt;-</span> <span class='fu'>sp</span>(<span class='no'>holey</span>)
+<span class='no'>spholey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>holey</span>)
 <span class='fu'>map_table</span>(<span class='no'>spholey</span>)</div><div class='output co'>#&gt; $o
 #&gt; # A tibble: 3 × 2
 #&gt;   rownumber_    object_
@@ -174,12 +172,30 @@ entities in spatial map data.</p>
 #&gt; 
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Michael D. Sumner.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 

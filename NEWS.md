@@ -1,5 +1,7 @@
 # spbabel dev
 
+* added support for sf
+
 * proper support for SpatialPoints in map_table
 
 # spbabel 0.4.5

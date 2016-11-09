@@ -13,7 +13,7 @@ URL: https://mdsumner.github.io/spbabel
 BugReports: https://github.com/mdsumner/spbabel/issues
 Depends:
     R (>= 3.2.3)
-Imports: dplyr, methods, sp, tibble
+Imports: dplyr, methods, sf, sp, tibble
 Suggests: testthat,
     ggplot2,
     maptools,
