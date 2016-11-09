@@ -85,7 +85,7 @@ map_table.Spatial <- function(x, ...) {
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[tabmap$object_]
   if (class(x) == "SpatialPointsDataFrame") {
-    ## no branches
+    tabmap$branch_ <- id_n(nrow(tabmap))
   } else {
   tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
   }
