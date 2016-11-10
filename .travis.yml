@@ -8,24 +8,24 @@ after_success:
   - Rscript -e 'covr::codecov()'
   
 before_install:
-  - export CURWD=`pwd`
-  - sudo apt-get install libproj-dev libgeos++-dev
-  - cd
-  - wget http://download.osgeo.org/gdal/2.0.2/gdal-2.0.2.tar.gz
-  - tar zxf gdal-2.0.2.tar.gz
-  - cd gdal-2.0.2
-  - ./configure
-  - make
-  - sudo make install
-  - cd
-  - wget http://download.osgeo.org/proj/proj-4.9.2.tar.gz
-  - tar zxvf proj-4.9.2.tar.gz
-  - cd proj-4.9.2
-  - ./configure
-  - make
-  - sudo make install
-  - sudo ldconfig
-  - cd $CURWD
+ - export CURWD=`pwd`
+ - sudo apt-get install libproj-dev libgeos++-dev
+ - cd
+ - wget http://download.osgeo.org/gdal/2.1.2/gdal-2.1.2.tar.gz
+ - tar zxf gdal-2.1.2.tar.gz
+ - cd gdal-2.1.2
+ - ./configure
+ - make
+ - sudo make install
+ - cd
+ - wget http://download.osgeo.org/proj/proj-4.9.3.tar.gz
+ - tar zxvf proj-4.9.3.tar.gz
+ - cd proj-4.9.3
+ - ./configure
+ - make
+ - sudo make install
+ - sudo ldconfig
+ - cd $CURWD
 
 r_packages:
   - rgdal
