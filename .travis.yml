@@ -30,4 +30,3 @@ before_install:
 r_packages:
   - rgdal
   - sf
-  - rgeos
