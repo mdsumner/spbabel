@@ -16,6 +16,21 @@ map_table.sf <- function(x, ...) {
   out
 }
 
+
+
+
+as.list.sfc <- function(x) {
+  rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list")
+}
+
+polygonData.sf <- function(x) {
+  matrix2list <- function(x) {
+    split(x, rep(seq(ncol(x)), each = nrow(x)))
+  }
+  structure(rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list"), 
+            bbox = matrix(attr(nc[[attr(nc, "sf_column")]], "bbox"), ncol = 2))
+}
+#' @export
 #' @importFrom sf st_geometry
 #' @importFrom tibble as_tibble
 sptable.sf <- function(x) {
