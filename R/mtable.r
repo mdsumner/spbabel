@@ -90,6 +90,7 @@ map_table.Spatial <- function(x, ...) {
   tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
   }
   out <- map_table_From2(tabdat, tabmap)
+
   # no class or methods in spbabel for map_table()
   #class(out) <- c("map_table", "list")
   out
@@ -114,25 +115,19 @@ map_table_From2 <- function(dat1, map1) {
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
   bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
  
-  ## classify unique vertices by unique index
-  ## could tidy this up some more . . .
-  #fpaste <- function(...) paste(..., sep = "_")
-  #map1 <- #map1 %>%
-  #  mutate(map1, vertex_  = as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))) 
-  ver_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
+ ver_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
   map1[["vertex_"]] <- id_n(length(unique(ver_)))[ver_]
-  #map1[["vertex_"]] <- id_n(length(unique(vertex_)))[vertex_]
-
-  
-  #map1$vertex_ <- id_nrow(nrow(map1))[map1$vertex_]
-  ## branches, owner object and island status
-  b <- distinct_(map1, .dots = b_atts) 
+   b <- distinct_(map1, .dots = b_atts) 
   ## four tables (dat1, map2, map4, map5)
 
     bXv <- dplyr::select_(map1, .dots = bxv_atts)
     #print(head(map1))
     v <- map1[!duplicated(map1$vertex_), c(v_atts, "vertex_")]
     #  v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
+  class(dat1) <- c("object_table", class(dat1))
+  class(b) <- c("branch_table", class(b))
+  class(bXv) <- c("branch_link_vertex_table", class(bXv))
+  class(v) <- c("vertex_table", class(v))
   res <- list(o = dat1, b = b,  bXv = bXv, v = v)
   res
 }
