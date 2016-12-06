@@ -1,5 +1,5 @@
 
-#' @export
+
 #' @importFrom tibble as_tibble
 map_table.sf <- function(x, ...) {
   
@@ -27,24 +27,93 @@ polygonData.sf <- function(x) {
   structure(rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list"), 
             bbox = matrix(attr(nc[[attr(nc, "sf_column")]], "bbox"), ncol = 2))
 }
-#' @export
+
+
+feature_table <- function(x, ...) {
+  UseMethod("feature_table")
+}
+
+feature_table.default <- function(x, ...) {
+  tibble::as_tibble(as_matrix(x))
+}
+
+
+feature.table.sfc_GEOMETRYCOLLECTION <- function(x, ...) lapply(x[[1]], feature_table)
+
+
+as_matrix <- function(x, ...) UseMethod("as_matrix")
+matrixOrVector <- 
+function(x, gclass) {
+  colnms <- unlist(strsplit(gclass, ""))
+  ##print(colnms)
+  x <- unclass(x)
+  if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
+  structure(as.matrix(x), dimnames = list(NULL, colnms))
+}
+
+
+as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix(a))
+
+as_matrix.sfc_GEOMETRYCOLLECTION <- function(x, ...) as_matrix(x[[1]])
+
+as_matrix.MULTIPOLYGON <-  
+  function(x, ...) {
+    do.call(rbind, lapply(seq_along(x),  function(polygon_) do.call(rbind, lapply(seq_along(x[[polygon_]]), 
+                          function(island_) cbind(matrixOrVector(x[[polygon_]][[island_]], class(x)[1L]),  polygon_, island_)))))
+    
+}
+
+as_matrix.POLYGON <-  
+  function(x, ...) {
+    do.call(rbind, lapply(seq_along(x), 
+                          function(island_) cbind(matrixOrVector(x[[island_]], class(x)[1L]),  island_)))
+  }
+
+as_matrix.MULTILINESTRING <- 
+  function(x, ...) {
+    do.call(rbind, lapply(seq_along(x), 
+                          function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
+  }
+
+as_matrix.POINT <- as_matrix.MULTIPOINT  <- as_matrix.LINESTRING <- function(x, ...) {
+  matrixOrVector(x, class(x)[1L])
+}
+
+sf_g_apply <- function(x, fun) {
+  lapply(st_geometry(x), fun)
+}
+
+
 #' @importFrom sf st_geometry
 #' @importFrom tibble as_tibble
 sptable.sf <- function(x) {
   g <- sf::st_geometry(x)
   
+  ## multipolygon
   gtab <- do.call(rbind,lapply(seq_along(g), 
                                function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]), 
                                                                         function(branch_) do.call(rbind, lapply(seq_along(g[[object_]][[branch_]]), 
                                                                                                                 function(sub_index) cbind(g[[object_]][[branch_]][[sub_index]], object_, branch_, sub_index)))))))
-  
-  
-  
+  # matrixOrVector <- function(x) {
+  #   if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
+  #   x
+  # }
+  # ## polygon, multilinestring, linestring, 
+  # gtab <- do.call(rbind,lapply(seq_along(g), 
+  #                              function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]), 
+  #                                                                       function(branch_) cbind(g[[object_]][[branch_]], object_, branch_)))))
+  # ## multipoint, point
+  # gtab <- do.call(rbind,lapply(seq_along(g), 
+  #                              function(branch_)  cbind(matrixOrVector(g[[branch_]]), branch_)))
+  # 
+  # 
+  # 
   pmap_df <- function(x) {
     x <- as_tibble(x); 
     names(x)[1:2] <- c("x_", "y_")
     x[["branch_"]] <- cumsum(c(0, diff(x[["branch_"]]))) + x[["branch_"]] + x[["object_"]]
     x <- x %>% mutate(island_ = sub_index == 1, sub_index = NULL)
+    x
   }
   pmap_df(gtab)
 }
