@@ -35,3 +35,6 @@ gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
 
 
 gz <- rbind(zoodoo, gcdoo)
+
+spbabel:::sf_g_apply(zoodoo, spbabel:::feature_table)
+spbabel:::sf_g_apply(gcdoo, spbabel:::feature_table)

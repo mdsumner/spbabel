@@ -1,6 +1,6 @@
 # spbabel dev
 
-* added support for sf
+* WIP added support for sf, new model based on "feature_table"
 
 * proper support for SpatialPoints in map_table
 
