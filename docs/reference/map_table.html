@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A decomposition of &#39;vector&#39; map data structures to tables. — map_table â€¢ spbabel</title>
+<title>A decomposition of &#39;vector&#39; map data structures to tables. â€” map_table â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -110,66 +110,62 @@ entities in spatial map data.</p>
  four-entity model, or exist without the branches at all. See &quot;mesh_table&quot; ??</p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>holey</span>)
 <span class='no'>spholey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>holey</span>)
 <span class='fu'>map_table</span>(<span class='no'>spholey</span>)</div><div class='output co'>#&gt; $o
-#&gt; # A tibble: 3 × 2
-#&gt;   rownumber_    object_
-#&gt;        &lt;int&gt;      &lt;chr&gt;
-#&gt; 1          1 fZLjaCErTV
-#&gt; 2          2 2kctymzdy8
-#&gt; 3          3 rQTm8TdGRQ
+#&gt; # A tibble: 3 Ã— 2
+#&gt;   rownumber_ object_
+#&gt;        &lt;int&gt;   &lt;chr&gt;
+#&gt; 1          1      fZ
+#&gt; 2          2      Lj
+#&gt; 3          3      aC
 #&gt; 
 #&gt; $b
-#&gt; # A tibble: 9 × 3
-#&gt;      object_    branch_ island_
-#&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1 fZLjaCErTV bnsNDAR6ln    TRUE
-#&gt; 2 fZLjaCErTV QENOfVV98y   FALSE
-#&gt; 3 fZLjaCErTV CtkGEWmSev   FALSE
-#&gt; 4 fZLjaCErTV ZqJuKl6HHr   FALSE
-#&gt; 5 fZLjaCErTV BxbCybxI1x    TRUE
-#&gt; 6 fZLjaCErTV GLqrD5ynPd    TRUE
-#&gt; 7 2kctymzdy8 9jG0SoHZbD    TRUE
-#&gt; 8 rQTm8TdGRQ XYznzPFOFZ    TRUE
-#&gt; 9 rQTm8TdGRQ R2a39FwWKN   FALSE
+#&gt; # A tibble: 9 Ã— 3
+#&gt;   object_ branch_ island_
+#&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;
+#&gt; 1      fZ      Er    TRUE
+#&gt; 2      fZ      TV   FALSE
+#&gt; 3      fZ      2k   FALSE
+#&gt; 4      fZ      ct   FALSE
+#&gt; 5      fZ      ym    TRUE
+#&gt; 6      fZ      zd    TRUE
+#&gt; 7      Lj      y8    TRUE
+#&gt; 8      aC      rQ    TRUE
+#&gt; 9      aC      Tm   FALSE
 #&gt; 
 #&gt; $bXv
-#&gt; # A tibble: 50 × 3
-#&gt;       branch_ order_    vertex_
-#&gt;         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
-#&gt; 1  bnsNDAR6ln      1 1Jp41pyVhm
-#&gt; 2  bnsNDAR6ln      2 kP15IJQpc4
-#&gt; 3  bnsNDAR6ln      3 jHh7ck68S2
-#&gt; 4  bnsNDAR6ln      4 0TtggXxd9L
-#&gt; 5  bnsNDAR6ln      5 1Jp41pyVhm
-#&gt; 6  QENOfVV98y      1 11vam6r27a
-#&gt; 7  QENOfVV98y      2 RnTnCuJpC4
-#&gt; 8  QENOfVV98y      3 e9Lk4cKo4Y
-#&gt; 9  QENOfVV98y      4 8cBN9t1H2F
-#&gt; 10 QENOfVV98y      5 11vam6r27a
+#&gt; # A tibble: 50 Ã— 3
+#&gt;    branch_ order_ vertex_
+#&gt;      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
+#&gt; 1       Er      1      8T
+#&gt; 2       Er      2      dG
+#&gt; 3       Er      3      bC
+#&gt; 4       Er      4      Bx
+#&gt; 5       Er      5      8T
+#&gt; 6       TV      1      xI
+#&gt; 7       TV      2      bn
+#&gt; 8       TV      3      RQ
+#&gt; 9       TV      4      yb
+#&gt; 10      TV      5      xI
 #&gt; # ... with 40 more rows
 #&gt; 
 #&gt; $v
-#&gt; # A tibble: 27 × 3
-#&gt;       x_    y_    vertex_
-#&gt;    &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;
-#&gt; 1      0     0 1Jp41pyVhm
-#&gt; 2      0    19 kP15IJQpc4
-#&gt; 3     46    19 jHh7ck68S2
-#&gt; 4     46     0 0TtggXxd9L
-#&gt; 5      7     6 11vam6r27a
-#&gt; 6     13     6 RnTnCuJpC4
-#&gt; 7     13    13 e9Lk4cKo4Y
-#&gt; 8      7    13 8cBN9t1H2F
-#&gt; 9     18     1 8Y3KV9SnsS
-#&gt; 10    24     1 FzTNy7sdJn
+#&gt; # A tibble: 27 Ã— 3
+#&gt;       x_    y_ vertex_
+#&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;chr&gt;
+#&gt; 1      0     0      8T
+#&gt; 2      0    19      dG
+#&gt; 3     46    19      bC
+#&gt; 4     46     0      Bx
+#&gt; 5      7     6      xI
+#&gt; 6     13     6      bn
+#&gt; 7     13    13      RQ
+#&gt; 8      7    13      yb
+#&gt; 9     18     1      sN
+#&gt; 10    24     1      Ct
 #&gt; # ... with 17 more rows
-#&gt; 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

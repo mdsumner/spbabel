@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert from dplyr tbl form to Spatial*DataFrame. � sp • spbabel</title>
+<title>Convert from dplyr tbl form to Spatial*DataFrame. — sp • spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,10 +101,7 @@
     <p>Spatial*</p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>semap1</span> <span class='kw'>&lt;-</span> <span class='no'>semap</span>  <span class='kw'>%&gt;%</span> <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>filter</span>(<span class='no'>y_</span> <span class='kw'>&gt;</span> -<span class='fl'>89.9999</span>)
 <span class='no'>sp_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>sp</span>(<span class='no'>semap1</span>, <span class='kw'>attr_tab</span> <span class='kw'>=</span> <span class='no'>seatt</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='st'>"+proj=longlat +ellps=WGS84"</span>)

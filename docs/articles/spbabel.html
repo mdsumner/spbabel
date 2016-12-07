@@ -35,7 +35,7 @@
       <h1>spbabel</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2016-11-09</h4>
+            <h4 class="date">2016-12-07</h4>
           </div>
 
     
@@ -144,7 +144,7 @@ mm$v &lt;-<span class="st"> </span>mm$v %&gt;%<span class="st"> </span><span cla
 ## cascaded inner join and arrange within branch
 ctable &lt;-<span class="st"> </span><span class="kw">with</span>(mm, 
        <span class="kw">inner_join</span>(v, bXv) %&gt;%<span class="st">  </span><span class="kw">inner_join</span>(b) %&gt;%<span class="st"> </span>
-<span class="st">         </span><span class="kw">arrange</span>(branch_, order_) %&gt;%<span class="st"> </span><span class="kw">select</span>(-vertex_))</code></pre></div>
+<span class="st">         </span><span class="kw">arrange</span>(branch_, order_) %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-vertex_))</code></pre></div>
 <pre><code>## Joining, by = "vertex_"</code></pre>
 <pre><code>## Joining, by = "branch_"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_sp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(ctable, 
@@ -153,7 +153,7 @@ ctable &lt;-<span class="st"> </span><span class="kw">with</span>(mm,
 mm_sp</code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
 ## features    : 19 
-## extent      : 95.00803, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
+## extent      : 95.10886, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
 ## coord. ref. : NA 
 ## variables   : 12
 ## # A tibble: 19 &times; 12
@@ -184,7 +184,7 @@ mm_sp</code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-5-2.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get a gg plot
 
-<span class="kw">ggplot</span>(ctable %&gt;%<span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">select</span>(mm$o, NAME, object_))) +<span class="st"> </span>
+<span class="kw">ggplot</span>(ctable %&gt;%<span class="st"> </span><span class="kw">inner_join</span>(dplyr::<span class="kw">select</span>(mm$o, NAME, object_))) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">group =</span> branch_, <span class="dt">fill =</span> NAME) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_polygon</span>() +<span class="st"> </span>ggplot2::<span class="kw">coord_equal</span>()</code></pre></div>
 <pre><code>## Joining, by = "object_"</code></pre>

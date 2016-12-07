@@ -80,6 +80,15 @@ feature_table.default <- function(x, ...) {
 #' @export
 feature_table.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, feature_table)
 
+#' @export
+feature_table.sf <- function(x) {
+  idx <- match(attr(x, "sf_column"), names(x))
+  ## watch out for indexing out the geometry column
+  ## because drop = TRUE in old data frames
+  object <- tibble::as_tibble(x)[, -idx]
+  geometry_tables <- lapply(st_geometry(x), feature_table)
+  list(object = object, geometry = geometry_tables)
+}
 
 as_matrix <- function(x, ...) UseMethod("as_matrix")
 matrixOrVector <- 

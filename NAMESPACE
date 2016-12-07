@@ -2,6 +2,7 @@
 
 S3method(feature_table,GEOMETRYCOLLECTION)
 S3method(feature_table,default)
+S3method(feature_table,sf)
 S3method(map_table,Spatial)
 S3method(map_table,sf)
 S3method(map_table,trip)
