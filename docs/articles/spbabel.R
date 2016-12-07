@@ -57,7 +57,8 @@ plot(mm$v[, c("x_", "y_")])
 ## cascaded inner join and arrange within branch
 ctable <- with(mm, 
        inner_join(v, bXv) %>%  inner_join(b) %>% 
-         arrange(branch_, order_) %>% select(-vertex_))
+         arrange(branch_, order_) %>% 
+         dplyr::select(-vertex_))
 
 mm_sp <- sp(ctable, 
             attr_tab = mm$o)
@@ -68,7 +69,7 @@ plot(mm_sp, col = grey(seq(0, 1, length = nrow(mm_sp))))
 ## ---- fig.height=9, fig.width=9------------------------------------------
 ## get a gg plot
 
-ggplot(ctable %>% inner_join(select(mm$o, NAME, object_))) + 
+ggplot(ctable %>% inner_join(dplyr::select(mm$o, NAME, object_))) + 
   aes(x = x_, y = y_, group = branch_, fill = NAME) + 
   geom_polygon() + ggplot2::coord_equal()
 

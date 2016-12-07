@@ -64,6 +64,13 @@ map_table.sf <- function(x, ...) {
 
 #' Normal form for sf
 #' 
+#' A `feature_table` is a normal form for simple features, where all branches are
+#' recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_ 
+#' are NA except for the holes in multipolygon. 
+#' 
+#' There are three tables, objects (the feature attributes and ID), branches (the parts), 
+#' coordinates (the X, Y, Z, M values). 
+#' 
 #' @param x sf object
 #' @param ... ignored
 #'
@@ -81,12 +88,13 @@ feature_table.default <- function(x, ...) {
 feature_table.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, feature_table)
 
 #' @export
-feature_table.sf <- function(x) {
+#' @importFrom sf st_geometry
+feature_table.sf <- function(x, ...) {
   idx <- match(attr(x, "sf_column"), names(x))
   ## watch out for indexing out the geometry column
   ## because drop = TRUE in old data frames
   object <- tibble::as_tibble(x)[, -idx]
-  geometry_tables <- lapply(st_geometry(x), feature_table)
+  geometry_tables <- lapply(sf::st_geometry(x), feature_table)
   list(object = object, geometry = geometry_tables)
 }
 

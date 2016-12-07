@@ -142,7 +142,8 @@ plot(mm$v[, c("x_", "y_")])
 ## cascaded inner join and arrange within branch
 ctable <- with(mm, 
        inner_join(v, bXv) %>%  inner_join(b) %>% 
-         arrange(branch_, order_) %>% dplyr::select(-vertex_))
+         arrange(branch_, order_) %>% 
+         dplyr::select(-vertex_))
 
 mm_sp <- sp(ctable, 
             attr_tab = mm$o)

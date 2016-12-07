@@ -76,7 +76,9 @@
     </div>
 
     
-    <p>Normal form for sf</p>
+    <p>A `feature_table` is a normal form for simple features, where all branches are
+recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_ 
+are NA except for the holes in multipolygon.</p>
     
 
     <pre><span class='fu'>feature_table</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -89,13 +91,20 @@
       <dd>ignored</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>There are three tables, objects (the feature attributes and ID), branches (the parts), 
+coordinates (the X, Y, Z, M values).</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

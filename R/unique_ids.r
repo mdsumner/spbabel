@@ -14,7 +14,7 @@ idmaker <- function(n = 10L) {
 
 
 ## create n unique ids
-id_n <- function(x = 1, n = 2L) {
+id_n <- function(x = 1, n = 5L) {
   replicate(x, idmaker(n))
 }
 

@@ -144,7 +144,8 @@ mm$v &lt;-<span class="st"> </span>mm$v %&gt;%<span class="st"> </span><span cla
 ## cascaded inner join and arrange within branch
 ctable &lt;-<span class="st"> </span><span class="kw">with</span>(mm, 
        <span class="kw">inner_join</span>(v, bXv) %&gt;%<span class="st">  </span><span class="kw">inner_join</span>(b) %&gt;%<span class="st"> </span>
-<span class="st">         </span><span class="kw">arrange</span>(branch_, order_) %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-vertex_))</code></pre></div>
+<span class="st">         </span><span class="kw">arrange</span>(branch_, order_) %&gt;%<span class="st"> </span>
+<span class="st">         </span>dplyr::<span class="kw">select</span>(-vertex_))</code></pre></div>
 <pre><code>## Joining, by = "vertex_"</code></pre>
 <pre><code>## Joining, by = "branch_"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_sp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(ctable, 
@@ -153,7 +154,7 @@ ctable &lt;-<span class="st"> </span><span class="kw">with</span>(mm,
 mm_sp</code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
 ## features    : 19 
-## extent      : 95.10886, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
+## extent      : 95.00803, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
 ## coord. ref. : NA 
 ## variables   : 12
 ## # A tibble: 19 &times; 12

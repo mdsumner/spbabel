@@ -12,6 +12,12 @@ feature_table(x, ...)
 \item{...}{ignored}
 }
 \description{
-Normal form for sf
+A `feature_table` is a normal form for simple features, where all branches are
+recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_ 
+are NA except for the holes in multipolygon.
+}
+\details{
+There are three tables, objects (the feature attributes and ID), branches (the parts), 
+coordinates (the X, Y, Z, M values).
 }
 
