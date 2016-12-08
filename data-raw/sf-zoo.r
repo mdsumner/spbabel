@@ -22,7 +22,7 @@ sfzoo <- function() {
        multipolygon = mpol)
 }
 sfgeomc <- function() {
-  gc <- st_geometrycollection(sfzoo())
+  gc <- st_geometrycollection(setNames(sfzoo(), "geometrycollection"))
 }
 
 

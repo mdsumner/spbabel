@@ -1,8 +1,55 @@
+# #' @export
+# feature_table_dedupe.Spatial <- function(x, ...) {
+#   mt <- map_table(x)
+#   object <- mt$o
+#   ## avoid Spatial hole-parents for now, maybe forever
+#   branch <- mt$b %>% mutate(type = sf_type(class(geometry(x))), parent = NA_character_)
+#   #object_, branch_, type_, parent_
+#   vertex <- mt$v
+#   structure(list(object = object, branch = branch, vertex = vertex), class = "feature_table")
+# }
+
+## tibble methods:
+
+
+sf_types <- function() {
+sf_topologies  <- 	
+             c("GEOMETRY",
+               "POINT",
+               "LINESTRING",
+               "POLYGON",
+               "MULTIPOINT",
+               "MULTILINESTRING",
+               "MULTIPOLYGON",
+               "GEOMETRYCOLLECTION",
+               "CIRCULARSTRING",
+               "COMPOUNDCURVE",
+               "CURVEPOLYGON",
+               "MULTICURVE",
+               "MULTISURFACE",
+               "CURVE",
+               "SURFACE",
+               "POLYHEDRALSURFACE",
+               "TIN",
+               "TRIANGLE")
+  factor(sf_topologies, sf_topologies)
+}
+
+sp_sf_types <- function() {
+  c(SpatialPoints = "POINT", SpatialMultiPoints = "MULTIPOINT", 
+    SpatialLines = "MULTILINESTRING", SpatialPolygons = "MULTIPOLYGON", 
+    SpatialCollection = "GEOMETRYCOLLECTION")
+}
+
+sf_type <- function(sp_type) {
+  factor(sp_sf_types()[sp_type], levels(sf_types()))
+}
+
 
 #' @export
 #' @importFrom tibble as_tibble
 map_table.sf <- function(x, ...) {
-
+  
   tabmap <- sptable(x)
   ## why did this ever work?
   #  tabdat <- tibble::as_tibble(x)
@@ -15,51 +62,8 @@ map_table.sf <- function(x, ...) {
   #class(out) <- c("map_table", "list")
   out
 }
-#
-# as.list.sfc <- function(x) {
-#   rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list")
-# }
-# 
-# polygonData.sf <- function(x) {
-#   matrix2list <- function(x) {
-#     split(x, rep(seq(ncol(x)), each = nrow(x)))
-#   }
-#   structure(rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list"), 
-#             bbox = matrix(attr(nc[[attr(nc, "sf_column")]], "bbox"), ncol = 2))
-# }
-# 
-# #' @importFrom sf st_crs
-# rangl.sf <- function (x, max_area = NULL, ...) 
-# {
-#   pr4 <- sf::st_crs(x)$proj4string
-#   
-#   tabs <- spbabel::map_table(x)
-#   ll <- vector("list", nrow(tabs$o))
-#   for (i_obj in seq(nrow(tabs$o))) {
-#     tabs_i <- tabs
-#     tabs_i$o <- tabs_i$o[i_obj, ]
-#     tabs_i <- rangl:::semi_cascade(tabs_i)
-#     tt_i <- rangl:::tri_mesh_map_table1(tabs_i, max_area = max_area)
-#     ll[[i_obj]] <- tt_i
-#   }
-#   outlist <- vector("list", length(ll[[1]]))
-#   nms <- names(ll[[1]])
-#   names(outlist) <- nms
-#   for (i in seq_along(outlist)) {
-#     outlist[[i]] <- dplyr::bind_rows(lapply(ll, "[[", nms[i]))
-#   }
-#   allverts <- dplyr::inner_join(outlist$tXv, outlist$v, "vertex_")
-#   allverts$uvert <- as.integer(factor(paste(allverts$x_, allverts$y_, 
-#                                             sep = "_")))
-#   allverts$vertex_ <- spbabel:::id_n(length(unique(allverts$uvert)))[allverts$uvert]
-#   outlist$tXv <- allverts[, c("triangle_", "vertex_")]
-#   outlist$v <- dplyr::distinct_(allverts, "vertex_", .keep_all = TRUE)[, 
-#                                                                        c("x_", "y_", "vertex_")]
-#   outlist$meta <- tibble::tibble(proj = pr4, x = "x_", y = "y_", 
-#                                  ctime = format(Sys.time(), tz = "UTC"))
-#   class(outlist) <- "trimesh"
-#   outlist
-# }
+
+
 
 
 #' Normal form for sf
@@ -67,6 +71,9 @@ map_table.sf <- function(x, ...) {
 #' A `feature_table` is a normal form for simple features, where all branches are
 #' recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_ 
 #' are NA except for the holes in multipolygon. 
+#' 
+#' There is wasted information stored this way, but that's because this is intended as a lowest common denominator format. 
+#' 
 #' 
 #' There are three tables, objects (the feature attributes and ID), branches (the parts), 
 #' coordinates (the X, Y, Z, M values). 
@@ -81,32 +88,34 @@ feature_table <- function(x, ...) {
 
 #' @export
 feature_table.default <- function(x, ...) {
-  tibble::as_tibble(as_matrix(x))
+  mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+  #as_matrix(x)
 }
 
 #' @export
-feature_table.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, feature_table)
-
+feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature_table))
 #' @export
-#' @importFrom sf st_geometry
-feature_table.sf <- function(x, ...) {
-  idx <- match(attr(x, "sf_column"), names(x))
-  ## watch out for indexing out the geometry column
-  ## because drop = TRUE in old data frames
-  object <- tibble::as_tibble(x)[, -idx]
-  geometry_tables <- lapply(sf::st_geometry(x), feature_table)
-  list(object = object, geometry = geometry_tables)
-}
+feature_table.sfc <- function(x, ...) lapply(x, feature_table)
+
+# @importFrom sf st_geometry
+# feature_table.sf <- function(x, ...) {
+#   idx <- match(attr(x, "sf_column"), names(x))
+#   ## watch out for indexing out the geometry column
+#   ## because drop = TRUE in old data frames
+#   object <- tibble::as_tibble(x)[, -idx]
+#   geometry_tables <- lapply(sf::st_geometry(x), feature_table)
+#   list(object = object, geometry = geometry_tables)
+# }
 
 as_matrix <- function(x, ...) UseMethod("as_matrix")
 matrixOrVector <- 
-function(x, gclass) {
-  colnms <- unlist(strsplit(gclass, ""))
-  ##print(colnms)
-  x <- unclass(x)
-  if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
-  structure(as.matrix(x), dimnames = list(NULL, colnms))
-}
+  function(x, gclass) {
+    colnms <- unlist(strsplit(gclass, ""))
+    ##print(colnms)
+    x <- unclass(x)
+    if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
+    structure(as.matrix(x), dimnames = list(NULL, colnms))
+  }
 
 
 as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix(a))
@@ -115,15 +124,15 @@ as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix
 
 as_matrix.MULTIPOLYGON <-  
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x),  function(polygon_) do.call(rbind, lapply(seq_along(x[[polygon_]]), 
-                          function(island_) cbind(matrixOrVector(x[[polygon_]][[island_]], class(x)[1L]),  polygon_, island_)))))
+    do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]), 
+                                                                                  function(branch_) cbind(matrixOrVector(x[[parent_]][[branch_]], class(x)[1L]),  parent_, branch_)))))
     
-}
+  }
 
 as_matrix.POLYGON <-  
   function(x, ...) {
     do.call(rbind, lapply(seq_along(x), 
-                          function(island_) cbind(matrixOrVector(x[[island_]], class(x)[1L]),  island_)))
+                          function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
   }
 
 as_matrix.MULTILINESTRING <- 
@@ -132,42 +141,12 @@ as_matrix.MULTILINESTRING <-
                           function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
   }
 
-as_matrix.POINT <- as_matrix.MULTIPOINT  <- as_matrix.LINESTRING <- function(x, ...) {
+as_matrix.MULTIPOINT <- function(x, ...) {
+  x <- matrixOrVector(x, class(x)[1L])
+  cbind(x, branch_ = seq_len(nrow(x)))
+}
+as_matrix.POINT <- as_matrix.LINESTRING <- function(x, ...) {
   matrixOrVector(x, class(x)[1L])
 }
 
 
-
-# #' @importFrom sf st_geometry
-# #' @importFrom tibble as_tibble
-# sptable.sf <- function(x) {
-#   g <- sf::st_geometry(x)
-#   
-#   ## multipolygon
-#   gtab <- do.call(rbind,lapply(seq_along(g), 
-#                                function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]), 
-#                                                                         function(branch_) do.call(rbind, lapply(seq_along(g[[object_]][[branch_]]), 
-#                                                                                                                 function(sub_index) cbind(g[[object_]][[branch_]][[sub_index]], object_, branch_, sub_index)))))))
-#   # matrixOrVector <- function(x) {
-#   #   if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
-#   #   x
-#   # }
-#   # ## polygon, multilinestring, linestring, 
-#   # gtab <- do.call(rbind,lapply(seq_along(g), 
-#   #                              function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]), 
-#   #                                                                       function(branch_) cbind(g[[object_]][[branch_]], object_, branch_)))))
-#   # ## multipoint, point
-#   # gtab <- do.call(rbind,lapply(seq_along(g), 
-#   #                              function(branch_)  cbind(matrixOrVector(g[[branch_]]), branch_)))
-#   # 
-#   # 
-#   # 
-#   pmap_df <- function(x) {
-#     x <- as_tibble(x); 
-#     names(x)[1:2] <- c("x_", "y_")
-#     x[["branch_"]] <- cumsum(c(0, diff(x[["branch_"]]))) + x[["branch_"]] + x[["object_"]]
-#     x <- x %>% mutate(island_ = sub_index == 1, sub_index = NULL)
-#     x
-#   }
-#   pmap_df(gtab)
-# }

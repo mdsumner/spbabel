@@ -57,8 +57,11 @@ gz <- rbind(zoodoo, gcdoo)
 sf_g_apply <- function(x, fun) {
   lapply(sf::st_geometry(x), fun)
 }
+topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon", 
+                    "multipolygon")
 test_that("feature_table methods work", {
-  expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list"))
-  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
-  expect_that(feature_table(zoodoo), is_a("list"))
+  expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
+    expect_named(topology_types) 
+  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list")) 
+##  expect_that(feature_table(zoodoo), is_a("list")) %>% expect_named(c("object", "geometry"))
 })

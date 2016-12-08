@@ -112,6 +112,22 @@ The long-form table may seem like soup, but it's not meant to be seen for normal
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
 
+# Dragons lurk in the fish soup
+
+Don't go in the woods. Straying from the path is very dangerous, there are proper ways to do spatial stuff. 
+
+Here is a list of reasons why you shouldn't do this at all. 
+
+- in ggplot2 terms, it treats a layer as a set of grouped coordinates, rather than as separate objects
+- it wastes memory, by copying identifying attributes from the nested list hierarchy to each coordinate
+- it can't work with mixed topology types (lines and polys for example)
+- it's not supported
+- non-topological clipping results in yucky geometries that don't make sense (i.e. you will have destroyed your data!)
+
+https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html
+
+
+https://github.com/hrbrmstr/ggalt/issues/21
 
 # Why do this? 
 
