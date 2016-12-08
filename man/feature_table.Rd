@@ -17,6 +17,8 @@ recorded in one table with attributes object_, branch_, type_, parent_. All inst
 are NA except for the holes in multipolygon.
 }
 \details{
+There is wasted information stored this way, but that's because this is intended as a lowest common denominator format.
+
 There are three tables, objects (the feature attributes and ID), branches (the parts), 
 coordinates (the X, Y, Z, M values).
 }
