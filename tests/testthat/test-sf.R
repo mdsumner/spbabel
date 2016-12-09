@@ -64,6 +64,7 @@ test_that("feature_table methods work", {
  expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
     expect_named(topology_types)
   expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
+  expect_that(feature_table(gcdoo$geometry), is_a("list"))
 ##  expect_that(feature_table(zoodoo), is_a("list")) %>% expect_named(c("object", "geometry"))
 })
 

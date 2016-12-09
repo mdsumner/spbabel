@@ -1,11 +1,10 @@
 #' @export
 #' @importFrom tibble as_tibble
 map_table.sf <- function(x, ...) {
-
   tabmap <- sptable(x)
   ## why did this ever work?
   #  tabdat <- tibble::as_tibble(x)
-  tabdat <- tibble::as_tibble(x)
+  tabdat <- as_tibble(drop_sf_geometry(x) )
   ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[tabmap$object_]
@@ -13,6 +12,9 @@ map_table.sf <- function(x, ...) {
   # no class or methods in spbabel for map_table()
   class(out) <- c("map_table", "list")
   out
+}
+drop_sf_geometry <- function(x) {
+  x[, -match(attr(x, "sf_column"), names(x))]
 }
 
 matrix2list <- function(x) {
