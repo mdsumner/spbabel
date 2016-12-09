@@ -23,22 +23,22 @@ matrix2list <- function(x) {
   }
   x
 }
-polygonData.sf <- function(x) {
-
-  structure(rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list"),
-            bbox = matrix(attr(nc[[attr(nc, "sf_column")]], "bbox"), ncol = 2))
-}
+# polygonData.sf <- function(x) {
+# 
+#   structure(rapply(rapply(unclass(x), matrix2list, how = "replace"), unclass, how = "list"),
+#             bbox = matrix(attr(x[[attr(x, "sf_column")]], "bbox"), ncol = 2))
+# }
 #' @export
 #' @importFrom sf st_geometry
 #' @importFrom tibble as_tibble
-sptable.sf <- function(x) {
+sptable.sf <- function(x, ...) {
   g <- sf::st_geometry(x)
 
  # gtab <- do.call(rbind,lapply(seq_along(g),
   #                             function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]),
   #                                                                      function(branch_) do.call(rbind, lapply(seq_along(g[[object_]][[branch_]]),
   #                                                                                                              function(sub_index) cbind(g[[object_]][[branch_]][[sub_index]], object_, branch_, sub_index)))))))
- gtab <- bind_rows(spbabel:::feature_table.sfc(g), .id = "object_")
+ gtab <- bind_rows(feature_table.sfc(g), .id = "object_")
  if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
 
  sf_to_grisnames <- function(gnames) {
