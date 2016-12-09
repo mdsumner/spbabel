@@ -114,6 +114,8 @@ Here is a list of reasons why you shouldn't do this at all.
 
 <https://github.com/hrbrmstr/ggalt/issues/21>
 
+Go back to the proper tools and make sure to get your data in nice shapefiles that never have any problems.
+
 Why do this?
 ============
 

@@ -1,6 +1,8 @@
-
+library(testthat)
 context("sf")
 library(sf)
+mix <- st_sfc(st_point(1:2), st_linestring(matrix(1:4,2)))
+
 ncpoly <- readRDS(system.file("extdata", "testdata", "nc.rds", package = "spbabel"))
 ncline <- st_as_sf(st_as_sf(as(as(ncpoly, "Spatial"), "SpatialLinesDataFrame")))
 ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
@@ -8,7 +10,7 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncline)
 
 test_that("sf conversion works", {
-# expect_that(map_table(nc), is_a("list"))  
+# expect_that(map_table(nc), is_a("list"))
 
   ## sptable not supported
 #  expect_error(map_table(st_as_sf(as(as(nc, "Spatial"), "SpatialLinesDataFrame"))), "replacement has 0 row")
@@ -17,9 +19,9 @@ test_that("sf conversion works", {
 
 
 sfzoo <- function() {
-  
+
   x <- st_point(c(1,2))
-  
+
   p <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5))
   mp <- st_multipoint(p)
   s1 <- rbind(c(0,3),c(0,4),c(1,5),c(2,5))
@@ -35,8 +37,8 @@ sfzoo <- function() {
   p5 <- rbind(c(3,3), c(4,2), c(4,3), c(3,3))
   mpol <- st_multipolygon(list(list(p1,p2), list(p3,p4), list(p5)))
   #gc <- st_geometrycollection(list(mp, mpol, ls))
-  
-  list(point = x, multipoint = mp, linestring = ls, multilinestring = mls, polygon = pol, 
+
+   list(point = x, multipoint = mp, linestring = ls, multilinestring = mls, polygon = pol,
        multipolygon = mpol)
 }
 sfgeomc <- function() {
@@ -44,7 +46,6 @@ sfgeomc <- function() {
 }
 
 
-library(sf)
 Zoo <- do.call(st_sfc, sfzoo())
 GC <- st_sfc(sfgeomc())
 
@@ -52,16 +53,17 @@ zoodoo <- data.frame(x = seq_along(Zoo)); zoodoo[["geometry"]]  <- Zoo; zoodoo <
 gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
 
 
-gz <- rbind(zoodoo, gcdoo)
+ gz <- rbind(zoodoo, gcdoo)
 
-sf_g_apply <- function(x, fun) {
-  lapply(sf::st_geometry(x), fun)
-}
-topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon", 
-                    "multipolygon")
+ sf_g_apply <- function(x, fun) {
+   lapply(sf::st_geometry(x), fun)
+ }
+ topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon",
+                     "multipolygon")
 test_that("feature_table methods work", {
-  expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
-    expect_named(topology_types) 
-  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list")) 
+ expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
+    expect_named(topology_types)
+  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
 ##  expect_that(feature_table(zoodoo), is_a("list")) %>% expect_named(c("object", "geometry"))
 })
+

@@ -1,7 +1,7 @@
 context("column-types")
 
 data(holey)
-library(dplyr)
+base::suppressPackageStartupMessages(library(dplyr))
 data(holey)
 sph <- sp(holey)  ## ok
 

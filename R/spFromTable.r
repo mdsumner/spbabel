@@ -126,8 +126,8 @@ detectSpClass <- function(x) {
   #if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
   #if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
   #if (all(gn$SpatialMultiPointsDataFrame %in% names(x))) return("SpatialMultiPointsDataFrame")
-  cat("cannot find matching topology type from these columns")
+ # cat("cannot find matching topology type from these columns")
   #print(x)
-  stop('cannot create Spatial* object from this input')
+  stop('cannot create Spatial* object from this input, matching topology type from these columns')
   
 }

@@ -12,7 +12,7 @@ test_that("we can ingest complex objects from sp", {
   
 })
 
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 test_that("we can ingest a line object from sp", {
   x <- c(1:9, 8:1)
   y <- c(1, 2*(5:3), 2, -1, 17, 9, 8, 2:9)

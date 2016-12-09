@@ -129,6 +129,8 @@ https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html
 
 https://github.com/hrbrmstr/ggalt/issues/21
 
+Go back to the proper tools and make sure to get your data in nice shapefiles that never have any problems. 
+
 # Why do this? 
 
 I want these things, and spbabel is the right compromise for where to start: 

@@ -46,6 +46,7 @@
 #'  Other topology types such as triangle or quad meshes can extend this 
 #'  four-entity model, or exist without the branches at all. See "mesh_table" ??
 #'  
+#'  These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods. 
 #'  
 #' @param x object to tidy
 #' @param ... arguments passed to methods
@@ -89,6 +90,7 @@ map_table.Spatial <- function(x, ...) {
   } else {
   tabmap$branch_ <- id_n(length(unique(tabmap$branch_)))[factor(tabmap$branch_)]
   }
+  
   out <- map_table_From2(tabdat, tabmap)
 
   # no class or methods in spbabel for map_table()

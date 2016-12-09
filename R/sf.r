@@ -13,7 +13,7 @@
 
 
 sf_types <- function() {
-sf_topologies  <- 	
+sf_topologies  <-
              c("GEOMETRY",
                "POINT",
                "LINESTRING",
@@ -36,8 +36,8 @@ sf_topologies  <-
 }
 
 sp_sf_types <- function() {
-  c(SpatialPoints = "POINT", SpatialMultiPoints = "MULTIPOINT", 
-    SpatialLines = "MULTILINESTRING", SpatialPolygons = "MULTIPOLYGON", 
+  c(SpatialPoints = "POINT", SpatialMultiPoints = "MULTIPOINT",
+    SpatialLines = "MULTILINESTRING", SpatialPolygons = "MULTIPOLYGON",
     SpatialCollection = "GEOMETRYCOLLECTION")
 }
 
@@ -46,38 +46,22 @@ sf_type <- function(sp_type) {
 }
 
 
-#' @export
-#' @importFrom tibble as_tibble
-map_table.sf <- function(x, ...) {
-  
-  tabmap <- sptable(x)
-  ## why did this ever work?
-  #  tabdat <- tibble::as_tibble(x)
-  tabdat <- tibble::as_tibble(x)
-  ## remove this if sptable is updated
-  tabdat$object_ <- id_n(nrow(tabdat))
-  tabmap$object_ <- tabdat$object_[tabmap$object_]
-  out <- map_table_From2(tabdat, tabmap)
-  # no class or methods in spbabel for map_table()
-  #class(out) <- c("map_table", "list")
-  out
-}
 
 
 
 
 #' Normal form for sf
-#' 
+#'
 #' A `feature_table` is a normal form for simple features, where all branches are
-#' recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_ 
-#' are NA except for the holes in multipolygon. 
-#' 
-#' There is wasted information stored this way, but that's because this is intended as a lowest common denominator format. 
-#' 
-#' 
-#' There are three tables, objects (the feature attributes and ID), branches (the parts), 
-#' coordinates (the X, Y, Z, M values). 
-#' 
+#' recorded in one table with attributes object_, branch_, type_, parent_. All instances of parent_
+#' are NA except for the holes in multipolygon.
+#'
+#' There is wasted information stored this way, but that's because this is intended as a lowest common denominator format.
+#'
+#'
+#' There are three tables, objects (the feature attributes and ID), branches (the parts),
+#' coordinates (the X, Y, Z, M values).
+#'
 #' @param x sf object
 #' @param ... ignored
 #'
@@ -95,7 +79,8 @@ feature_table.default <- function(x, ...) {
 #' @export
 feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature_table))
 #' @export
-feature_table.sfc <- function(x, ...) lapply(x, feature_table)
+## this unname is only because there are NA names, which kill object_
+feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
 
 # @importFrom sf st_geometry
 # feature_table.sf <- function(x, ...) {
@@ -108,7 +93,7 @@ feature_table.sfc <- function(x, ...) lapply(x, feature_table)
 # }
 
 as_matrix <- function(x, ...) UseMethod("as_matrix")
-matrixOrVector <- 
+matrixOrVector <-
   function(x, gclass) {
     colnms <- unlist(strsplit(gclass, ""))
     ##print(colnms)
@@ -122,24 +107,25 @@ as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix
 
 #as_matrix.sfc_GEOMETRYCOLLECTION <- function(x, ...) as_matrix(x[[1]])
 
-as_matrix.MULTIPOLYGON <-  
+as_matrix.MULTIPOLYGON <-
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]), 
+    do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]),
                                                                                   function(branch_) cbind(matrixOrVector(x[[parent_]][[branch_]], class(x)[1L]),  parent_, branch_)))))
-    
+
   }
 
-as_matrix.POLYGON <-  
+as_matrix.POLYGON <-
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x), 
+    do.call(rbind, lapply(seq_along(x),
                           function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
   }
 
-as_matrix.MULTILINESTRING <- 
+as_matrix.MULTILINESTRING <-
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x), 
+    do.call(rbind, lapply(seq_along(x),
                           function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
   }
+
 
 as_matrix.MULTIPOINT <- function(x, ...) {
   x <- matrixOrVector(x, class(x)[1L])
