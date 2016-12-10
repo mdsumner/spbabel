@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert from sp package &#39;Spatial&#39; classes to a table. — sptable • spbabel</title>
+<title>Convert from various forms to a table. � sptable.SpatialPolygons • spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -72,16 +72,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert from sp package &#39;Spatial&#39; classes to a table.</h1>
+    <h1>Convert from various forms to a table.</h1>
     </div>
 
     
-    <p>Decompose a <code><a href='http://www.rdocumentation.org/packages/sp/topics/Spatial-class'>Spatial</a></code> object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.</p>
+    <p>Decompose a <code><a href='http://www.rdocumentation.org/packages/sp/topics/Spatial-class'>Spatial</a></code> or <code><a href='http://www.rdocumentation.org/packages/sf/topics/sf'>sf</a></code> object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.</p>
     
 
-    <pre><span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for SpatialPolygons</span>
+    <pre><span class='co'># S3 method for SpatialPolygons</span>
 <span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialLines</span>
@@ -94,6 +92,8 @@
 <span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='fu'>sptable</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for trip</span>
 <span class='fu'><a href='map_table.html'>map_table</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -112,6 +112,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Spatial object</p>
     <p><code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code>  with columns
 <ul>
 <li> SpatialPolygonsDataFrame &quot;object_&quot;   &quot;branch_&quot;   &quot;island_&quot;   &quot;order_&quot; &quot;x&quot;    &quot;y_&quot;
@@ -121,15 +122,18 @@
 <li> SpatialPointsDataFrame  &quot;object_&quot; x_&quot;      &quot;y_&quot;
  </li>
 <li> SpatialMultiPointsDataFrame &quot;object_&quot; &quot;branch_&quot; &quot;x_&quot; &quot;y_&quot;
+ </li>
+<li> sf some combination of the above
 </li>
 </ul></p>
-    <p>Spatial object</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Input can be a <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialLines'>SpatialLinesDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialMultiPoints'>SpatialMultiPointsDataFrame</a></code> or a <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code>.
-For simplicity <code>sptable</code> and its inverse <code>sp</code> assume that all geometry can be encoded with object, branch, island, order, x and y. 
+    <p>Input can be a of type <code><a href='http://www.rdocumentation.org/packages/sf/topics/sf'>sf</a></code> <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialLines'>SpatialLinesDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialMultiPoints'>SpatialMultiPointsDataFrame</a></code> or a <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code>.
+For simplicity <code>sptable</code> and its inverses <code>sp</code> and <code>sf</code> assume that all geometry can be encoded with object, branch, island, order, x and y. 
 and that the type of topology is identified by which of these are present.</p>
+    <p>For simple features objects with mixed types of topology the result is consistent, but probabably not useful. 
+Columns that aren&#39;t present in one type will be present, padded with NA. (This is work in progress).</p>
     <p>This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
 <ul>
 <li> <code><a href='http://www.rdocumentation.org/packages/broom/topics/sp_tidiers'>sp_tidiers</a></code> (replacement of &#39;ggplot2::fortify&#39;).
@@ -155,10 +159,9 @@ and that the type of topology is identified by which of these are present.</p>
 <span class='co'>#also convert to singular objects - note that this now means we have an overlapping pair of polys</span>
 <span class='co'>#because the door had a hole filled by another object</span>
 <span class='no'>notahole</span>$<span class='no'>object_</span> <span class='kw'>&lt;-</span> <span class='no'>notahole</span>$<span class='no'>branch_</span>
-<span class='fu'>plot</span>(<span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><img src='sptable-5.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><img src='sptable.SpatialPolygons-5.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'>## example using in-place modification with sptable&lt;-</span>
-<span class='fu'>library</span>(<span class='no'>maptools</span>)
-<span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
+<span class='fu'>library</span>(<span class='no'>maptools</span>)</div><div class='output co'>#&gt; <span class='message'>Checking rgeos availability: TRUE</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
 <span class='no'>spdata2</span> <span class='kw'>&lt;-</span> <span class='no'>spdata</span>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='co'>## modify the geometry on this object without separating the vertices from the objects</span>

@@ -2,7 +2,7 @@
 
 * go with n = 5 for id length (2 is too short)
 
-* WIP added support for sf, new model based on "feature_table"
+* added support for sf, new model based on "feature_table"
 
 * proper support for SpatialPoints in map_table
 

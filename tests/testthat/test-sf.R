@@ -9,6 +9,7 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncpoly)
 #sptable(ncline)
 
+nc <- ncpoly
 test_that("sf conversion works", {
   expect_that(map_table(nc), is_a("list"))
   

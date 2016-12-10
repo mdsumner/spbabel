@@ -43,26 +43,29 @@
 <p><a href="http://www.r-pkg.org/pkg/spbabel"><img src="http://www.r-pkg.org/badges/version/spbabel"></a></p>
 <p><a href="http://www.r-pkg.org/pkg/spbabel"><img src="http://cranlogs.r-pkg.org/badges/spbabel" alt="CRAN RStudio mirror downloads"></a></p>
 <p><a href="https://codecov.io/github/mdsumner/spbabel?branch=master"><img src="https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg" alt="Coverage Status"></a></p>
-<div id="spbabel-a-tidy-view-of-spatial" class="section level1">
-<div class="page-header"><h1 class="hasAnchor"><a href="#spbabel-a-tidy-view-of-spatial" class="anchor"> </a>spbabel: a tidy view of Spatial</h1></div>
-<p>Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes.</p>
+<div id="spbabel-an-untidy-tidy-view-of-spatial" class="section level1">
+<div class="page-header"><h1 class="hasAnchor"><a href="#spbabel-an-untidy-tidy-view-of-spatial" class="anchor"> </a>spbabel: an untidy tidy view of Spatial</h1></div>
+<p>Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes. It&rsquo;s pretty chaotic, but there is a</p>
 <p>This framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables that can be transferred from and to R in many different ways.</p>
 <p>Currently supported are</p>
-<ul><li>sp</li>
+<ul><li>sf</li>
+<li>sp</li>
 <li>ggplot2</li>
-<li>gris</li>
+<li>rangl</li>
+<li>trip</li>
+<li>rgl</li>
 </ul><p>In progress are</p>
 <ul><li>graphics</li>
-<li>rgl</li>
 <li>maps</li>
 <li>spatstat</li>
-<li>sf</li>
-<li>trip</li>
 </ul><p>Planned are</p>
 <ul><li>PBSmapping</li>
-<li><p>lawn</p></li>
-<li><p>the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others <code>crawl</code> and <code>move</code> packages contain objects that could be coerced in a straightforward way, see the Spatio Temporal Task View for more (in the Moving Objects / Trajectories section). The hyperframe in spatstat is another example, and to follow up Edzer&rsquo;s work in spacetime.</p></li>
-</ul><p>If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.</p>
+<li>lawn</li>
+<li>igraph</li>
+<li>everything else</li>
+<li>the other trajectory / animal tracking packages</li>
+</ul><p>The tracking packages such as adehabitatLT, trajectories, and dozens of others <code>crawl</code> and <code>move</code> packages contain objects that could be coerced in a straightforward way, see the Spatio Temporal Task View for more (in the Moving Objects / Trajectories section). The hyperframe in spatstat is another example, and to follow up Edzer&rsquo;s work in spacetime.</p>
+<p>If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.</p>
 <p>There already are converters for Spatial classes, why do this? There are converters, but the sp classes reflect modern GIS standards and thes are quite restrictive. There are many spatial data structures in R that cannot be represented in sp, and that cannot be represented by extending the existing classes. To do so requires a more fundamental re-write.</p>
 <p>Conversions between existing forms is simply a side-benefit of having a more general framework. The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation.</p>
 <p>Not all pairwise combinations are of interest, but most importantly some of the representations are more general than others. The only one that can be used to represent all others is a set of relational tables, and &lsquo;gris&rsquo; does most of this, but &lsquo;ggplot2&rsquo; also comes pretty close. Neither have been used extensively to do this though!</p>
@@ -108,6 +111,7 @@
 <li>non-topological clipping results in yucky geometries that don&rsquo;t make sense (i.e.&nbsp;you will have destroyed your data!)</li>
 </ul><p><a href="https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html" class="uri">https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html</a></p>
 <p><a href="https://github.com/hrbrmstr/ggalt/issues/21" class="uri">https://github.com/hrbrmstr/ggalt/issues/21</a></p>
+<p>Go back to the proper tools and make sure to get your data in nice shapefiles that never have any problems.</p>
 </div>
 <div id="why-do-this" class="section level1">
 <h1 class="hasAnchor"><a href="#why-do-this" class="anchor"> </a>Why do this?</h1>

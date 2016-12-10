@@ -35,7 +35,7 @@
       <h1>spbabel</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2016-12-08</h4>
+            <h4 class="date">2016-12-11</h4>
           </div>
 
     
@@ -92,20 +92,20 @@
 ## 1     AS     AU    AUS    36 Australia 768230 20310208      9        53
 ## # ... with 2 more variables: LON &lt;dbl&gt;, LAT &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## long-form encoding of objects
-oztab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(oz)
+oztab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.SpatialPolygons.html">sptable</a></span>(oz)
 
 ##  make a copy to modify
 woz &lt;-<span class="st"> </span>oz
 <span class="kw">library</span>(dplyr)
 ## modify the geometry on this object without separating the vertices from the objects
-<span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">x_ =</span> x_ -<span class="st"> </span><span class="dv">5</span>)
+<span class="kw"><a href="../reference/sptable.SpatialPolygons.html">sptable</a></span>(woz) &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.SpatialPolygons.html">sptable</a></span>(woz) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">x_ =</span> x_ -<span class="st"> </span><span class="dv">5</span>)
 
 <span class="co"># plot to compare </span>
 <span class="kw">plot</span>(oz, <span class="dt">col =</span> <span class="st">"grey"</span>)
 <span class="kw">plot</span>(woz, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>We can also restructure objects, by mutating the value of object to be the same as &ldquo;branch&rdquo; we get individual objects from each.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(wrld_simpl %&gt;%<span class="st"> </span><span class="kw">subset</span>(NAME ==<span class="st"> "Japan"</span> |<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"Korea"</span>, NAME)))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.SpatialPolygons.html">sptable</a></span>(wrld_simpl %&gt;%<span class="st"> </span><span class="kw">subset</span>(NAME ==<span class="st"> "Japan"</span> |<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"Korea"</span>, NAME)))
 ## explode (or "disaggregate"") objects to individual polygons
 ## here each branch becomes an object, and each object only has one branch
 ## (ignoring hole-vs-island status for now)

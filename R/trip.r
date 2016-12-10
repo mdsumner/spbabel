@@ -17,7 +17,7 @@ as_trip_MultiPoints <- function(x, ...) {
   SpatialMultiPointsDataFrame(
     ## sheesh
     lapply(split(as.data.frame(coordinates(x)), x[[tor[2L]]]), as.matrix), 
-                              data.frame(object_ = seq_len(length(unique(x[[tor[2L]]]))), stringsAsFactors = FALSE), 
-                              proj4string = CRS(proj4string(x)), match.ID = FALSE)
+    data.frame(object_ = seq_len(length(unique(x[[tor[2L]]]))), stringsAsFactors = FALSE), 
+    proj4string = CRS(proj4string(x)), match.ID = FALSE)
 }
 

@@ -1,37 +1,82 @@
-# #' @export
-# feature_table_dedupe.Spatial <- function(x, ...) {
-#   mt <- map_table(x)
-#   object <- mt$o
-#   ## avoid Spatial hole-parents for now, maybe forever
-#   branch <- mt$b %>% mutate(type = sf_type(class(geometry(x))), parent = NA_character_)
-#   #object_, branch_, type_, parent_
-#   vertex <- mt$v
-#   structure(list(object = object, branch = branch, vertex = vertex), class = "feature_table")
-# }
+#' @export
+#' @importFrom tibble as_tibble
+map_table.sf <- function(x, ...) {
+  tabmap <- sptable(x)
+  tabdat <- as_tibble(drop_sf_geometry(x) )
+  ## remove this if sptable is updated
+  tabdat$object_ <- id_n(nrow(tabdat))
+  tabmap$object_ <- tabdat$object_[factor(tabmap$object_)]
+  out <- map_table_From2(tabdat, tabmap, ...)
+  class(out) <- c("map_table", "list")
+  out
+}
 
-## tibble methods:
+drop_sf_geometry <- function(x) {
+  x[, -match(attr(x, "sf_column"), names(x))]
+}
+
+matrix2list <- function(x) {
+  if (!is.null(dim(x))) {
+    x <- split(x, rep(seq(ncol(x)), each = nrow(x)))
+  } else {
+    x <- as.list(x)
+  }
+  x
+}
+
+#' @export
+#' @importFrom sf st_geometry
+#' @importFrom tibble as_tibble
+sptable.sf <- function(x, ...) {
+  g <- sf::st_geometry(x)
+  
+  ftl <- feature_table.sfc(g)
+  
+  gtab <- bind_rows(ftl, .id = "object_")
+  if ("branch_" %in% names(gtab)) gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
+  gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
+  if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
+  
+  sf_to_grisnames <- function(gnames) {
+    gnames <- gsub("^X$", "x_", gnames)
+    gnames <- gsub("^Y$", "y_", gnames)
+    gnames <- gsub("^Z$", "z_", gnames)
+    gnames <- gsub("^M$", "m_", gnames)
+    gnames <- gsub("^type$", "type_", gnames)
+    gnames
+  }
+  names(gtab) <- sf_to_grisnames(names(gtab))
+  gtab$order_ <-  seq(nrow(gtab))
+  gtab$type_ <- NULL
+  if (!is.null(gtab[["parent_"]])) {
+    gtab$island_ <- gtab$parent_ == 1
+    gtab$parent_ <- NULL
+  }
+  class(gtab) <- c("coordinate_table", class(gtab))
+  gtab
+}
 
 
 sf_types <- function() {
-sf_topologies  <-
-             c("GEOMETRY",
-               "POINT",
-               "LINESTRING",
-               "POLYGON",
-               "MULTIPOINT",
-               "MULTILINESTRING",
-               "MULTIPOLYGON",
-               "GEOMETRYCOLLECTION",
-               "CIRCULARSTRING",
-               "COMPOUNDCURVE",
-               "CURVEPOLYGON",
-               "MULTICURVE",
-               "MULTISURFACE",
-               "CURVE",
-               "SURFACE",
-               "POLYHEDRALSURFACE",
-               "TIN",
-               "TRIANGLE")
+  sf_topologies  <-
+    c("GEOMETRY",
+      "POINT",
+      "LINESTRING",
+      "POLYGON",
+      "MULTIPOINT",
+      "MULTILINESTRING",
+      "MULTIPOLYGON",
+      "GEOMETRYCOLLECTION",
+      "CIRCULARSTRING",
+      "COMPOUNDCURVE",
+      "CURVEPOLYGON",
+      "MULTICURVE",
+      "MULTISURFACE",
+      "CURVE",
+      "SURFACE",
+      "POLYHEDRALSURFACE",
+      "TIN",
+      "TRIANGLE")
   factor(sf_topologies, sf_topologies)
 }
 
@@ -79,10 +124,10 @@ feature_table.default <- function(x, ...) {
 }
 #' @export
 feature_table.MULTIPOLYGON <- function(x, ...) {
-   ## pretty sure I will get rid of this parent_ stuff, it needs to be done differently
-    x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+  ## pretty sure I will get rid of this parent_ stuff, it needs to be done differently
+  x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
   x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
- x
+  x
 }
 
 #' @export
@@ -119,8 +164,8 @@ as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix
 as_matrix.MULTIPOLYGON <-
   function(x, ...) {
     do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]),
-                                                                                  function(part_) cbind(matrixOrVector(x[[parent_]][[part_]], class(x)[1L]),  parent_)))))
-
+                                                                                 function(part_) cbind(matrixOrVector(x[[parent_]][[part_]], class(x)[1L]),  parent_)))))
+    
   }
 
 as_matrix.POLYGON <-

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A decomposition of &#39;vector&#39; map data structures to tables. â€” map_table â€¢ spbabel</title>
+<title>A decomposition of &#39;vector&#39; map data structures to tables. — map_table â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,13 +108,14 @@ entities in spatial map data.</p>
  fourth table to link vertices to branches.</p>
     <p>Other topology types such as triangle or quad meshes can extend this 
  four-entity model, or exist without the branches at all. See &quot;mesh_table&quot; ??</p>
+    <p>These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>holey</span>)
 <span class='no'>spholey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>holey</span>)
 <span class='fu'>map_table</span>(<span class='no'>spholey</span>)</div><div class='output co'>#&gt; $o
-#&gt; # A tibble: 3 Ã— 2
+#&gt; # A tibble: 3 × 2
 #&gt;   rownumber_ object_
 #&gt;        &lt;int&gt;   &lt;chr&gt;
 #&gt; 1          1   fZLja
@@ -122,7 +123,7 @@ entities in spatial map data.</p>
 #&gt; 3          3   2kcty
 #&gt; 
 #&gt; $b
-#&gt; # A tibble: 9 Ã— 3
+#&gt; # A tibble: 9 × 3
 #&gt;   object_ branch_ island_
 #&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;
 #&gt; 1   fZLja   mzdy8    TRUE
@@ -136,7 +137,7 @@ entities in spatial map data.</p>
 #&gt; 9   2kcty   WmSev   FALSE
 #&gt; 
 #&gt; $bXv
-#&gt; # A tibble: 50 Ã— 3
+#&gt; # A tibble: 50 × 3
 #&gt;    branch_ order_ vertex_
 #&gt;      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
 #&gt; 1    mzdy8      1   ZqJuK
@@ -152,7 +153,7 @@ entities in spatial map data.</p>
 #&gt; # ... with 40 more rows
 #&gt; 
 #&gt; $v
-#&gt; # A tibble: 27 Ã— 3
+#&gt; # A tibble: 27 × 3
 #&gt;       x_    y_ vertex_
 #&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;chr&gt;
 #&gt; 1      0     0   ZqJuK
