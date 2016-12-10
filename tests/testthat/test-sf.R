@@ -94,3 +94,9 @@ test_that("feature_table methods work", {
   expect_that(feature_table(zoodoo$geometry), is_a("list")) 
 })
 
+
+test_that('internal functions run', {
+  spbabel:::sp_sf_types()
+  spbabel:::sf_types()
+  expect_that(sf_type("SpatialPolygons", equals("MULTIPOLYGON")))
+})
