@@ -73,7 +73,7 @@ feature_table <- function(x, ...) {
 #' @export
 feature_table.default <- function(x, ...) {
   x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
-  x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
+  x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
   #as_matrix(x)
   x
 }
@@ -112,7 +112,7 @@ as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix
 as_matrix.MULTIPOLYGON <-
   function(x, ...) {
     do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]),
-                                                                                  function(branch_) cbind(matrixOrVector(x[[parent_]][[branch_]], class(x)[1L]),  parent_, branch_)))))
+                                                                                  function(part_) cbind(matrixOrVector(x[[parent_]][[part_]], class(x)[1L]),  parent_)))))
 
   }
 

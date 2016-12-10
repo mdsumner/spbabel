@@ -45,7 +45,12 @@ sfgeomc <- function() {
   gc <- st_geometrycollection(sfzoo())
 }
 
-
+example(st_read)
+library(dplyr)
+test_that("correct interpretations", {
+  expect_that(distinct(sptable(nc[57, ])), is_a("data.frame")) 
+  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L)) 
+})
 Zoo <- do.call(st_sfc, sfzoo())
 GC <- st_sfc(sfgeomc())
 
