@@ -73,7 +73,7 @@ feature_table <- function(x, ...) {
 #' @export
 feature_table.default <- function(x, ...) {
   x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
-  x[["branch_"]] <- id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
+  x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
   #as_matrix(x)
   x
 }

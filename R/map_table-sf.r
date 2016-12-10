@@ -39,8 +39,11 @@ sptable.sf <- function(x, ...) {
  # gtab <- do.call(rbind,lapply(seq_along(g),
   #                             function(object_)  do.call(rbind, lapply(seq_along(g[[object_]]),
   #                                                                      function(branch_) do.call(rbind, lapply(seq_along(g[[object_]][[branch_]]),
-  #                                                                                                              function(sub_index) cbind(g[[object_]][[branch_]][[sub_index]], object_, branch_, sub_index)))))))
- gtab <- bind_rows(feature_table.sfc(g), .id = "object_")
+  #                   function(sub_index) cbind(g[[object_]][[branch_]][[sub_index]], object_, branch_, sub_index)))))))
+  ftl <- feature_table.sfc(g)
+  #ftl <- lapply(seq_along(ftl))
+ gtab <- bind_rows(ftl, .id = "object_")
+ gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
  if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
 
  sf_to_grisnames <- function(gnames) {
