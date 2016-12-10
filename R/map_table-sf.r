@@ -8,7 +8,7 @@ map_table.sf <- function(x, ...) {
   ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[factor(tabmap$object_)]
-  out <- map_table_From2(tabdat, tabmap)
+  out <- map_table_From2(tabdat, tabmap, ...)
   # no class or methods in spbabel for map_table()
   class(out) <- c("map_table", "list")
   out

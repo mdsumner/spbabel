@@ -105,14 +105,14 @@ map_table.Spatial <- function(x, ...) {
 #'
 #' @param dat1 object "meta"data
 #' @param map1 geometry data in sptable form
-#'
+#' @param v_atts the vertex attributes to de-duplicate by (x_, y_ by default)
 #' @importFrom dplyr %>% bind_rows distinct_ mutate select select_
 #' @importFrom tibble tibble
 #' @importFrom utils head
 #' @noRd
-map_table_From2 <- function(dat1, map1) {
+map_table_From2 <- function(dat1, map1,   v_atts = c("x_", "y_")) {
   ## we expect that these attributes, taken together are "unique vertices" potentially shared by neighbours
-  v_atts <- c("x_", "y_")
+
   o_atts <- setdiff(names(map1), v_atts)
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
   bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")

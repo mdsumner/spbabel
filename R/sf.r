@@ -70,12 +70,17 @@ feature_table <- function(x, ...) {
   UseMethod("feature_table")
 }
 
+
 #' @export
 feature_table.default <- function(x, ...) {
-  x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+  mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+}
+#' @export
+feature_table.MULTIPOLYGON <- function(x, ...) {
+   ## pretty sure I will get rid of this parent_ stuff, it needs to be done differently
+    x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
   x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
-  #as_matrix(x)
-  x
+ x
 }
 
 #' @export

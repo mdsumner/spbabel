@@ -57,7 +57,13 @@ GC <- st_sfc(sfgeomc())
 zoodoo <- data.frame(x = seq_along(Zoo)); zoodoo[["geometry"]]  <- Zoo; zoodoo <- st_as_sf(zoodoo)
 gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
 
-sptable(zoodoo)
+feature_table(zoodoo[1, ]$geometry)
+sptable(zoodoo[1, ])
+sptable(zoodoo[2, ])
+sptable(zoodoo[3, ])
+sptable(zoodoo[4, ])
+sptable(zoodoo[5, ])
+sptable(zoodoo[6, ])
 
  gz <- rbind(zoodoo, gcdoo)
 
