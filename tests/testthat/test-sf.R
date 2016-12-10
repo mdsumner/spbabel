@@ -10,18 +10,18 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncline)
 
 test_that("sf conversion works", {
-# expect_that(map_table(nc), is_a("list"))
-
-  ## sptable not supported
-#  expect_error(map_table(st_as_sf(as(as(nc, "Spatial"), "SpatialLinesDataFrame"))), "replacement has 0 row")
-# expect_error(map_table(st_as_sf(as(as(as(nc, "Spatial"), "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame"))), "replacement has 0 row")
+  expect_that(map_table(nc), is_a("list"))
+  
+  ## sptable now supported
+  expect_silent(map_table(st_as_sf(as(as(nc, "Spatial"), "SpatialLinesDataFrame"))))
+  expect_silent(map_table(st_as_sf(as(as(as(nc, "Spatial"), "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame"))))
 })
 
 
 sfzoo <- function() {
-
+  
   x <- st_point(c(1,2))
-
+  
   p <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5))
   mp <- st_multipoint(p)
   s1 <- rbind(c(0,3),c(0,4),c(1,5),c(2,5))
@@ -37,8 +37,8 @@ sfzoo <- function() {
   p5 <- rbind(c(3,3), c(4,2), c(4,3), c(3,3))
   mpol <- st_multipolygon(list(list(p1,p2), list(p3,p4), list(p5)))
   #gc <- st_geometrycollection(list(mp, mpol, ls))
-
-   list(point = x, multipoint = mp, linestring = ls, multilinestring = mls, polygon = pol,
+  
+  list(point = x, multipoint = mp, linestring = ls, multilinestring = mls, polygon = pol,
        multipolygon = mpol)
 }
 sfgeomc <- function() {
@@ -46,37 +46,50 @@ sfgeomc <- function() {
 }
 
 example(st_read)
-library(dplyr)
-test_that("correct interpretations", {
-  expect_that(distinct(sptable(nc[57, ])), is_a("data.frame")) 
-  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L)) 
-})
 Zoo <- do.call(st_sfc, sfzoo())
 GC <- st_sfc(sfgeomc())
 
 zoodoo <- data.frame(x = seq_along(Zoo)); zoodoo[["geometry"]]  <- Zoo; zoodoo <- st_as_sf(zoodoo)
 gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
 
-feature_table(zoodoo[1, ]$geometry)
-sptable(zoodoo[1, ])
-sptable(zoodoo[2, ])
-sptable(zoodoo[3, ])
-sptable(zoodoo[4, ])
-sptable(zoodoo[5, ])
-sptable(zoodoo[6, ])
+library(dplyr)
+test_that("correct interpretations", {
+  expect_that(distinct(sptable(nc[57, ])), is_a("data.frame")) 
+  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L)) 
+})
 
- gz <- rbind(zoodoo, gcdoo)
 
- sf_g_apply <- function(x, fun) {
-   lapply(sf::st_geometry(x), fun)
- }
- topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon",
-                     "multipolygon")
+test_that("individual topology types work as feature tables", {
+  feature_table(zoodoo[1, ]$geometry)
+  feature_table(zoodoo[2, ]$geometry)
+  feature_table(zoodoo[3, ]$geometry)
+  feature_table(zoodoo[4, ]$geometry)
+  feature_table(zoodoo[5, ]$geometry)
+  feature_table(zoodoo[6, ]$geometry)
+})
+test_that("sptable can decompose the basic types", {
+  
+  sptable(zoodoo[1, ])
+  sptable(zoodoo[2, ])
+  sptable(zoodoo[3, ])
+  sptable(zoodoo[4, ])
+  sptable(zoodoo[5, ])
+  sptable(zoodoo[6, ])
+  expect_warning(sptable(zoodoo), "geometry has more than one topological type")
+})
+
+gz <- rbind(zoodoo, gcdoo)
+
+sf_g_apply <- function(x, fun) {
+  lapply(sf::st_geometry(x), fun)
+}
+topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon",
+                    "multipolygon")
 test_that("feature_table methods work", {
-# expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
-#    expect_named(topology_types)
-#  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
-#  expect_that(feature_table(gcdoo$geometry), is_a("list"))
-##  expect_that(feature_table(zoodoo), is_a("list")) %>% expect_named(c("object", "geometry"))
+  expect_that(sf_g_apply(zoodoo, spbabel:::feature_table), is_a("list")) %>%
+    expect_named(topology_types)
+  expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
+  expect_that(feature_table(gcdoo$geometry), is_a("list"))
+  expect_that(feature_table(zoodoo$geometry), is_a("list")) 
 })
 

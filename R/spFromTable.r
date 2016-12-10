@@ -1,5 +1,6 @@
 
 setOldClass( c("tbl_df", "tbl", "data.frame" ) )
+setOldClass( c("coordinate_table", "tbl_df", "tbl", "data.frame" ) )
 setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 
 

@@ -73,7 +73,9 @@ feature_table <- function(x, ...) {
 
 #' @export
 feature_table.default <- function(x, ...) {
-  mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+  x<- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
+  if ("branch_" %in% names(x)) x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
+  x
 }
 #' @export
 feature_table.MULTIPOLYGON <- function(x, ...) {

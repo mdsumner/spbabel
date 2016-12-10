@@ -43,7 +43,7 @@ sptable.sf <- function(x, ...) {
   ftl <- feature_table.sfc(g)
   #ftl <- lapply(seq_along(ftl))
  gtab <- bind_rows(ftl, .id = "object_")
- gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
+ if ("branch_" %in% names(gtab)) gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
  gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
  if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
 
