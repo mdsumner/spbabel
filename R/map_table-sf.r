@@ -7,7 +7,7 @@ map_table.sf <- function(x, ...) {
   tabdat <- as_tibble(drop_sf_geometry(x) )
   ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
-  tabmap$object_ <- tabdat$object_[tabmap$object_]
+  tabmap$object_ <- tabdat$object_[factor(tabmap$object_)]
   out <- map_table_From2(tabdat, tabmap)
   # no class or methods in spbabel for map_table()
   class(out) <- c("map_table", "list")
