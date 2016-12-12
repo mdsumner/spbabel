@@ -50,3 +50,8 @@ tr <- faketrip()
 test_that("trip works", {
     mp <- map_table(tr)
 })
+
+data("walrus818")
+test_that("walrus trip works", {
+  mp <- map_table(walrus818)
+})

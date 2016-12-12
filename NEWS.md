@@ -1,3 +1,11 @@
+# spbabel dev
+
+* go with n = 5 for id length (2 is too short)
+
+* added support for sf, new model based on "feature_table"
+
+* proper support for SpatialPoints in map_table
+
 # spbabel 0.4.5
 
 * fixed bug in sp() logic that recreates a SpatialLines (it was using a Polygon under the hood)

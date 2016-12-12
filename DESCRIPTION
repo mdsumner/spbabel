@@ -1,20 +1,26 @@
 Package: spbabel
 Type: Package
-Version: 0.4.5
+Version: 0.4.5.9001
 Title: Convert Spatial Data Using Tidy Tables
 Description: Tools to convert from specific formats to more general forms of 
     spatial data. Using tables to store the actual entities present in spatial
     data provides far greater flexibility, and the functions here deliberately 
     minimize the level of interpretation applied, leaving that for specific 
-    applications. Includes round-trip for 'Spatial' classes and long-form 
+    applications. Includes support for simple features,  round-trip for 'Spatial' classes and long-form 
     tables, analogous to 'ggplot2::fortify'. 
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
 URL: https://mdsumner.github.io/spbabel
 BugReports: https://github.com/mdsumner/spbabel/issues
 Depends:
     R (>= 3.2.3)
-Imports: dplyr, methods, sp, tibble
-Suggests: testthat,
+Imports: 
+    dplyr, 
+    methods, 
+    sf, 
+    sp, 
+    tibble
+Suggests: 
+    testthat,
     ggplot2,
     maptools,
     raster,
@@ -26,7 +32,8 @@ Suggests: testthat,
     ggalt, 
     ggpolypath,
     maps, 
-    trip
+    trip, 
+    viridis
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3

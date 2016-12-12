@@ -21,7 +21,7 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' ## look, seamless Antarctica!
 #' ## library(rgdal); plot(spTransform(sp_obj, "+proj=laea +lat_0=-70"))
 sp <- function(x, ...) {
- UseMethod("sp")
+  UseMethod("sp")
 }
 
 #' @rdname sp
@@ -49,13 +49,13 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   minc <- c(SpatialPolygonsDataFrame = 3, SpatialLinesDataFrame = 2, SpatialMultiPointsDataFrame = 1, SpatialPointsDataFrame = 1)[target]
   if (nrow(x) < minc) stop(sprintf("target is %s but input table has  %i %s", target, nrow(x), c("rows", "row")[(nrow(x) ==1)+1]))
   dat <- distinct_(x, "object_", .keep_all = TRUE)
-
-   n_object <- nrow(dat)
-   n_attribute <- nrow(attr_tab)
-   if (is.null(n_attribute)) n_attribute <- n_object
+  
+  n_object <- nrow(dat)
+  n_attribute <- nrow(attr_tab)
+  if (is.null(n_attribute)) n_attribute <- n_object
   if (!(n_attribute == n_object)) stop("number of rows in attr must match distinct object in x") 
   if (!is.null(attr_tab)) dat <- bind_cols(dat, attr_tab)
- # dat <- as.data.frame(dat)
+  # dat <- as.data.frame(dat)
   gom <- switch(target,
                 SpatialPolygonsDataFrame = reverse_geomPoly(x, dat, crs),
                 SpatialLinesDataFrame = reverse_geomLine(x, dat, crs),
@@ -126,8 +126,8 @@ detectSpClass <- function(x) {
   #if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
   #if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
   #if (all(gn$SpatialMultiPointsDataFrame %in% names(x))) return("SpatialMultiPointsDataFrame")
-  cat("cannot find matching topology type from these columns")
+  # cat("cannot find matching topology type from these columns")
   #print(x)
-  stop('cannot create Spatial* object from this input')
+  stop('cannot create Spatial* object from this input, matching topology type from these columns')
   
 }

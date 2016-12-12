@@ -27,33 +27,36 @@ knitr::opts_chunk$set(
 
 [![Coverage Status](https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg)](https://codecov.io/github/mdsumner/spbabel?branch=master)
 
-# spbabel: a tidy view of Spatial
+# spbabel: spatial translator
 
-Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes. 
+Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes.  
 
 This framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables that can be transferred from and to R in many different ways. 
 
 Currently supported are
 
+* sf
 * sp 
 * ggplot2
-* gris 
+* rangl
+* trip
+* rgl
 
 In progress are
 
 * graphics
-* rgl
 * maps
 * spatstat
-* sf
-* trip
 
 Planned are
 
 * PBSmapping
 * lawn
+* igraph
+* everything else
+* the other trajectory / animal tracking packages
 
-* the trajectory / animal tracking packages, such as adehabitatLT, trajectories, and dozens of others
+The tracking packages such as adehabitatLT, trajectories, and dozens of others
 `crawl` and `move` packages contain objects that  could be coerced in a straightforward way, see the Spatio Temporal Task View for more (in the Moving Objects / Trajectories section). The hyperframe in spatstat is another example, and to follow up Edzer's work in spacetime. 
 
 If you know of other variants that should be included, please file an issue or let me know.  Once the basic framework is available, adding new conversions will be pretty simple. 
@@ -112,6 +115,24 @@ The long-form table may seem like soup, but it's not meant to be seen for normal
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames,  or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible. 
 
+# Dragons lurk in the fish soup
+
+Don't go in the woods. Straying from the path is very dangerous, there are proper ways to do spatial stuff. 
+
+Here is a list of reasons why you shouldn't do this at all. 
+
+- in ggplot2 terms, it treats a layer as a set of grouped coordinates, rather than as separate objects
+- it wastes memory, by copying identifying attributes from the nested list hierarchy to each coordinate
+- it can't work with mixed topology types (lines and polys for example)
+- it's not supported
+- non-topological clipping results in yucky geometries that don't make sense (i.e. you will have destroyed your data!)
+
+https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html
+
+
+https://github.com/hrbrmstr/ggalt/issues/21
+
+Go back to the proper tools and make sure to get your data in nice shapefiles that never have any problems. 
 
 # Why do this? 
 

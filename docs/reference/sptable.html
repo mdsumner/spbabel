@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sptable. spbabel</title>
+<title>Convert from various forms to a table. — sptable.SpatialPolygons â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,10 +34,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-topic">
       <header>
-      
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,9 +49,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -62,28 +58,28 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>Convert from sp package &#39;Spatial&#39; classes to a table.</h1>
-</div>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>Convert from various forms to a table.</h1>
+    </div>
 
-<div class="row">
-  <div class="col-md-9">
     
-    <p>Decompose a <code><a href='http://www.rdocumentation.org/packages/Spatial-class/topics/sp'>Spatial</a></code> object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.</p>
+    <p>Decompose a <code><a href='http://www.rdocumentation.org/packages/sp/topics/Spatial-class'>Spatial</a></code> or <code><a href='http://www.rdocumentation.org/packages/sf/topics/sf'>sf</a></code> object to a single table structured as a row for every coordinate in all the sub-geometries, including duplicated coordinates that close polygonal rings, close lines and shared vertices between objects.</p>
     
 
-    <pre><span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for SpatialPolygons</span>
+    <pre><span class='co'># S3 method for SpatialPolygons</span>
 <span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialLines</span>
@@ -97,13 +93,15 @@
 
 <span class='fu'>sptable</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
 
+<span class='fu'>sptable</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for trip</span>
-<span class='fu'>map_table</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='map_table.html'>map_table</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2>Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd><code><a href='http://www.rdocumentation.org/packages/Spatial-class/topics/sp'>Spatial</a></code> object</dd>
+      <dd><code><a href='http://www.rdocumentation.org/packages/sp/topics/Spatial-class'>Spatial</a></code> object</dd>
       <dt>...</dt>
       <dd>ignored</dd>
       <dt>object</dt>
@@ -112,10 +110,10 @@
       <dd>modified sptable version of object</dd>
     </dl>
     
-    <div class="Value">
-      <h2>Value</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <p><code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code>  with columns
+    <p>Spatial object</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></code>  with columns
 <ul>
 <li> SpatialPolygonsDataFrame &quot;object_&quot;   &quot;branch_&quot;   &quot;island_&quot;   &quot;order_&quot; &quot;x&quot;    &quot;y_&quot;
  </li>
@@ -124,31 +122,32 @@
 <li> SpatialPointsDataFrame  &quot;object_&quot; x_&quot;      &quot;y_&quot;
  </li>
 <li> SpatialMultiPointsDataFrame &quot;object_&quot; &quot;branch_&quot; &quot;x_&quot; &quot;y_&quot;
+ </li>
+<li> sf some combination of the above
 </li>
 </ul></p>
-      <p>Spatial object</p>
-    </div>
-
-    <div class="Details">
-      <h2>Details</h2>
-
-      <p>Input can be a <code><a href='http://www.rdocumentation.org/packages/SpatialPolygons/topics/sp'>SpatialPolygonsDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/SpatialLines/topics/sp'>SpatialLinesDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/SpatialMultiPoints/topics/sp'>SpatialMultiPointsDataFrame</a></code> or a <code><a href='http://www.rdocumentation.org/packages/SpatialPoints/topics/sp'>SpatialPointsDataFrame</a></code>.
-For simplicity <code>sptable</code> and its inverse <code>sp</code> assume that all geometry can be encoded with object, branch, island, order, x and y. 
-and that the type of topology is identified by which of these are present.</p>
-      <p>This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
-<ul>
-<li> <code><a href='http://www.rdocumentation.org/packages/sp_tidiers/topics/broom'>sp_tidiers</a></code> (replacement of &#39;ggplot2::fortify&#39;).
- </li>
-<li> <code><a href='http://www.rdocumentation.org/packages/geom/topics/raster'>geom</a></code>
- </li>
-<li> <code><a href='http://www.rdocumentation.org/packages/SpatialPolygonsDataFrame-class/topics/sp'>SpatialPolygonsDataFrame-class</a></code> with its &#39;as(as(x, &quot;SpatialLinesDataFrame&quot;), &quot;SpatialPointsDataFrame&quot;)&#39; workflow. 
-</li>
-</ul></p>
-    </div>
     
-    <h2 id="examples">Examples</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Input can be a of type <code><a href='http://www.rdocumentation.org/packages/sf/topics/sf'>sf</a></code> <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialLines'>SpatialLinesDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialMultiPoints'>SpatialMultiPointsDataFrame</a></code> or a <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code>.
+For simplicity <code>sptable</code> and its inverses <code>sp</code> and <code>sf</code> assume that all geometry can be encoded with object, branch, island, order, x and y. 
+and that the type of topology is identified by which of these are present.</p>
+    <p>For simple features objects with mixed types of topology the result is consistent, but probabably not useful. 
+Columns that aren&#39;t present in one type will be present, padded with NA. (This is work in progress).</p>
+    <p>This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
+<ul>
+<li> <code><a href='http://www.rdocumentation.org/packages/broom/topics/sp_tidiers'>sp_tidiers</a></code> (replacement of &#39;ggplot2::fortify&#39;).
+ </li>
+<li> <code><a href='http://www.rdocumentation.org/packages/raster/topics/geom'>geom</a></code>
+ </li>
+<li> <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygonsDataFrame-class'>SpatialPolygonsDataFrame-class</a></code> with its &#39;as(as(x, &quot;SpatialLinesDataFrame&quot;), &quot;SpatialPointsDataFrame&quot;)&#39; work flow. 
+</li>
+</ul></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## holey is a decomposed SpatialPolygonsDataFrame</span>
-<span class='no'>spdata</span> <span class='kw'>&lt;-</span> <span class='fu'>sp</span>(<span class='no'>holey</span>)
+<span class='no'>spdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>holey</span>)
 <span class='fu'>library</span>(<span class='no'>sp</span>)
 <span class='fu'>plot</span>(<span class='no'>spdata</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>rainbow</span>(<span class='fu'>nrow</span>(<span class='no'>spdata</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))</div><div class='input'><span class='fu'>points</span>(<span class='no'>holey</span>$<span class='no'>x_</span>, <span class='no'>holey</span>$<span class='no'>y_</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='input'><span class='no'>holes</span> <span class='kw'>&lt;-</span> <span class='fu'>subset</span>(<span class='no'>holey</span>, !<span class='no'>island_</span>)
 <span class='co'>## add the points that only belong to holes</span>
@@ -160,20 +159,39 @@ and that the type of topology is identified by which of these are present.</p>
 <span class='co'>#also convert to singular objects - note that this now means we have an overlapping pair of polys</span>
 <span class='co'>#because the door had a hole filled by another object</span>
 <span class='no'>notahole</span>$<span class='no'>object_</span> <span class='kw'>&lt;-</span> <span class='no'>notahole</span>$<span class='no'>branch_</span>
-<span class='fu'>plot</span>(<span class='fu'>sp</span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><img src='unknown-5.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><img src='sptable.SpatialPolygons-5.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'>## example using in-place modification with sptable&lt;-</span>
-<span class='fu'>library</span>(<span class='no'>maptools</span>)</div><div class='output'><strong class='text-info'>Checking rgeos availability: TRUE</strong></div><div class='input'><span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
+<span class='fu'>library</span>(<span class='no'>maptools</span>)
+<span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
 <span class='no'>spdata2</span> <span class='kw'>&lt;-</span> <span class='no'>spdata</span>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='co'>## modify the geometry on this object without separating the vertices from the objects</span>
 <span class='fu'>sptable</span>(<span class='no'>spdata2</span>) <span class='kw'>&lt;-</span> <span class='fu'>sptable</span>(<span class='no'>spdata2</span>) <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>x_</span> <span class='kw'>=</span> <span class='no'>x_</span> + <span class='fl'>10</span>, <span class='kw'>y_</span> <span class='kw'>=</span> <span class='no'>y_</span> + <span class='fl'>5</span>)</div></pre>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Michael D. Sumner.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 

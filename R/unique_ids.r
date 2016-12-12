@@ -14,19 +14,7 @@ idmaker <- function(n = 10L) {
 
 
 ## create n unique ids
-id_n <- function(x = 1) {
-  replicate(x, idmaker())
+id_n <- function(x = 1, n = 5L) {
+  replicate(x, idmaker(n))
 }
 
-
-## reclassify input ids
-# id_rec <- function(x) {
-#   x <- factor(x)
-#   levels(x) <- id_n(nlevels(x))
-#   levels(x)[x]
-# }
-# 
-# 
-# make_unq <- function(x) {
-#   id_rec(do.call(paste, as.list(x)))
-# }

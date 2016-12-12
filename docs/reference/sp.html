@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sp. spbabel</title>
+<title>Convert from dplyr tbl form to Spatial*DataFrame. — sp â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -34,10 +34,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-topic">
       <header>
-      
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,9 +49,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -62,21 +58,23 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>Convert from dplyr tbl form to Spatial*DataFrame.</h1>
-</div>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>Convert from dplyr tbl form to Spatial*DataFrame.</h1>
+    </div>
 
-<div class="row">
-  <div class="col-md-9">
     
     <p>Convert from dplyr tbl form to Spatial*DataFrame.</p>
     
@@ -86,10 +84,10 @@
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>sp</span>(<span class='no'>x</span>, <span class='kw'>attr_tab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>crs</span>, <span class='no'>...</span>)</pre>
     
-    <h2>Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>tibble as created by <code>sptable</code></dd>
+      <dd>tibble as created by <code><a href='sptable.SpatialPolygons.html'>sptable</a></code></dd>
       <dt>...</dt>
       <dd>unused</dd>
       <dt>attr_tab</dt>
@@ -98,25 +96,40 @@
       <dd>projection, defaults to <code>NA_character_</code></dd>
     </dl>
     
-    <div class="Value">
-      <h2>Value</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <p>Spatial*</p>
-    </div>
+    <p>Spatial*</p>
     
-    <h2 id="examples">Examples</h2>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>semap1</span> <span class='kw'>&lt;-</span> <span class='no'>semap</span>  <span class='kw'>%&gt;%</span> <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>filter</span>(<span class='no'>y_</span> <span class='kw'>&gt;</span> -<span class='fl'>89.9999</span>)
 <span class='no'>sp_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>sp</span>(<span class='no'>semap1</span>, <span class='kw'>attr_tab</span> <span class='kw'>=</span> <span class='no'>seatt</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='st'>"+proj=longlat +ellps=WGS84"</span>)
 <span class='co'>## look, seamless Antarctica!</span>
 <span class='co'>## library(rgdal); plot(spTransform(sp_obj, "+proj=laea +lat_0=-70"))</span></div></pre>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Michael D. Sumner.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 
