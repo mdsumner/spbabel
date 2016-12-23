@@ -12,7 +12,7 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 nc <- ncpoly
 test_that("sf conversion works", {
   expect_that(map_table(nc), is_a("list"))
-  
+
   ## sptable now supported
   expect_silent(map_table(st_as_sf(as(as(nc, "Spatial"), "SpatialLinesDataFrame"))))
   expect_silent(map_table(st_as_sf(as(as(as(nc, "Spatial"), "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame"))))
@@ -20,9 +20,9 @@ test_that("sf conversion works", {
 
 
 sfzoo <- function() {
-  
+
   x <- st_point(c(1,2))
-  
+
   p <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5))
   mp <- st_multipoint(p)
   s1 <- rbind(c(0,3),c(0,4),c(1,5),c(2,5))
@@ -38,7 +38,7 @@ sfzoo <- function() {
   p5 <- rbind(c(3,3), c(4,2), c(4,3), c(3,3))
   mpol <- st_multipolygon(list(list(p1,p2), list(p3,p4), list(p5)))
   #gc <- st_geometrycollection(list(mp, mpol, ls))
-  
+
   list(point = x, multipoint = mp, linestring = ls, multilinestring = mls, polygon = pol,
        multipolygon = mpol)
 }
@@ -55,8 +55,8 @@ gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
 
 library(dplyr)
 test_that("correct interpretations", {
-  expect_that(distinct(sptable(nc[57, ])), is_a("data.frame")) 
-  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L)) 
+  expect_that(distinct(sptable(nc[57, ])), is_a("data.frame"))
+  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L))
 })
 
 
@@ -69,7 +69,7 @@ test_that("individual topology types work as feature tables", {
   feature_table(zoodoo[6, ]$geometry)
 })
 test_that("sptable can decompose the basic types", {
-  
+
   sptable(zoodoo[1, ])
   sptable(zoodoo[2, ])
   sptable(zoodoo[3, ])
@@ -91,12 +91,12 @@ test_that("feature_table methods work", {
     expect_named(topology_types)
   expect_that(sf_g_apply(gcdoo, spbabel:::feature_table), is_a("list"))
   expect_that(feature_table(gcdoo$geometry), is_a("list"))
-  expect_that(feature_table(zoodoo$geometry), is_a("list")) 
+  expect_that(feature_table(zoodoo$geometry), is_a("list"))
 })
 
 
 test_that('internal functions run', {
   spbabel:::sp_sf_types()
   spbabel:::sf_types()
-  expect_that(sf_type("SpatialPolygons", equals("MULTIPOLYGON")))
+  expect_that(unname(spbabel:::sf_type("SpatialPolygons")), equals("MULTIPOLYGON"))
 })
