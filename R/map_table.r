@@ -67,7 +67,7 @@ map_table_From2 <- function(dat1, map1,   v_atts = c("x_", "y_")) {
   class(b) <- c("branch_table", class(b))
   class(bXv) <- c("branch_link_vertex_table", class(bXv))
   class(v) <- c("vertex_table", class(v))
-  res <- list(o = dat1, b = b,  bXv = bXv, v = v)
+  res <- structure(list(o = dat1, b = b,  bXv = bXv, v = v), class = c("map_table", "list"))
   res
 }
 

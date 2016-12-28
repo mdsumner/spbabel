@@ -87,7 +87,8 @@ sp_sf_types <- function() {
 }
 
 sf_type <- function(sp_type) {
-  factor(sp_sf_types()[sp_type], levels(sf_types()))
+  #factor(sp_sf_types()[sp_type], levels(sf_types()))
+  sp_sf_types()[sp_type]
 }
 
 
