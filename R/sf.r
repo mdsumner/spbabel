@@ -48,10 +48,10 @@ sptable.sf <- function(x, ...) {
   names(gtab) <- sf_to_grisnames(names(gtab))
   gtab$order_ <-  seq(nrow(gtab))
   gtab$type_ <- NULL
-  if (!is.null(gtab[["parent_"]])) {
-    gtab$island_ <- gtab$parent_ == 1
-    gtab$parent_ <- NULL
-  }
+  #if (!is.null(gtab[["parent_"]])) {
+  #  gtab$island_ <- gtab$parent_ == 1
+  #  gtab$parent_ <- NULL
+  #}
   class(gtab) <- c("coordinate_table", class(gtab))
   gtab
 }
@@ -119,18 +119,12 @@ feature_table <- function(x, ...) {
 
 #' @export
 feature_table.default <- function(x, ...) {
-  x<- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
-  if ("branch_" %in% names(x)) x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
+  x <- mutate(as_tibble(x), type = rev(class(x))[2L])
+  nms <- intersect(c("branch_"), names(x))
+  for (i in seq_along(nms)) x[[nms[i]]] <- id_n(length(unique(x[[nms[i]]])))[x[[nms[i]]]]
   x
 }
-#' @export
-feature_table.MULTIPOLYGON <- function(x, ...) {
-  ## pretty sure I will get rid of this parent_ stuff, it needs to be done differently
-  x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
-  #x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
-  x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
-  x
-}
+
 
 #' @export
 feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature_table))
@@ -138,16 +132,23 @@ feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature
 ## this unname is only because there are NA names, which kill object_
 feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
 
-# @importFrom sf st_geometry
-# feature_table.sf <- function(x, ...) {
-#   idx <- match(attr(x, "sf_column"), names(x))
-#   ## watch out for indexing out the geometry column
-#   ## because drop = TRUE in old data frames
-#   object <- tibble::as_tibble(x)[, -idx]
-#   geometry_tables <- lapply(sf::st_geometry(x), feature_table)
-#   list(object = object, geometry = geometry_tables)
-# }
 
+#' Individual geometries as tibbles. 
+#'
+#' @param x sf geometry of type sfg
+#'
+#' @return tibble
+#' @export
+#'
+#' @examples
+#' as_tibble(st_point(c(1, 1, 1)))
+as_tibble.sfg <- function(x) {
+     x <- as_tibble(as_matrix(x))
+     ## convert non-coordinates to integer (remove this when someone cracks the limit)
+     nms <- setdiff(names(x), c("X", "Y", "Z", "M"))
+     for (i in seq_along(nms)) x[[nms[i]]] <- as.integer(x[[nms[i]]])
+     x
+}
 as_matrix <- function(x, ...) UseMethod("as_matrix")
 matrixOrVector <-
   function(x, gclass) {

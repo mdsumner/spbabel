@@ -100,3 +100,7 @@ test_that('internal functions run', {
   spbabel:::sf_types()
   expect_that(unname(spbabel:::sf_type("SpatialPolygons")), equals("MULTIPOLYGON"))
 })
+
+# sfh <- st_as_sf(sp(holey))
+# a <- do.call(rbind, lapply(c("MULTIPOLYGON", "MULTILINESTRING", "MULTIPOINT", "POLYGON", "LINESTRING", "POINT"), function(x) st_cast(sfh, x)))
+# b <- st_as_sf(tibble(geometry = st_sfc(st_geometrycollection(lapply(st_geometry(a), identity)))))
