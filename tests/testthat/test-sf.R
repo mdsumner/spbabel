@@ -48,15 +48,15 @@ sfgeomc <- function() {
 
 example(st_read)
 Zoo <- do.call(st_sfc, sfzoo())
-GC <- st_sfc(sfgeomc())
+GC <- sfgeomc()
 
 zoodoo <- data.frame(x = seq_along(Zoo)); zoodoo[["geometry"]]  <- Zoo; zoodoo <- st_as_sf(zoodoo)
-gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- GC; gcdoo <- st_as_sf(gcdoo)
+gcdoo <- data.frame(x = 1L); gcdoo[["geometry"]] <- st_sfc(GC); gcdoo <- st_as_sf(gcdoo)
 
 library(dplyr)
 test_that("correct interpretations", {
   expect_that(distinct(sptable(nc[57, ])), is_a("data.frame"))
-  expect_that(nrow(distinct(sptable(nc[57, ]), branch_)), equals(2L))
+  expect_that(nrow(distinct(sptable(nc[57, ]), island_)), equals(2L))
 })
 
 

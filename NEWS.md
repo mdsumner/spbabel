@@ -1,6 +1,7 @@
 # spbabel dev
 
-* go with n = 5 for id length (2 is too short)
+* new concept of "island", as the intermediary part before a branch for 
+MULTIPOLYGON only
 
 * added support for sf, new model based on "feature_table"
 

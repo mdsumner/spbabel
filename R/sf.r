@@ -127,7 +127,8 @@ feature_table.default <- function(x, ...) {
 feature_table.MULTIPOLYGON <- function(x, ...) {
   ## pretty sure I will get rid of this parent_ stuff, it needs to be done differently
   x <- mutate(tibble::as_tibble(as_matrix(x)), type = class(x)[2L])
-  x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
+  #x[["branch_"]] <-  id_n(length(unique(x[["parent_"]])))[x[["parent_"]]]
+  x[["branch_"]] <-  id_n(length(unique(x[["branch_"]])))[x[["branch_"]]]
   x
 }
 
@@ -164,8 +165,8 @@ as_matrix.GEOMETRYCOLLECTION <- function(x, ...) lapply(x, function(a) as_matrix
 
 as_matrix.MULTIPOLYGON <-
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x),  function(parent_) do.call(rbind, lapply(seq_along(x[[parent_]]),
-                                                                                 function(part_) cbind(matrixOrVector(x[[parent_]][[part_]], class(x)[1L]),  parent_)))))
+    do.call(rbind, lapply(seq_along(x),  function(island_) do.call(rbind, lapply(seq_along(x[[island_]]),
+                                                                                 function(branch_) cbind(matrixOrVector(x[[island_]][[branch_]], class(x)[1L]),  island_, branch_)))))
     
   }
 
