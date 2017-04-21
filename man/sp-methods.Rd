@@ -2,10 +2,10 @@
 % Please edit documentation in R/utils.r
 \docType{methods}
 \name{show,SpatialPolygonsDataFrame-method}
-\alias{print,Spatial-method}
+\alias{show,SpatialPolygonsDataFrame-method}
 \alias{show,SpatialLinesDataFrame-method}
 \alias{show,SpatialPointsDataFrame-method}
-\alias{show,SpatialPolygonsDataFrame-method}
+\alias{print,Spatial-method}
 \title{sp methods}
 \usage{
 \S4method{show}{SpatialPolygonsDataFrame}(object)
@@ -26,4 +26,3 @@
 \description{
 Sp methods
 }
-

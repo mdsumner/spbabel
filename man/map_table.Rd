@@ -41,4 +41,3 @@ data(holey)
 spholey <- sp(holey)
 map_table(spholey)
 }
-

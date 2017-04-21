@@ -7,9 +7,15 @@
 \method{as_tibble}{sfg}(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{sf geometry of type sfg}
+}
+\value{
+tibble
 }
 \description{
 Individual geometries as tibbles.
 }
+\examples{
 
+tibble::as_tibble(sf::st_point(c(1, 1, 1)))
+}

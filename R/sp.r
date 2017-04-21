@@ -42,7 +42,6 @@ sptable.SpatialPointsDataFrame <- function(x, ...) {
 
 #' @export
 #' @rdname sptable
-#' @importFrom dplyr bind_cols
 sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
   df <- .pointsGeom(x, ...)
   df$object_ <- as.integer(df$object_) 
@@ -78,7 +77,7 @@ sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
     sp(value,  as.data.frame(object), proj4string(object))
     
   }
-
+#' @importFrom dplyr bind_cols
 .pointsGeom <-  function(x, ...) {
   ## this will have to become a tbl
   xy <- as_tibble(as.data.frame(coordinates(x)))
@@ -87,10 +86,10 @@ sptable.SpatialMultiPointsDataFrame <- function(x, ...) {
   if (is.list(x@coords)) {
     br <- rep(seq_along(x@coords), unlist(lapply(x@coords, nrow), use.names = FALSE))
     cnames <- c('branch_', 'object_', 'x_', 'y_')
-    xy <- bind_cols(tibble(br), tibble(br), xy)
+    xy <- dplyr::bind_cols(tibble(br), tibble(br), xy)
   } else {
     br <- seq(nrow(xy))
-    xy <- bind_cols(tibble(br), xy)
+    xy <- dplyr::bind_cols(tibble(br), xy)
   }
   
   colnames(xy) <- cnames

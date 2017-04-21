@@ -2,8 +2,8 @@
 % Please edit documentation in R/spbabel-package.r
 \docType{data}
 \name{semap}
-\alias{seatt}
 \alias{semap}
+\alias{seatt}
 \title{"South-east" map data.}
 \description{
 Created in /data-raw/ \code{semap} is the \code{sptable} version of some of \code{\link[maptools]{wrld_simpl}}, and \code{seatt} is the matching attribute data, linked by 'object_'.
@@ -15,4 +15,3 @@ Created in /data-raw/.
 mp <- sp(semap, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
 
 }
-

@@ -14,4 +14,3 @@ Facilities for converting between different types of spatial objects, including 
  \code{\link{sp}} \tab create Spatial DataFrame object from table \cr
  }
 }
-

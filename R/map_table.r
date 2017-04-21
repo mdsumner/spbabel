@@ -43,7 +43,7 @@ map_table <- function(x, ...) {
 #' @param dat1 object "meta"data
 #' @param map1 geometry data in sptable form
 #' @param v_atts the vertex attributes to de-duplicate by (x_, y_ by default)
-#' @importFrom dplyr %>% bind_rows distinct_ mutate select select_
+#' @importFrom dplyr %>% distinct_  select_
 #' @importFrom tibble tibble
 #' @importFrom utils head
 #' @noRd
@@ -54,15 +54,14 @@ map_table_From2 <- function(dat1, map1,   v_atts = c("x_", "y_")) {
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
   bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
   
-  ver_ <- as.integer(factor(do.call(paste, select_(map1, .dots = v_atts))))
+  ver_ <- as.integer(factor(do.call(paste, dplyr::select_(map1, .dots = v_atts))))
   map1[["vertex_"]] <- id_n(length(unique(ver_)))[ver_]
-  b <- distinct_(map1, .dots = b_atts) 
+  b <- dplyr::distinct_(map1, .dots = b_atts) 
   ## four tables (dat1, map2, map4, map5)
   
-  bXv <- dplyr::select_(map1, .dots = bxv_atts)
+  bXv <- map1[, intersect(names(map1), c("branch_", "vertex_", "order_"))]
   #print(head(map1))
   v <- map1[!duplicated(map1$vertex_), c(v_atts, "vertex_")]
-  #  v <- map1 %>% distinct_(.dots = c(v_atts, "vertex_"))
   class(dat1) <- c("object_table", class(dat1))
   class(b) <- c("branch_table", class(b))
   class(bXv) <- c("branch_link_vertex_table", class(bXv))
