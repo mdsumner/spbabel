@@ -53,8 +53,9 @@ map_table_From2 <- function(dat1, map1,   v_atts = c("x_", "y_")) {
   o_atts <- setdiff(names(map1), v_atts)
   b_atts <- setdiff(o_atts, c("order_", "vertex_"))
   bxv_atts <- c(setdiff(names(map1), c("object_", "island_", v_atts)), "vertex_")
+  pasty <- dplyr::select_(map1, .dots = v_atts)
   
-  ver_ <- as.integer(factor(do.call(paste, dplyr::select_(map1, .dots = v_atts))))
+  ver_ <- as.integer(factor(do.call(paste, pasty)))
   map1[["vertex_"]] <- id_n(length(unique(ver_)))[ver_]
   b <- dplyr::distinct_(map1, .dots = b_atts) 
   ## four tables (dat1, map2, map4, map5)

@@ -1,4 +1,4 @@
-# spbabel dev
+# spbabel 0.4.6
 
 * new concept of "island", as the intermediary part before a branch for 
 MULTIPOLYGON only
@@ -11,7 +11,7 @@ MULTIPOLYGON only
 
 * fixed bug in sp() logic that recreates a SpatialLines (it was using a Polygon under the hood)
 
-* sped up sptable by using old raster code, after generalizing to the all types
+* sped up sptable by using old raster code, after generalizing to all types
 
 * new map_table method for 'trip' objects
 
