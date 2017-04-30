@@ -15,8 +15,9 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' @param attr_tab remaining data from the attributes
 #' @param ... unused
 #' @return sf
+#' 
 sf <- function(x, ...) {
-  stop("not yet implemented")
+  #stop("not yet implemented")
   UseMethod("sf")
 }
 
@@ -26,4 +27,5 @@ sf.data.frame <- function(x, attr_tab = NULL, crs, ...) {
 }
 
 sfFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
+  sf::st_as_sf(sp(x, attr_tab = attr_tab, crs = crs, topol_ = topol_))
 }

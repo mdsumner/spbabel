@@ -4,10 +4,11 @@ Version: 0.4.6
 Title: Convert Spatial Data Using Tidy Tables
 Description: Tools to convert from specific formats to more general forms of 
     spatial data. Using tables to store the actual entities present in spatial
-    data provides far greater flexibility, and the functions here deliberately 
+    data provides flexibility, and the functions here deliberately 
     minimize the level of interpretation applied, leaving that for specific 
     applications. Includes support for simple features,  round-trip for 'Spatial' classes and long-form 
-    tables, analogous to 'ggplot2::fortify'. 
+    tables, analogous to 'ggplot2::fortify'. There is also a more "normal form" representation
+    that decomposes simple features and their kin to tables of objects, parts, and densified coordinates. 
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
 URL: https://mdsumner.github.io/spbabel
 BugReports: https://github.com/mdsumner/spbabel/issues
