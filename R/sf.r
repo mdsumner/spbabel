@@ -133,6 +133,7 @@ feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature
 feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
 
 
+
 #' Individual geometries as tibbles. 
 #'
 #' @param x sf geometry of type sfg
@@ -154,7 +155,7 @@ matrixOrVector <-
   function(x, gclass) {
     colnms <- unlist(strsplit(gclass, ""))
     ##print(colnms)
-    x <- unclass(x)
+    #x <- unclass(x)
     if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
     structure(as.matrix(x), dimnames = list(NULL, colnms))
   }
