@@ -22,4 +22,3 @@ There is wasted information stored this way, but that's because this is intended
 There are three tables, objects (the feature attributes and ID), branches (the parts),
 coordinates (the X, Y, Z, M values).
 }
-

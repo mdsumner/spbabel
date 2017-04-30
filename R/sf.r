@@ -2,7 +2,7 @@
 #' @importFrom tibble as_tibble
 map_table.sf <- function(x, ...) {
   tabmap <- sptable(x)
-  tabdat <- as_tibble(drop_sf_geometry(x) )
+  tabdat <- tibble::as_tibble(drop_sf_geometry(x) )
   ## remove this if sptable is updated
   tabdat$object_ <- id_n(nrow(tabdat))
   tabmap$object_ <- tabdat$object_[factor(tabmap$object_)]
@@ -32,7 +32,7 @@ sptable.sf <- function(x, ...) {
   
   ftl <- feature_table.sfc(g)
   
-  gtab <- bind_rows(ftl, .id = "object_")
+  gtab <- dplyr::bind_rows(ftl, .id = "object_")
   if ("branch_" %in% names(gtab)) gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
   gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
   if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
@@ -118,8 +118,9 @@ feature_table <- function(x, ...) {
 
 
 #' @export
+#' @importFrom dplyr mutate
 feature_table.default <- function(x, ...) {
-  x <- mutate(as_tibble(x), type = rev(class(x))[2L])
+  x <- dplyr::mutate(as_tibble(x), type = rev(class(x))[2L])
   nms <- intersect(c("branch_"), names(x))
   for (i in seq_along(nms)) x[[nms[i]]] <- id_n(length(unique(x[[nms[i]]])))[x[[nms[i]]]]
   x
@@ -127,7 +128,7 @@ feature_table.default <- function(x, ...) {
 
 
 #' @export
-feature_table.GEOMETRYCOLLECTION <- function(x, ...) bind_rows(lapply(x, feature_table))
+feature_table.GEOMETRYCOLLECTION <- function(x, ...) dplyr::bind_rows(lapply(x, feature_table))
 #' @export
 ## this unname is only because there are NA names, which kill object_
 feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
@@ -140,9 +141,10 @@ feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
 #'
 #' @return tibble
 #' @export
-#'
+#' @importFrom tibble as_tibble
 #' @examples
-#' as_tibble(st_point(c(1, 1, 1)))
+#' 
+#' tibble::as_tibble(sf::st_point(c(1, 1, 1)))
 as_tibble.sfg <- function(x) {
      x <- as_tibble(as_matrix(x))
      ## convert non-coordinates to integer (remove this when someone cracks the limit)

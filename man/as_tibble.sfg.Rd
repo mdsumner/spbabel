@@ -16,6 +16,6 @@ tibble
 Individual geometries as tibbles.
 }
 \examples{
-as_tibble(st_point(c(1, 1, 1)))
-}
 
+tibble::as_tibble(sf::st_point(c(1, 1, 1)))
+}

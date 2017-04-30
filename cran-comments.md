@@ -1,4 +1,4 @@
-spbabel 0.4.5 update
+spbabel 0.4.6 update
 
 ## Test environments
 * local Windows 7 install (R 3.3.1)
@@ -13,4 +13,3 @@ spbabel 0.4.5 update
 
 The only dependency is spdplyr, which passes check against this update. 
 
-Also checked with 'devtools::revdep_check'. 

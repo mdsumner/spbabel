@@ -39,7 +39,7 @@ sp.data.frame <- function(x, attr_tab = NULL, crs, ...) {
 ## nsp_df type, unnest twice (need name of column)
 ## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
 
-#' @importFrom dplyr left_join
+#' @importFrom dplyr bind_cols distinct_
 spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
@@ -48,13 +48,13 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   ## check for minimum sensible number of coordinates
   minc <- c(SpatialPolygonsDataFrame = 3, SpatialLinesDataFrame = 2, SpatialMultiPointsDataFrame = 1, SpatialPointsDataFrame = 1)[target]
   if (nrow(x) < minc) stop(sprintf("target is %s but input table has  %i %s", target, nrow(x), c("rows", "row")[(nrow(x) ==1)+1]))
-  dat <- distinct_(x, "object_", .keep_all = TRUE)
+  dat <- dplyr::distinct_(x, "object_", .keep_all = TRUE)
   
   n_object <- nrow(dat)
   n_attribute <- nrow(attr_tab)
   if (is.null(n_attribute)) n_attribute <- n_object
   if (!(n_attribute == n_object)) stop("number of rows in attr must match distinct object in x") 
-  if (!is.null(attr_tab)) dat <- bind_cols(dat, attr_tab)
+  if (!is.null(attr_tab)) dat <- dplyr::bind_cols(dat, attr_tab)
   # dat <- as.data.frame(dat)
   gom <- switch(target,
                 SpatialPolygonsDataFrame = reverse_geomPoly(x, dat, crs),

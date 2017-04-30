@@ -27,6 +27,7 @@
 #'  \item sf some combination of the above
 #' }
 #' @export
+#' @importFrom dplyr mutate
 #' @examples 
 #' ## holey is a decomposed SpatialPolygonsDataFrame
 #' spdata <- sp(holey)
@@ -52,7 +53,7 @@
 #' spdata2 <- spdata
 #' library(dplyr)
 #' ## modify the geometry on this object without separating the vertices from the objects
-#' sptable(spdata2) <- sptable(spdata2) %>% mutate(x_ = x_ + 10, y_ = y_ + 5)
+#' sptable(spdata2) <- sptable(spdata2) %>% dplyr::mutate(x_ = x_ + 10, y_ = y_ + 5)
 sptable <- function(x, ...) {
   UseMethod("sptable")
 }

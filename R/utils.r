@@ -12,7 +12,7 @@ has_data <- function(x) .hasSlot(x, "data")
 
 #' @importFrom methods .hasSlot
 #' @importFrom sp bbox proj4string 
-#' @importFrom dplyr tbl_df group_by
+#' @importFrom tibble as_tibble 
 .print_Spatial <- 
   function (x, ...) 
   {
@@ -41,7 +41,7 @@ has_data <- function(x) .hasSlot(x, "data")
       if (!isRaster) {
         cat("variables   : ", nc, "\n", sep = "")
       }
-      if (!inherits(x, "tbl_df")) x <- tbl_df(x)
+      if (!inherits(x, "tbl_df")) x <- tibble::as_tibble(x)
       print(x)
     }
   }

@@ -1,5 +1,6 @@
 #' @export
 #' @rdname sptable
+#' @importFrom dplyr bind_cols
 map_table.trip <- function(x, ...) {
   
   if (!requireNamespace("trip", quietly = TRUE)) {
@@ -8,7 +9,7 @@ map_table.trip <- function(x, ...) {
   mpts <- as_trip_MultiPoints(x)
   tabs <- map_table(mpts)
   ## now put the stuff back on
-  tabs$bXv <- bind_cols(tabs$bXv, x@data)
+  tabs$bXv <- dplyr::bind_cols(tabs$bXv, x@data)
   tabs
 }
 
