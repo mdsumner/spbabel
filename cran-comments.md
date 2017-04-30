@@ -1,9 +1,8 @@
 spbabel 0.4.6 update
 
 ## Test environments
-* local Windows 7 install (R 3.4.0)
 * ubuntu 14.04, on travis-ci (R 3.4.0)
-* r-hub (devel and release)
+* r-winbuilder (devel and release)
 
 ## R CMD check results
 
