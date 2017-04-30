@@ -28,7 +28,8 @@ plot(report)
 print(report)
 
 ## ------------------------------------------------------------------------
-map_table(report, v_atts = c("x_", "y_", "z_"))
+#library(spbabel)
+#map_table(report, v_atts = c("x_", "y_", "z_"))
 
 
 

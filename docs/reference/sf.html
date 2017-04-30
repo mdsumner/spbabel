@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TBD Convert from dplyr tbl form to simple features. � sf • spbabel</title>
+<title>TBD Convert from dplyr tbl form to simple features. — sf • spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -79,22 +81,31 @@
     <p>Not yet implemented.</p>
     
 
-    <pre><span class='fu'>sf</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>sf</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>sf</span>(<span class='no'>x</span>, <span class='kw'>attr_tab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>crs</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>tibble as created by <code><a href='sptable.SpatialPolygons.html'>sptable</a></code></dd>
-      <dt>...</dt>
-      <dd>unused</dd>
-      <dt>attr_tab</dt>
-      <dd>remaining data from the attributes</dd>
-      <dt>crs</dt>
-      <dd>projection, defaults to <code>NA_character_</code></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>tibble as created by <code><a href='sptable.html'>sptable</a></code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>unused</p></td>
+    </tr>
+    <tr>
+      <th>attr_tab</th>
+      <td><p>remaining data from the attributes</p></td>
+    </tr>
+    <tr>
+      <th>crs</th>
+      <td><p>projection, defaults to <code>NA_character_</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
