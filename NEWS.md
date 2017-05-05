@@ -1,3 +1,8 @@
+# spbabel 0.4.7
+
+* remove dependency on sf, spbabel can decompose sf but cannot recompose. Importing sf requires too many 
+ dependencies that are not relevant to the workflows. 
+
 # spbabel 0.4.6
 
 * new concept of "island", as the intermediary part before a branch for 

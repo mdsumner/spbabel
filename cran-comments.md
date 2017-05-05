@@ -1,4 +1,4 @@
-spbabel 0.4.6 update
+spbabel 0.4.7 update
 
 ## Test environments
 * ubuntu 14.04, on travis-ci (R 3.4.0)

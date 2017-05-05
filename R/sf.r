@@ -25,10 +25,11 @@ matrix2list <- function(x) {
 }
 
 #' @export
-#' @importFrom sf st_geometry
+#importFrom sf st_geometry
 #' @importFrom tibble as_tibble
 sptable.sf <- function(x, ...) {
-  g <- sf::st_geometry(x)
+  ## g <- sf::st_geometry(x)
+  g <- x[[attr(x, "sf_column")]]
   
   ftl <- feature_table.sfc(g)
   

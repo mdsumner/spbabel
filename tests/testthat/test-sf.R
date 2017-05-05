@@ -96,7 +96,7 @@ test_that("feature_table methods work", {
 
 test_that("recomposition works", {
   sptable(nc[, 1:4]) %>% sp()
-  sptable(nc[, 1:4]) %>% sf()
+  expect_error(sptable(nc[, 1:4]) %>% sf(), "available")
 })
 
 test_that('internal functions run', {

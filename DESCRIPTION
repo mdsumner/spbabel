@@ -17,7 +17,6 @@ Depends:
 Imports: 
     dplyr, 
     methods, 
-    sf, 
     sp, 
     tibble
 Suggests: 
@@ -26,12 +25,12 @@ Suggests:
     maptools,
     raster,
     rmarkdown, 
-    scales,
     knitr,
     covr, 
     broom, 
     ggpolypath,
-    maps, 
+    maps,
+    sf,
     trip, 
     viridis
 VignetteBuilder: knitr

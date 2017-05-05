@@ -15,17 +15,19 @@ setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 #' @param attr_tab remaining data from the attributes
 #' @param ... unused
 #' @return sf
-#' 
+#' @export
 sf <- function(x, ...) {
   #stop("not yet implemented")
   UseMethod("sf")
 }
 
+#' @export
 #' @rdname sf
 sf.data.frame <- function(x, attr_tab = NULL, crs, ...) {
   sfFromTable(x, attr_tab = attr_tab, crs = crs, ...)
 }
 
 sfFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
-  sf::st_as_sf(sp(x, attr_tab = attr_tab, crs = crs, topol_ = topol_))
+  stop("sf direct creation currently not available, please for now install sf and use 'library(sf); st::as_sf(sp(x, ...))'")
+  #sf::st_as_sf(sp(x, attr_tab = attr_tab, crs = crs, topol_ = topol_))
 }
