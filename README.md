@@ -1,7 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-
 [![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel)
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel)
@@ -17,9 +15,11 @@ spbabel for spatial forms
 
 Spbabel provides simple tools to flip between specialist, bespoke formats and tabular, generic forms of spatial data. This package aims assist in the ongoing development of tools for spatial data in R. This is really a set of tools for developing other tools, but do see some examples in the vignettes.
 
-A table-based framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables.
+The key functions for simple decomposition and recomposition are `sptable` and `sp`, which provide the identified coordinates in a single data frame.
 
-Currently supported are
+A more useful and extensible decomposition is provided by `map_table` which provides data frames of the object data, the parts data and the coordinates data as separate tables linked by ID. See here for more on the rationale. <http://rpubs.com/cyclemumner/sc-rationale> This table-based framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables.
+
+Currently supported:
 
 -   sf
 -   sp
@@ -27,19 +27,10 @@ Currently supported are
 -   trip
 -   rgl
 
-In progress are
+In progress:
 
--   graphics
--   maps
--   spatstat
-
-Planned are
-
--   PBSmapping
--   lawn
--   igraph
 -   everything else
--   the other trajectory / animal tracking packages
+-   especially the other trajectory / animal tracking packages
 
 The tracking packages such as adehabitatLT, trajectories, and dozens of others `crawl` and `move` packages contain objects that could be coerced in a straightforward way, see the Spatio Temporal Task View for more (in the Moving Objects / Trajectories section). The hyperframe in spatstat is another example, and to follow up Edzer's work in spacetime.
 
