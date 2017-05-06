@@ -46,7 +46,7 @@ sfgeomc <- function() {
   gc <- st_geometrycollection(sfzoo())
 }
 
-example(st_read)
+nc <- read_sf(system.file("shape/nc.shp", package="sf"))
 Zoo <- do.call(st_sfc, sfzoo())
 GC <- sfgeomc()
 
@@ -94,6 +94,10 @@ test_that("feature_table methods work", {
   expect_that(feature_table(zoodoo$geometry), is_a("list"))
 })
 
+test_that("recomposition works", {
+  sptable(nc[, 1:4]) %>% sp()
+  expect_error(sptable(nc[, 1:4]) %>% sf(), "available")
+})
 
 test_that('internal functions run', {
   spbabel:::sp_sf_types()

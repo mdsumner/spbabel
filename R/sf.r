@@ -25,15 +25,29 @@ matrix2list <- function(x) {
 }
 
 #' @export
-#' @importFrom sf st_geometry
+#importFrom sf st_geometry
 #' @importFrom tibble as_tibble
 sptable.sf <- function(x, ...) {
-  g <- sf::st_geometry(x)
+  ## g <- sf::st_geometry(x)
+  g <- x[[attr(x, "sf_column")]]
   
   ftl <- feature_table.sfc(g)
   
+  
+ if ("island_" %in% names(ftl[[1]])) {
+   ftl <- lapply(ftl, function(x) {
+     x[["branch_"]] <- paste(x[["branch_"]], x[["island_"]])
+     x[["island_"]] <- as.integer(factor(x[["branch_"]])) < 2
+     
+     x
+   })
+ }
   gtab <- dplyr::bind_rows(ftl, .id = "object_")
-  if ("branch_" %in% names(gtab)) gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
+  
+  if ("branch_" %in% names(ftl[[1]])) {
+    gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
+  }
+  
   gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
   if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
   
@@ -131,7 +145,11 @@ feature_table.default <- function(x, ...) {
 feature_table.GEOMETRYCOLLECTION <- function(x, ...) dplyr::bind_rows(lapply(x, feature_table))
 #' @export
 ## this unname is only because there are NA names, which kill object_
-feature_table.sfc <- function(x, ...) unname(lapply(x, feature_table))
+feature_table.sfc <- function(x, ...) {
+  out <- unname(lapply(x, feature_table))
+ out 
+}
+
 
 
 #' Individual geometries as tibbles. 
@@ -156,7 +174,7 @@ matrixOrVector <-
   function(x, gclass) {
     colnms <- unlist(strsplit(gclass, ""))
     ##print(colnms)
-    x <- unclass(x)
+    #x <- unclass(x)
     if (is.null(dim(x))) x <- matrix(x, ncol = length(x))
     structure(as.matrix(x), dimnames = list(NULL, colnms))
   }

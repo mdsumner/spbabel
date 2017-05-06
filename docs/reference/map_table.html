@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A decomposition of &#39;vector&#39; map data structures to tables. — map_table â€¢ spbabel</title>
+<title>A decomposition of 'vector' map data structures to tables. â€” map_table â€¢ spbabel</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -72,7 +74,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A decomposition of &#39;vector&#39; map data structures to tables.</h1>
+    <h1>A decomposition of 'vector' map data structures to tables.</h1>
     </div>
 
     
@@ -80,15 +82,20 @@
 entities in spatial map data.</p>
     
 
-    <pre><span class='fu'>map_table</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>map_table</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>object to tidy</dd>
-      <dt>...</dt>
-      <dd>arguments passed to methods</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>object to tidy</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments passed to methods</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -96,78 +103,78 @@ entities in spatial map data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The basic entities behind spatial data, and hence the &quot;map tables&quot; are: 
-<dl class='dl-horizontal'>
- <dt>vertices</dt><dd>the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.</dd>
- <dt>branches</dt><dd>a single connected chain of vertices, or &quot;parts&quot;</dd>
- <dt>objects</dt><dd>a collection of branches aligned to a row of metadata</dd>
- </dl></p>
-    <p>This is the basic &quot;topology&quot; of traditional GIS vector data, for points, 
+    <p>The basic entities behind spatial data, and hence the "map tables" are:</p><dl class='dl-horizontal'>
+ <dt>vertices</dt><dd><p>the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.</p></dd>
+ <dt>branches</dt><dd><p>a single connected chain of vertices, or "parts"</p></dd>
+ <dt>objects</dt><dd><p>a collection of branches aligned to a row of metadata</p></dd>
+ </dl><p>This is the basic "topology" of traditional GIS vector data, for points, 
  lines, polygons and their multi-counterparts. By default map_tables will 
  produce these tables and also de-duplicated the input vertices, adding a 
- fourth table to link vertices to branches.</p>
-    <p>Other topology types such as triangle or quad meshes can extend this 
- four-entity model, or exist without the branches at all. See &quot;mesh_table&quot; ??</p>
-    <p>These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.</p>
+ fourth table to link vertices to branches.
+    Other topology types such as triangle or quad meshes can extend this 
+ four-entity model, or exist without the branches at all. See "mesh_table" ??
+    These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>holey</span>)
 <span class='no'>spholey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>holey</span>)
 <span class='fu'>map_table</span>(<span class='no'>spholey</span>)</div><div class='output co'>#&gt; $o
-#&gt; # A tibble: 3 × 2
-#&gt;   rownumber_ object_
-#&gt;        &lt;int&gt;   &lt;chr&gt;
-#&gt; 1          1   fZLja
-#&gt; 2          2   CErTV
-#&gt; 3          3   2kcty
+#&gt; # A tibble: 3 Ã— 2
+#&gt;   rownumber_    object_
+#&gt;        &lt;int&gt;      &lt;chr&gt;
+#&gt; 1          1 fZLjaCErTV
+#&gt; 2          2 2kctymzdy8
+#&gt; 3          3 rQTm8TdGRQ
 #&gt; 
 #&gt; $b
-#&gt; # A tibble: 9 × 3
-#&gt;   object_ branch_ island_
-#&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1   fZLja   mzdy8    TRUE
-#&gt; 2   fZLja   rQTm8   FALSE
-#&gt; 3   fZLja   TdGRQ   FALSE
-#&gt; 4   fZLja   bnsND   FALSE
-#&gt; 5   fZLja   AR6ln    TRUE
-#&gt; 6   fZLja   QENOf    TRUE
-#&gt; 7   CErTV   VV98y    TRUE
-#&gt; 8   2kcty   CtkGE    TRUE
-#&gt; 9   2kcty   WmSev   FALSE
+#&gt; # A tibble: 9 Ã— 3
+#&gt;      object_    branch_ island_
+#&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+#&gt; 1 fZLjaCErTV bnsNDAR6ln    TRUE
+#&gt; 2 fZLjaCErTV QENOfVV98y   FALSE
+#&gt; 3 fZLjaCErTV CtkGEWmSev   FALSE
+#&gt; 4 fZLjaCErTV ZqJuKl6HHr   FALSE
+#&gt; 5 fZLjaCErTV BxbCybxI1x    TRUE
+#&gt; 6 fZLjaCErTV GLqrD5ynPd    TRUE
+#&gt; 7 2kctymzdy8 9jG0SoHZbD    TRUE
+#&gt; 8 rQTm8TdGRQ XYznzPFOFZ    TRUE
+#&gt; 9 rQTm8TdGRQ R2a39FwWKN   FALSE
 #&gt; 
 #&gt; $bXv
-#&gt; # A tibble: 50 × 3
-#&gt;    branch_ order_ vertex_
-#&gt;      &lt;chr&gt;  &lt;int&gt;   &lt;chr&gt;
-#&gt; 1    mzdy8      1   ZqJuK
-#&gt; 2    mzdy8      2   l6HHr
-#&gt; 3    mzdy8      3   Pf1e0
-#&gt; 4    mzdy8      4   UPzvT
-#&gt; 5    mzdy8      5   ZqJuK
-#&gt; 6    rQTm8      1   7tw3Z
-#&gt; 7    rQTm8      2   bxI1x
-#&gt; 8    rQTm8      3   BxbCy
-#&gt; 9    rQTm8      4   gEpQk
-#&gt; 10   rQTm8      5   7tw3Z
+#&gt; # A tibble: 50 Ã— 3
+#&gt;       branch_ order_    vertex_
+#&gt;         &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
+#&gt; 1  bnsNDAR6ln      1 1Jp41pyVhm
+#&gt; 2  bnsNDAR6ln      2 kP15IJQpc4
+#&gt; 3  bnsNDAR6ln      3 jHh7ck68S2
+#&gt; 4  bnsNDAR6ln      4 0TtggXxd9L
+#&gt; 5  bnsNDAR6ln      5 1Jp41pyVhm
+#&gt; 6  QENOfVV98y      1 11vam6r27a
+#&gt; 7  QENOfVV98y      2 RnTnCuJpC4
+#&gt; 8  QENOfVV98y      3 e9Lk4cKo4Y
+#&gt; 9  QENOfVV98y      4 8cBN9t1H2F
+#&gt; 10 QENOfVV98y      5 11vam6r27a
 #&gt; # ... with 40 more rows
 #&gt; 
 #&gt; $v
-#&gt; # A tibble: 27 × 3
-#&gt;       x_    y_ vertex_
-#&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;chr&gt;
-#&gt; 1      0     0   ZqJuK
-#&gt; 2      0    19   l6HHr
-#&gt; 3     46    19   Pf1e0
-#&gt; 4     46     0   UPzvT
-#&gt; 5      7     6   7tw3Z
-#&gt; 6     13     6   bxI1x
-#&gt; 7     13    13   BxbCy
-#&gt; 8      7    13   gEpQk
-#&gt; 9     18     1   GLqrD
-#&gt; 10    24     1   pyVhm
+#&gt; # A tibble: 27 Ã— 3
+#&gt;       x_    y_    vertex_
+#&gt;    &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;
+#&gt; 1      0     0 1Jp41pyVhm
+#&gt; 2      0    19 kP15IJQpc4
+#&gt; 3     46    19 jHh7ck68S2
+#&gt; 4     46     0 0TtggXxd9L
+#&gt; 5      7     6 11vam6r27a
+#&gt; 6     13     6 RnTnCuJpC4
+#&gt; 7     13    13 e9Lk4cKo4Y
+#&gt; 8      7    13 8cBN9t1H2F
+#&gt; 9     18     1 8Y3KV9SnsS
+#&gt; 10    24     1 FzTNy7sdJn
 #&gt; # ... with 17 more rows
-#&gt; </div></pre>
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "map_table" "list"     </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

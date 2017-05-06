@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
@@ -11,18 +12,17 @@
 
 [![Coverage Status](https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg)](https://codecov.io/github/mdsumner/spbabel?branch=master)
 
-spbabel: spatial translator
-===========================
+spbabel for spatial forms
+=========================
 
-Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims assist in the ongoing development of tools for spatial data in R. There is limited use for users directly, though see examples in the vignettes.
+Spbabel provides simple tools to flip between specialist, bespoke formats and tabular, generic forms of spatial data. This package aims assist in the ongoing development of tools for spatial data in R. This is really a set of tools for developing other tools, but do see some examples in the vignettes.
 
-This framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables that can be transferred from and to R in many different ways.
+A table-based framework allows for the easy transfer between the different spatial representations in R, in generic database-ready tables.
 
 Currently supported are
 
 -   sf
 -   sp
--   ggplot2
 -   rangl
 -   trip
 -   rgl
@@ -45,7 +45,7 @@ The tracking packages such as adehabitatLT, trajectories, and dozens of others `
 
 If you know of other variants that should be included, please file an issue or let me know. Once the basic framework is available, adding new conversions will be pretty simple.
 
-There already are converters for Spatial classes, why do this? There are converters, but the sp classes reflect modern GIS standards and thes are quite restrictive. There are many spatial data structures in R that cannot be represented in sp, and that cannot be represented by extending the existing classes. To do so requires a more fundamental re-write.
+There already are converters for Spatial classes, so why do this? There are converters, but the `sp` and `sf` classes adhere to a common denominator in modern GIS standards which is quite restrictive. There are many spatial data structures in R that cannot be represented, and that cannot be represented by extending the standard packages. Most other spatial software also goes around the simple features standards, and so we enter regions where we have no standards at all.
 
 Conversions between existing forms is simply a side-benefit of having a more general framework. The main motivation is to be able to convert these commonly used types into forms ready for modern tools for interactive use, and to allow database back-ending without proliferation of complicated workarounds doing constant translation.
 
@@ -100,25 +100,6 @@ The long-form table may seem like soup, but it's not meant to be seen for normal
 
 We can tidy this up by encoding the geometry data into a geometry-column, into nested data frames, or by normalizing to tables that store only one kind of data, or with recursive data structures such as lists of matrices. Each of these has strengths and weaknesses. Ultimately I want this to evolve into a fully-fledged set of tools for representing spatial/topological data in R, but still by leveraging existing code whereever possible.
 
-Dragons lurk in the fish soup
-=============================
-
-Don't go in the woods. Straying from the path is very dangerous, there are proper ways to do spatial stuff.
-
-Here is a list of reasons why you shouldn't do this at all.
-
--   in ggplot2 terms, it treats a layer as a set of grouped coordinates, rather than as separate objects
--   it wastes memory, by copying identifying attributes from the nested list hierarchy to each coordinate
--   it can't work with mixed topology types (lines and polys for example)
--   it's not supported
--   non-topological clipping results in yucky geometries that don't make sense (i.e. you will have destroyed your data!)
-
-<https://stat.ethz.ch/pipermail/r-sig-geo/2016-December/025198.html>
-
-<https://github.com/hrbrmstr/ggalt/issues/21>
-
-Go back to the proper tools and make sure to get your data in nice shapefiles that never have any problems.
-
 Why do this?
 ============
 
@@ -137,5 +118,7 @@ I want these things, and spbabel is the right compromise for where to start:
 Flexibility in attributes generally is the key to breaking out of traditional GIS constraints that don't allow clear continuous / discrete distinctions, or time-varying objects/events, 3D/4D geometry, or clarity on topology versus geometry. When everything is tables this becomes natural, and we can build structures like link-relations between tables that transfer data only when required.
 
 The ability to use [Manifold System](http://www.georeference.org/doc/manifold.htm) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending".
+
+A more general approach to this is started here: <https://github.com/mdsumner/sc>
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
