@@ -12,6 +12,11 @@ test_that("utils tests work", {
   expect_that(spbabel:::has_names(sph), is_true())
   expect_that(spbabel:::has_names(x), is_false())
   expect_output(show(sph))
+  expect_output(spbabel::print(sph))
+  sph1 <- sph1
+  sph1@data <- as.data.frame(sph@data)
+  expect_output(spbabel::print(sph1))
+  
   expect_output(show(as(sph, "SpatialLinesDataFrame")))
   expect_output(show(as(as(sph, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")))
   expect_output(show(as(as(sph, "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame")))

@@ -15,14 +15,7 @@ drop_sf_geometry <- function(x) {
   x[, -match(attr(x, "sf_column"), names(x))]
 }
 
-matrix2list <- function(x) {
-  if (!is.null(dim(x))) {
-    x <- split(x, rep(seq(ncol(x)), each = nrow(x)))
-  } else {
-    x <- as.list(x)
-  }
-  x
-}
+
 
 #' @export
 #importFrom sf st_geometry
