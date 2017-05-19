@@ -13,7 +13,7 @@ test_that("utils tests work", {
   expect_that(spbabel:::has_names(x), is_false())
   expect_output(show(sph))
   expect_output(spbabel::print(sph))
-  sph1 <- sph1
+  sph1 <- sph
   sph1@data <- as.data.frame(sph@data)
   expect_output(spbabel::print(sph1))
   
