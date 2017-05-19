@@ -43,7 +43,7 @@ sptable.sf <- function(x, ...) {
   
   gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
   if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
-  
+
   sf_to_grisnames <- function(gnames) {
     gnames <- gsub("^X$", "x_", gnames)
     gnames <- gsub("^Y$", "y_", gnames)
@@ -53,7 +53,12 @@ sptable.sf <- function(x, ...) {
     gnames
   }
   names(gtab) <- sf_to_grisnames(names(gtab))
-  gtab$order_ <-  seq(nrow(gtab))
+  ## Points don't get order
+
+  if (!any(grepl("POINT", gtab[["type_"]]))) {
+    gtab$order_ <-  seq(nrow(gtab))
+  }
+ 
   gtab$type_ <- NULL
   #if (!is.null(gtab[["parent_"]])) {
   #  gtab$island_ <- gtab$parent_ == 1

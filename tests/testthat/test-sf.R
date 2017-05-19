@@ -9,6 +9,9 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncpoly)
 #sptable(ncline)
 
+test_that("columns are correct", {
+  sptable(ncpoint[50:52, ]) %>% expect_named(c("object_", "x_", "y_", "branch_"))
+})
 test_that("round trip sf to sp works", {
   sptable(ncpoly[10:12, ]) %>% sp() %>% expect_s4_class("SpatialPolygonsDataFrame")
   sptable(st_cast(ncpoly[10:12, ], "POLYGON", warn = FALSE)) %>% sp() %>% expect_s4_class("SpatialPolygonsDataFrame")

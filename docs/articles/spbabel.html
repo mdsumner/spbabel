@@ -53,7 +53,7 @@
       <h1>spbabel</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2017-04-30</h4>
+            <h4 class="date">2017-05-19</h4>
           </div>
 
     
@@ -117,7 +117,7 @@
 ## extent      : 112.9511, 159.1019, -54.74973, -10.05167  (xmin, xmax, ymin, ymax)
 ## coord. ref. :  +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
 ## variables   : 11
-## # A tibble: 1 × 11
+## # A tibble: 1 x 11
 ##     FIPS   ISO2   ISO3    UN      NAME   AREA  POP2005 REGION SUBREGION
 ## * &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;    &lt;fctr&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;int&gt;     &lt;int&gt;
 ## 1     AS     AU    AUS    36 Australia 768230 20310208      9        53
@@ -189,18 +189,18 @@ mm_sp</code></pre></div>
 ## extent      : 95.00803, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
 ## coord. ref. : NA 
 ## variables   : 12
-## # A tibble: 19 × 12
+## # A tibble: 19 x 12
 ##      FIPS   ISO2   ISO3    UN                            NAME   AREA
 ##    &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;                          &lt;fctr&gt;  &lt;int&gt;
-## 1      AS     AU    AUS    36                       Australia 768230
-## 2      BP     SB    SLB    90                 Solomon Islands   2799
-## 3      FJ     FJ    FJI   242                            Fiji   1827
-## 4      FM     FM    FSM   583 Micronesia, Federated States of     70
-## 5      KR     KI    KIR   296                        Kiribati     73
-## 6      NC     NC    NCL   540                   New Caledonia   1828
-## 7      NF     NF    NFK   574                  Norfolk Island      0
-## 8      CK     CC    CCK   166         Cocos (Keeling) Islands      1
-## 9      KT     CX    CXR   162                Christmas Island      0
+##  1     AS     AU    AUS    36                       Australia 768230
+##  2     BP     SB    SLB    90                 Solomon Islands   2799
+##  3     FJ     FJ    FJI   242                            Fiji   1827
+##  4     FM     FM    FSM   583 Micronesia, Federated States of     70
+##  5     KR     KI    KIR   296                        Kiribati     73
+##  6     NC     NC    NCL   540                   New Caledonia   1828
+##  7     NF     NF    NFK   574                  Norfolk Island      0
+##  8     CK     CC    CCK   166         Cocos (Keeling) Islands      1
+##  9     KT     CX    CXR   162                Christmas Island      0
 ## 10     NH     VU    VUT   548                         Vanuatu   1219
 ## 11     NR     NR    NRU   520                           Nauru      2
 ## 12     NZ     NZ    NZL   554                     New Zealand  26799
@@ -212,7 +212,7 @@ mm_sp</code></pre></div>
 ## 18     PS     PW    PLW   585                           Palau      0
 ## 19     RM     MH    MHL   584                Marshall Islands      0
 ## # ... with 6 more variables: POP2005 &lt;dbl&gt;, REGION &lt;int&gt;, SUBREGION &lt;int&gt;,
-## #   LON &lt;dbl&gt;, LAT &lt;dbl&gt;, object_ &lt;chr&gt;</code></pre>
+## #   LON &lt;dbl&gt;, LAT &lt;dbl&gt;, object_1 &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mm_sp, <span class="dt">col =</span> <span class="kw">grey</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(mm_sp))))</code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-5-2.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get a gg plot

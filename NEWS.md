@@ -1,5 +1,7 @@
 # spbabel 0.4.8
 
+* bug fix, MULTIPOINT and point were getting "order_"
+
 * bug fix, POLYGON island status wasn't recorded (redundantly) along
 with branch - so recomposition resulted in lines
 
