@@ -1,7 +1,13 @@
+# spbabel 0.4.8
+
+* bug fix, POLYGON island status wasn't recorded (redundantly) along
+with branch - so recomposition resulted in lines
+
 # spbabel 0.4.7
 
-* remove dependency on sf, spbabel can decompose sf but cannot recompose. Importing sf requires too many 
- dependencies that are not relevant to the workflows. 
+* remove dependency on sf, spbabel can decompose sf but cannot recompose. 
+ Importing sf requires too many  dependencies that are not relevant to the  
+workflows. 
 
 # spbabel 0.4.6
 

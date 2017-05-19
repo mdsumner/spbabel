@@ -9,6 +9,20 @@ ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncpoly)
 #sptable(ncline)
 
+test_that("round trip sf to sp works", {
+  sptable(ncpoly[10:12, ]) %>% sp() %>% expect_s4_class("SpatialPolygonsDataFrame")
+  sptable(st_cast(ncpoly[10:12, ], "POLYGON", warn = FALSE)) %>% sp() %>% expect_s4_class("SpatialPolygonsDataFrame")
+  as_matrix(ncpoly$geometry[[1]]) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "island_", "branch_"))
+  as_matrix(st_cast(ncpoly$geometry[[1]], "POLYGON", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "island_", "branch_"))
+  
+  suppressWarnings(as_matrix(st_cast(ncpoly$geometry[[4]], "LINESTRING", warn = FALSE))) %>% tibble::as_tibble() %>% expect_named(c("X", "Y"))
+  as_matrix(st_cast(ncpoly$geometry[[4]], "MULTILINESTRING", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "branch_"))
+  
+  
+  suppressWarnings(as_matrix(st_cast(ncpoly$geometry[[4]], "POINT", warn = FALSE))) %>% tibble::as_tibble() %>% expect_named(c("X", "Y"))
+  as_matrix(st_cast(ncpoly$geometry[[4]], "MULTIPOINT", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "branch_"))
+  
+})
 nc <- ncpoly
 test_that("sf conversion works", {
   expect_that(map_table(nc), is_a("list"))

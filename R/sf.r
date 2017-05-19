@@ -191,10 +191,15 @@ as_matrix.MULTIPOLYGON <-
     
   }
 
+#' @importFrom utils tail
 as_matrix.POLYGON <-
   function(x, ...) {
-    do.call(rbind, lapply(seq_along(x),
+    out <- do.call(rbind, lapply(seq_along(x),
                           function(branch_) cbind(matrixOrVector(x[[branch_]], class(x)[1L]),  branch_)))
+    ## we need to add the island status as a copy of branch for POLYGON
+    out <- cbind(out, out[, ncol(out)])
+    colnames(out)[tail(seq_len(ncol(out)), 2)] <- c("island_", "branch_")
+    out
   }
 
 as_matrix.MULTILINESTRING <-
