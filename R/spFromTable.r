@@ -113,7 +113,7 @@ reverse_geomMultiPoint <- function(a, d, proj) {
   d$branch_ <- d$object_  <- d$x_ <- d$y_ <- NULL
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
   
-  SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$branch_), as.matrix)), d, proj4string = CRS(proj))
+  SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$object_), as.matrix)), d, proj4string = CRS(proj))
 }
 detectSpClass <- function(x) {
   #if ("topol_" %in% names(x)) return(topol2sp(x$topol_))

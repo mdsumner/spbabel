@@ -1,5 +1,7 @@
 # spbabel 0.4.8
 
+* bug fix, sp recomposition for multpoint now correctly splits on object_ (rather than branch_)
+
 * bug fix, MULTIPOINT and point were getting "order_"
 
 * bug fix, POLYGON island status wasn't recorded (redundantly) along

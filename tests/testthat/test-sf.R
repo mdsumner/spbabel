@@ -122,6 +122,19 @@ test_that('internal functions run', {
   expect_that(unname(spbabel:::sf_type("SpatialPolygons")), equals("MULTIPOLYGON"))
 })
 
+
+## multipoint
+mp <- st_sf(a = 1:2, geometry = st_sfc(st_multipoint(cbind(0, 1:2)), st_multipoint(cbind(0, 1:4))))
+test_that("multipoints recreated", {
+  tab <- as.data.frame(mp)
+  if (attr(mp, "sf_column") %in% names(mp)) tab[[attr(mp, "sf_column")]] <- NULL
+  map <- spbabel::sptable(mp)
+  crs <- attr(tab[[attr(mp, "sf_column")]], "crs")$proj4string
+  spbabel::sp(map, tab, crs) %>% expect_s4_class("SpatialMultiPointsDataFrame")
+  
+  
+})
+
 # sfh <- st_as_sf(sp(holey))
 # a <- do.call(rbind, lapply(c("MULTIPOLYGON", "MULTILINESTRING", "MULTIPOINT", "POLYGON", "LINESTRING", "POINT"), function(x) st_cast(sfh, x)))
 # b <- st_as_sf(tibble(geometry = st_sfc(st_geometrycollection(lapply(st_geometry(a), identity)))))
