@@ -2,7 +2,8 @@
 #' 
 #' A generic version of sp's 'coordinates' to get a centroid.
 #' 
-#' The default method handles any sp or sf object
+#' The default method handles any sp or sf object. 
+#' @param x object with implicit centroids
 #' @importFrom dplyr select group_by summarize %>% 
 #' @importFrom tibble as_tibble
 #' @importFrom stats setNames
