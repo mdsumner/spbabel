@@ -11,5 +11,6 @@ spbabel 0.4.8 bugfix update
 
 ## Reverse dependencies
 
-The two reverse dependencies angstroms and spdplyr, both pass check against this update. 
+The two reverse dependencies angstroms and spdplyr, 
+both pass check against this update. 
 
