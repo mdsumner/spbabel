@@ -29,10 +29,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/spbabel.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sfbabel.html">Speaking Simple Features</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -53,7 +71,7 @@
       <h1>Speaking Simple Features</h1>
                         <h4 class="author">Michael Sumner</h4>
             
-            <h4 class="date">2017-05-22</h4>
+            <h4 class="date">2017-08-04</h4>
           </div>
 
     
@@ -83,20 +101,20 @@ xy_traverse &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind,
 <span class="fl">0.537</span>, <span class="fl">0.584</span>, <span class="fl">0.625</span>, <span class="fl">0.661</span>, <span class="fl">0.698</span>, <span class="fl">0.698</span>, <span class="fl">0.682</span>, <span class="fl">0.631</span>, <span class="fl">0.563</span>, 
 <span class="fl">0.545</span>)), <span class="dt">.Names =</span> <span class="kw">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)))
 
-rastergrid &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">t</span>(volcano[,<span class="kw">ncol</span>(volcano):<span class="dv">1</span> ]))
+rastergrid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/transpose">t</a></span>(volcano[,<span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/ncell">ncol</a></span>(volcano):<span class="dv">1</span> ]))
 
-zz &lt;-<span class="st"> </span><span class="kw">extract</span>(rastergrid, xy_traverse)
-<span class="kw">plot</span>(rastergrid, <span class="dt">col =</span> viridis::<span class="kw">viridis</span>(<span class="dv">10</span>))
+zz &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(rastergrid, xy_traverse)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(rastergrid, <span class="dt">col =</span> viridis::<span class="kw">viridis</span>(<span class="dv">10</span>))
 <span class="kw">lines</span>(xy_traverse[, <span class="dv">1</span>:<span class="dv">2</span>])</code></pre></div>
 <p><img src="sfbabel_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(zz, <span class="dt">type =</span> <span class="st">"l"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(zz, <span class="dt">type =</span> <span class="st">"l"</span>)</code></pre></div>
 <p><img src="sfbabel_files/figure-html/unnamed-chunk-1-2.png" width="672"></p>
 <p>Having done all of this work, we write a nice compact report.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)</code></pre></div>
 <pre><code>## Linking to GEOS 3.5.1, GDAL 2.1.2, proj.4 4.9.3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">report &lt;-<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">name =</span> <span class="st">"epic traverse"</span>, <span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">cbind</span>(xy_traverse, zz))))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">report &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>(<span class="dt">name =</span> <span class="st">"epic traverse"</span>, <span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/sfc">st_sfc</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st">st_linestring</a></span>(<span class="kw">cbind</span>(xy_traverse, zz))))
 
-<span class="kw">plot</span>(report)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/plot">plot</a></span>(report)</code></pre></div>
 <p><img src="sfbabel_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(report)</code></pre></div>
 <pre><code>## Simple feature collection with 1 feature and 1 field
@@ -118,44 +136,44 @@ zz &lt;-<span class="st"> </span><span class="kw">extract</span>(rastergrid, xy_
 ## # A tibble: 1 x 3
 ##            name st_sfc.st_linestring.cbind.xy_traverse..zz...    object_
 ## *        &lt;fctr&gt;                              &lt;simple_feature&gt;      &lt;chr&gt;
-## 1 epic traverse                             &lt;LINESTRINGZ(...&gt; 1KCmzFXuYd
+## 1 epic traverse                             &lt;LINESTRINGZ(...&gt; EjV4FAfhiX
 ## 
 ## $b
 ## # A tibble: 1 x 1
 ##      object_
 ##        &lt;chr&gt;
-## 1 1KCmzFXuYd
+## 1 EjV4FAfhiX
 ## 
 ## $bXv
 ## # A tibble: 35 x 2
 ##    order_    vertex_
 ##     &lt;int&gt;      &lt;chr&gt;
-##  1      1 QU93TXty5Q
-##  2      2 gC6lbzwera
-##  3      3 uCogSA6mx6
-##  4      4 5jheIQCb44
-##  5      5 7uJLABbVbt
-##  6      6 LNu5bIZsXA
-##  7      7 dNH7QzcM4L
-##  8      8 S752sSvIOU
-##  9      9 l0xTgkrsZQ
-## 10     10 PsofTKcO1o
+##  1      1 TxdoIneGKz
+##  2      2 s4YDxre62e
+##  3      3 kMyqjFUGse
+##  4      4 nntx7LMpnR
+##  5      5 1LKuvRi4Wk
+##  6      6 Hgn1PPKkxm
+##  7      7 0JfwVeG5lS
+##  8      8 NmoNSNLzgO
+##  9      9 YnegvLAWIT
+## 10     10 M7DjQxuuTX
 ## # ... with 25 more rows
 ## 
 ## $v
 ## # A tibble: 35 x 4
 ##       x_    y_    z_    vertex_
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;
-##  1 0.161 0.000   114 QU93TXty5Q
-##  2 0.186 0.029   120 gC6lbzwera
-##  3 0.202 0.037   122 uCogSA6mx6
-##  4 0.228 0.053   128 5jheIQCb44
-##  5 0.252 0.053   130 7uJLABbVbt
-##  6 0.270 0.060   132 LNu5bIZsXA
-##  7 0.285 0.094   138 dNH7QzcM4L
-##  8 0.292 0.121   142 S752sSvIOU
-##  9 0.309 0.155   146 l0xTgkrsZQ
-## 10 0.349 0.200   146 PsofTKcO1o
+##  1 0.161 0.000   114 TxdoIneGKz
+##  2 0.186 0.029   120 s4YDxre62e
+##  3 0.202 0.037   122 kMyqjFUGse
+##  4 0.228 0.053   128 nntx7LMpnR
+##  5 0.252 0.053   130 1LKuvRi4Wk
+##  6 0.270 0.060   132 Hgn1PPKkxm
+##  7 0.285 0.094   138 0JfwVeG5lS
+##  8 0.292 0.121   142 NmoNSNLzgO
+##  9 0.309 0.155   146 YnegvLAWIT
+## 10 0.349 0.200   146 M7DjQxuuTX
 ## # ... with 25 more rows
 ## 
 ## attr(,"class")
@@ -166,7 +184,8 @@ zz &lt;-<span class="st"> </span><span class="kw">extract</span>(rastergrid, xy_
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#simple-features">Simple features</a></li>
       <li><a href="#maunga-whau-traversal">Maunga Whau traversal</a></li>

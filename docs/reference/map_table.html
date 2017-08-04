@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/spbabel.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/sfbabel.html">Speaking Simple Features</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -107,13 +126,14 @@ entities in spatial map data.</p>
  <dt>vertices</dt><dd><p>the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.</p></dd>
  <dt>branches</dt><dd><p>a single connected chain of vertices, or "parts"</p></dd>
  <dt>objects</dt><dd><p>a collection of branches aligned to a row of metadata</p></dd>
- </dl><p>This is the basic "topology" of traditional GIS vector data, for points, 
+ </dl>
+    <p>This is the basic "topology" of traditional GIS vector data, for points, 
  lines, polygons and their multi-counterparts. By default map_tables will 
  produce these tables and also de-duplicated the input vertices, adding a 
- fourth table to link vertices to branches.
-    Other topology types such as triangle or quad meshes can extend this 
- four-entity model, or exist without the branches at all. See "mesh_table" ??
-    These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.</p>
+ fourth table to link vertices to branches.</p> 
+<p>Other topology types such as triangle or quad meshes can extend this 
+ four-entity model, or exist without the branches at all. See "mesh_table" ??</p> 
+<p>These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

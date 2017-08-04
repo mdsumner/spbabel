@@ -2,8 +2,10 @@ spbabel 0.4.8 bugfix update
 
 ## Test environments
 
-* ubuntu 14.04, (R 3.4.1)
-* r-winbuilder (devel and release)
+* Travis ubuntu 14.04 (devel and release)
+* local ubuntu 16.04, R 3.4.1
+* win-builder (devel and release)
+* Rhub MacOS El Capitan (release)
 
 ## R CMD check results
 
