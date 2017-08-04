@@ -181,9 +181,10 @@ Columns that aren't present in one type will be present, padded with NA. (This i
 <span class='co'>#also convert to singular objects - note that this now means we have an overlapping pair of polys</span>
 <span class='co'>#because the door had a hole filled by another object</span>
 <span class='no'>notahole</span>$<span class='no'>object_</span> <span class='kw'>&lt;-</span> <span class='no'>notahole</span>$<span class='no'>branch_</span>
-<span class='fu'>plot</span>(<span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='sptable-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='sp.html'>sp</a></span>(<span class='no'>notahole</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='sptable-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## example using in-place modification with sptable&lt;-</span>
-<span class='fu'>library</span>(<span class='no'>maptools</span>)</div><div class='output co'>#&gt; <span class='message'>Checking rgeos availability: TRUE</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
+<span class='fu'>library</span>(<span class='no'>maptools</span>)
+<span class='fu'>data</span>(<span class='no'>wrld_simpl</span>)
 <span class='no'>spdata2</span> <span class='kw'>&lt;-</span> <span class='no'>spdata</span>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='co'>## modify the geometry on this object without separating the vertices from the objects</span>

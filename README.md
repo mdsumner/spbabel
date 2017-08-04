@@ -112,4 +112,6 @@ The ability to use [Manifold System](http://www.georeference.org/doc/manifold.ht
 
 A more general approach to this is started here: <https://github.com/mdsumner/sc>
 
+The decomposition and rebuild process of sf objects is now better thought out here: <https://github.com/mdsumner/gibble> and is to be built into whatever sc becomes.
+
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
