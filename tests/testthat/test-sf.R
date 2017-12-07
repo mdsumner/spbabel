@@ -138,3 +138,12 @@ test_that("multipoints recreated", {
 # sfh <- st_as_sf(sp(holey))
 # a <- do.call(rbind, lapply(c("MULTIPOLYGON", "MULTILINESTRING", "MULTIPOINT", "POLYGON", "LINESTRING", "POINT"), function(x) st_cast(sfh, x)))
 # b <- st_as_sf(tibble(geometry = st_sfc(st_geometrycollection(lapply(st_geometry(a), identity)))))
+
+
+test_that("raw geometry works", {
+          sptable(st_geometry(mp)) %>% 
+    expect_named(c("object_", "x_", "y_", "branch_"))
+          expect_warning(ew <- sptable(st_geometry(mix)) , "more than one")
+          ew %>% expect_named(c("object_", "x_", "y_")) 
+}
+          )

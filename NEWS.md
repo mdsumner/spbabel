@@ -1,3 +1,7 @@
+# spbabel dev
+
+* support for sf columns to spbabel and map_table
+
 # spbabel 0.4.8
 
 * bug fix, sp recomposition for multpoint now correctly splits on object_ (rather than branch_)
