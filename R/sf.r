@@ -59,7 +59,8 @@ sptable.sf <- function(x, ...) {
     gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
   }
   
-  gtab[["object_"]] <- as.integer(factor(gtab[["object_"]]))
+  gtab[["object_"]] <- as.integer(factor(gtab[["object_"]], unique(gtab$object_)))
+  
   if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
 
   sf_to_grisnames <- function(gnames) {

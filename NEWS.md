@@ -1,5 +1,7 @@
 # spbabel dev
 
+* Fix order bug in creation of `object_` for sf objects. 
+
 * support for sf columns to spbabel and map_table
 
 # spbabel 0.4.8
