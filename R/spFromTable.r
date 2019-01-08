@@ -2,6 +2,8 @@
 setOldClass( c("tbl_df", "tbl", "data.frame" ) )
 setOldClass( c("grouped_df", "tbl_df", "tbl", "data.frame" ) )
 
+setOldClass( c("vertex_table", "tbl_df", "tbl", "data.frame" ) )
+
 
 
 #' Convert from dplyr tbl form to Spatial*DataFrame.

@@ -1,5 +1,7 @@
 # spbabel dev
 
+* Declare 'vertex_table' as old class for sp to keep its data frame restriction happy. 
+
 * Fix order bug in creation of `object_` for sf objects. 
 
 * support for sf columns to spbabel and map_table
