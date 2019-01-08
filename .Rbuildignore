@@ -1,4 +1,5 @@
 ^CRAN-RELEASE$
+^tic\.R$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
