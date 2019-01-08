@@ -1,11 +1,9 @@
-spbabel 0.4.8 bugfix update
+spbabel 0.5.0 
 
 ## Test environments
 
 * Travis ubuntu 14.04 (devel and release)
-* local ubuntu 16.04, R 3.4.1
 * win-builder (devel and release)
-* Rhub MacOS El Capitan (release)
 
 ## R CMD check results
 
@@ -13,6 +11,5 @@ spbabel 0.4.8 bugfix update
 
 ## Reverse dependencies
 
-The two reverse dependencies angstroms and spdplyr, 
-both pass check against this update. 
+The three reverse dependencies angstroms, spdplyr, and tabularaster pass check against this update. 
 

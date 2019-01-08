@@ -1,4 +1,4 @@
-# spbabel dev
+# spbabel 0.5.0
 
 * Declare 'vertex_table' as old class for sp to keep its data frame restriction happy. 
 
