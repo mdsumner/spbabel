@@ -22,6 +22,8 @@ library(ggplot2)
 
 Spbabel provides simple tools to flip between Spatial and tidy forms of data. This package aims to assist in the ongoing development of tools for spatial data in R.
 
+NOTE: this is largely deprecated by new code in https://github.com/hypertidy/silicate. 
+
 
 ## Formal spatial data in R
 
