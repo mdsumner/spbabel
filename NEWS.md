@@ -2,6 +2,7 @@
 
 * Fixed CRAN breakages, aused by old use of select_ and distinct_, and needless warnings emitted by sf. #50
 
+* Deprecated map_table(). 
 
 # spbabel 0.5.0
 

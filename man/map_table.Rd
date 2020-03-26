@@ -36,8 +36,3 @@ The basic entities behind spatial data, and hence the "map tables" are:
 
  These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.
 }
-\examples{
-data(holey)
-spholey <- sp(holey)
-map_table(spholey)
-}

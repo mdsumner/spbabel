@@ -1,6 +1,6 @@
 Package: spbabel
 Type: Package
-Version: 0.5.0
+Version: 0.5.1
 Title: Convert Spatial Data Using Tidy Tables
 Description: Tools to convert from specific formats to more general forms of 
     spatial data. Using tables to store the actual entities present in spatial

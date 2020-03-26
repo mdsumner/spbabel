@@ -26,10 +26,6 @@
 #'
 #' @return list of tibbles
 #' @export
-#' @examples
-#' data(holey)
-#' spholey <- sp(holey)
-#' map_table(spholey)
 map_table <- function(x, ...) {
   .Deprecated()
   UseMethod("map_table")
