@@ -14,3 +14,4 @@
 ^CONDUCT\.md$
 ^prepare_package.r$
 ^README-.*\.png$
+^spbabel\.Rproj$

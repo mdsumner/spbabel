@@ -4,7 +4,7 @@ library(sf)
 mix <- st_sfc(st_point(1:2), st_linestring(matrix(1:4,2)))
 
 ncpoly <- readRDS(system.file("extdata", "testdata", "nc.rds", package = "spbabel"))
-ncline <- st_as_sf(st_as_sf(as(as(ncpoly, "Spatial"), "SpatialLinesDataFrame")))
+ncline <- st_as_sf(as(as(ncpoly, "Spatial"), "SpatialLinesDataFrame"))
 ncpoint <- st_as_sf(as(as(ncline, "Spatial"), "SpatialMultiPointsDataFrame"))
 #sptable(ncpoly)
 #sptable(ncline)
@@ -17,22 +17,22 @@ test_that("round trip sf to sp works", {
   sptable(st_cast(ncpoly[10:12, ], "POLYGON", warn = FALSE)) %>% sp() %>% expect_s4_class("SpatialPolygonsDataFrame")
   as_matrix(ncpoly$geometry[[1]]) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "island_", "branch_"))
   as_matrix(st_cast(ncpoly$geometry[[1]], "POLYGON", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "island_", "branch_"))
-  
+
   suppressWarnings(as_matrix(st_cast(ncpoly$geometry[[4]], "LINESTRING", warn = FALSE))) %>% tibble::as_tibble() %>% expect_named(c("X", "Y"))
   as_matrix(st_cast(ncpoly$geometry[[4]], "MULTILINESTRING", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "branch_"))
-  
-  
+
+
   suppressWarnings(as_matrix(st_cast(ncpoly$geometry[[4]], "POINT", warn = FALSE))) %>% tibble::as_tibble() %>% expect_named(c("X", "Y"))
   as_matrix(st_cast(ncpoly$geometry[[4]], "MULTIPOINT", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "branch_"))
-  
+
 })
 nc <- ncpoly
 test_that("sf conversion works", {
   expect_that(map_table(nc), is_a("list"))
 
   ## sptable now supported
-  expect_silent(map_table(st_as_sf(as(as(nc, "Spatial"), "SpatialLinesDataFrame"))))
-  expect_silent(map_table(st_as_sf(as(as(as(nc, "Spatial"), "SpatialLinesDataFrame"), "SpatialMultiPointsDataFrame"))))
+  expect_silent(map_table(ncline))
+  expect_silent(map_table(ncpoint))
 })
 
 
@@ -131,8 +131,8 @@ test_that("multipoints recreated", {
   map <- spbabel::sptable(mp)
   crs <- attr(tab[[attr(mp, "sf_column")]], "crs")$proj4string
   spbabel::sp(map, tab, crs) %>% expect_s4_class("SpatialMultiPointsDataFrame")
-  
-  
+
+
 })
 
 # sfh <- st_as_sf(sp(holey))
@@ -141,9 +141,9 @@ test_that("multipoints recreated", {
 
 
 test_that("raw geometry works", {
-          sptable(st_geometry(mp)) %>% 
+          sptable(st_geometry(mp)) %>%
     expect_named(c("object_", "x_", "y_", "branch_"))
           expect_warning(ew <- sptable(st_geometry(mix)) , "more than one")
-          ew %>% expect_named(c("object_", "x_", "y_")) 
+          ew %>% expect_named(c("object_", "x_", "y_"))
 }
           )
