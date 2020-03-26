@@ -26,14 +26,6 @@ test_that("round trip sf to sp works", {
   as_matrix(st_cast(ncpoly$geometry[[4]], "MULTIPOINT", warn = FALSE)) %>% tibble::as_tibble() %>% expect_named(c("X", "Y", "branch_"))
 
 })
-nc <- ncpoly
-test_that("sf conversion works", {
-  expect_that(map_table(nc), is_a("list"))
-
-  ## sptable now supported
-  expect_silent(map_table(ncline))
-  expect_silent(map_table(ncpoint))
-})
 
 
 sfzoo <- function() {

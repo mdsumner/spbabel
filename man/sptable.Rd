@@ -51,10 +51,10 @@ Decompose a \code{\link[sp]{Spatial}} or \code{\link[sf]{sf}} object to a single
 \details{
 Input can be a of type \code{\link[sf]{sf}} \code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[sp]{SpatialLinesDataFrame}}, \code{\link[sp]{SpatialMultiPointsDataFrame}} or a \code{\link[sp]{SpatialPointsDataFrame}}.
 For simplicity \code{sptable} and its inverses \code{sp} and \code{sf} assume that all geometry can be encoded with object, branch, island, order, x and y. 
-and that the type of topology is identified by which of these are present.
+and that the type of topology is identified by which of these are present. 
 
 For simple features objects with mixed types of topology the result is consistent, but probably not useful. 
-Columns that aren't present in one type will be present, padded with NA. (This is work in progress).
+Columns that aren't present in one type will be present, padded with NA. (This is work in progress). 
 
 This is analogous to the following but in spbabel provides a consistent way to round-trip back to Spatial classes and other forms. 
 \itemize{

@@ -1,3 +1,8 @@
+# spbabel dev
+
+* Fixed CRAN breakages, aused by old use of select_ and distinct_, and needless warnings emitted by sf. #50
+
+
 # spbabel 0.5.0
 
 * Declare 'vertex_table' as old class for sp to keep its data frame restriction happy. 

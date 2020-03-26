@@ -8,7 +8,7 @@ data(mpoint1)
 data(wrld_simpl)
 poly1 <- wrld_simpl
 line1 <- as(wrld_simpl, "SpatialLinesDataFrame")
-point1 <- as(line1, "SpatialPointsDataFrame") 
+point1 <- as(line1, "SpatialPointsDataFrame")
 
 ## create sptable versions
 poly1tab <- sptable(poly1)
@@ -27,17 +27,17 @@ mpoint0 <- sp(mpoint1tab, attr_tab = mpoint1@data)
 test_that("we can round-trip sensibly", {
   expect_true(all(names(poly1) == names(poly0)))
   expect_that(nrow(poly1), equals(nrow(poly0)))
-  
+
   expect_true(all(names(line1) == names(line0)))
   expect_that(nrow(line1), equals(nrow(line0)))
-  
+
   ## sp() needs to no replicate names
   expect_true(all(names(point1) == names(point0)))
   expect_that(nrow(point1), equals(nrow(point0)))
-  
+
   expect_true(all(names(mpoint1) == names(mpoint0)))
   expect_that(nrow(mpoint1), equals(nrow(mpoint0)))
-  
+
   # gah these are such a pain
   #expect_true(proj4string(sp) == gsub("^ ", "", proj4string(poly1)))
 })
@@ -46,7 +46,7 @@ sptabmod <-  poly1tab
 sptabmod$object_ <- sptabmod$branch_
 spmod <- sp(sptabmod)
 test_that("if objects = branchs then fewer rows", {
-  expect_that(nrow(spmod), equals(nrow(dplyr::distinct_(poly1tab, "branch_"))))
+  expect_that(nrow(spmod), equals(nrow(dplyr::distinct(poly1tab, branch_))))
 })
 
 
@@ -61,7 +61,7 @@ test_that("attributes are preserved, and adding a new one does only that", {
   skip_on_cran()
   expect_true(all(names(poly1) %in% names(sp1)))
   expect_that(base::setdiff( names(sp1), names(poly1)), equals("new"))
-  
+
 })
 
 test_that("mismatched attributes and object number is an error", {
@@ -78,11 +78,11 @@ cl0 <- cl %>% filter(object_ == -1) #%>% mutate(object_ = as.character(i)) #%>% 
 
 test_that("dud inputs caught", {
   expect_error(spbabel::sp(cl0))  #error
-  
+
   expect_error(spbabel::sp(cl0, topol_ = "SpatialPointsDataFrame"))
-  
-  
+
+
   expect_silent(spbabel::sp(cl, topol_  = "SpatialLinesDataFrame"))  ## ok)
-  
+
 })
 

@@ -15,10 +15,11 @@ BugReports: https://github.com/mdsumner/spbabel/issues
 Depends:
     R (>= 3.2.3)
 Imports: 
-    dplyr, 
-    methods, 
-    sp, 
-    tibble
+    dplyr,
+    methods,
+    sp,
+    tibble,
+    rlang
 Suggests: 
     testthat,
     ggplot2,
@@ -36,5 +37,5 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 ByteCompile: TRUE

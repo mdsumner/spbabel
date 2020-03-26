@@ -19,21 +19,21 @@ Creates a set of related tables to store the appropriate
 entities in spatial map data.
 }
 \details{
-The basic entities behind spatial data, and hence the "map tables" are: 
+The basic entities behind spatial data, and hence the "map tables" are:
 \describe{
  \item{vertices}{the positions in geometric space, e.g. x, y, z, time, long, lat, salinity etc.}
  \item{branches}{a single connected chain of vertices, or "parts"}
  \item{objects}{a collection of branches aligned to a row of metadata}
  }
- 
- This is the basic "topology" of traditional GIS vector data, for points, 
- lines, polygons and their multi-counterparts. By default map_tables will 
- produce these tables and also de-duplicated the input vertices, adding a 
- fourth table to link vertices to branches. 
- 
- Other topology types such as triangle or quad meshes can extend this 
+
+ This is the basic "topology" of traditional GIS vector data, for points,
+ lines, polygons and their multi-counterparts. By default map_tables will
+ produce these tables and also de-duplicated the input vertices, adding a
+ fourth table to link vertices to branches.
+
+ Other topology types such as triangle or quad meshes can extend this
  four-entity model, or exist without the branches at all. See "mesh_table" ??
- 
+
  These are currently classed as object_table, branch_table, branch_link_vertex_table, and vertex_table. But there are no methods.
 }
 \examples{

@@ -14,9 +14,9 @@ setOldClass( c("vertex_table", "tbl_df", "tbl", "data.frame" ) )
 #' @param ... unused
 #' @return Spatial*
 #' @export
-#' @importFrom dplyr %>% distinct_ 
+#' @importFrom dplyr %>% distinct_
 #' @importFrom sp coordinates CRS SpatialPoints SpatialPointsDataFrame Line Lines SpatialLines SpatialLinesDataFrame Polygon Polygons SpatialPolygons SpatialPolygonsDataFrame
-#' @examples 
+#' @examples
 #' library(dplyr)
 #' semap1 <- semap  %>% dplyr::filter(y_ > -89.9999)
 #' sp_obj <- sp(semap1, attr_tab = seatt, crs = "+proj=longlat +ellps=WGS84")
@@ -42,6 +42,7 @@ sp.data.frame <- function(x, attr_tab = NULL, crs, ...) {
 ## db_df type, inner_join Object, Branch, Vertex and re-nest to sportify
 
 #' @importFrom dplyr bind_cols distinct_
+#' @importFrom rlang .data
 spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   if (missing(crs)) crs <- attr(x, "crs")
   if (is.null(crs)) crs <- NA_character_
@@ -50,18 +51,18 @@ spFromTable <- function(x, attr_tab =  NULL, crs, ..., topol_ = NULL) {
   ## check for minimum sensible number of coordinates
   minc <- c(SpatialPolygonsDataFrame = 3, SpatialLinesDataFrame = 2, SpatialMultiPointsDataFrame = 1, SpatialPointsDataFrame = 1)[target]
   if (nrow(x) < minc) stop(sprintf("target is %s but input table has  %i %s", target, nrow(x), c("rows", "row")[(nrow(x) ==1)+1]))
-  dat <- dplyr::distinct_(x, "object_", .keep_all = TRUE)
-  
+  dat <- dplyr::distinct(x, .data$object_, .keep_all = TRUE)
+
   n_object <- nrow(dat)
   n_attribute <- nrow(attr_tab)
   if (is.null(n_attribute)) n_attribute <- n_object
-  if (!(n_attribute == n_object)) stop("number of rows in attr must match distinct object in x") 
+  if (!(n_attribute == n_object)) stop("number of rows in attr must match distinct object in x")
   if (!is.null(attr_tab)) dat <- dplyr::bind_cols(dat, attr_tab)
   # dat <- as.data.frame(dat)
   gom <- switch(target,
                 SpatialPolygonsDataFrame = reverse_geomPoly(x, dat, crs),
                 SpatialLinesDataFrame = reverse_geomLine(x, dat, crs),
-                SpatialPointsDataFrame = reverse_geomPoint(x, dat, crs), 
+                SpatialPointsDataFrame = reverse_geomPoint(x, dat, crs),
                 SpatialMultiPointsDataFrame = reverse_geomMultiPoint(x, dat, crs)
   )
   gom
@@ -88,7 +89,7 @@ reverse_geomPoly <- function(x, d, proj) {
   ## match.ID should be replaced by method to carry the original rownames somehow
   SpatialPolygonsDataFrame(SpatialPolygons(lapply(objects, loopBranchPoly), proj4string = CRS(proj)), d, match.ID = FALSE)
 }
-loopBranchPoly <- function(a) Polygons(lapply(dropZeroRowFromList(split(a, a$branch_)), 
+loopBranchPoly <- function(a) Polygons(lapply(dropZeroRowFromList(split(a, a$branch_)),
                                               function(b) Polygon(as.matrix(b[, c("x_", "y_")]), hole = !b$island_[1L])), as.character(a$object_[1L]))
 
 
@@ -114,7 +115,7 @@ reverse_geomPoint <- function(a, d, proj) {
 reverse_geomMultiPoint <- function(a, d, proj) {
   d$branch_ <- d$object_  <- d$x_ <- d$y_ <- NULL
   if (ncol(d) < 1L) d$rownumber_ <- seq(nrow(d))  ## we might end up with no attributes
-  
+
   SpatialMultiPointsDataFrame(SpatialMultiPoints(lapply(split(a[, c("x_", "y_")], a$object_), as.matrix)), d, proj4string = CRS(proj))
 }
 detectSpClass <- function(x) {
@@ -123,7 +124,7 @@ detectSpClass <- function(x) {
   for (i in seq_along(gn)) {
     if (all(gn[[i]] %in% names(x))) return(names(gn)[i])
   }
-  
+
   #if (all(gn$SpatialPolygonsDataFrame %in% names(x))) return("SpatialPolygonsDataFrame")
   #if (all(gn$SpatialLinesDataFrame %in% names(x))) return("SpatialLinesDataFrame")
   #if (all(gn$SpatialPointsDataFrame %in% names(x))) return("SpatialPointsDataFrame")
@@ -131,5 +132,5 @@ detectSpClass <- function(x) {
   # cat("cannot find matching topology type from these columns")
   #print(x)
   stop('cannot create Spatial* object from this input, matching topology type from these columns')
-  
+
 }
