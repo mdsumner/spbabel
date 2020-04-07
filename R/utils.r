@@ -11,10 +11,10 @@ has_names <- function(x) {
 has_data <- function(x) .hasSlot(x, "data")
 
 #' @importFrom methods .hasSlot
-#' @importFrom sp bbox proj4string 
-#' @importFrom tibble as_tibble 
-.print_Spatial <- 
-  function (x, ...) 
+#' @importFrom sp bbox proj4string
+#' @importFrom tibble as_tibble
+.print_Spatial <-
+  function (x, ...)
   {
     cat("class       :", class(x), "\n")
     isRaster <- hasData <- FALSE
@@ -24,17 +24,17 @@ has_data <- function(x) .hasSlot(x, "data")
       nc <- ncol(x@data)
     }
     ln <- 1
-    
+
     ln <- length(x)
     cat("features    :", ln, "\n")
-    
+
     e <- bbox(x)
     if (ln > 0) {
-      cat("extent      : ", e[1, 1], ", ", e[1, 2], ", ", e[2, 
-                                                            1], ", ", e[2, 2], "  (xmin, xmax, ymin, ymax)\n", 
+      cat("extent      : ", e[1, 1], ", ", e[1, 2], ", ", e[2,
+                                                            1], ", ", e[2, 2], "  (xmin, xmax, ymin, ymax)\n",
           sep = "")
     }
-    cat("coord. ref. :", proj4string(x), "\n")
+    #cat("coord. ref. :", proj4string(x), "\n")
     if (hasData) {
       x <- x@data
       maxnl <- 15
@@ -53,25 +53,17 @@ has_data <- function(x) .hasSlot(x, "data")
 #' @title sp methods
 #' @rdname sp-methods
 #' @export
-#' @importFrom methods show 
-setMethod("show", "SpatialPolygonsDataFrame", 
+#' @importFrom methods show
+setMethod("show", "SpatialPolygonsDataFrame",
           function(object) {
             .print_Spatial(object)
           }
-          
+
 )
 
 #' @rdname sp-methods
 #' @export
-setMethod("show", "SpatialLinesDataFrame", 
-          function(object) {
-            .print_Spatial(object)
-          }
-)
-
-#' @rdname sp-methods
-#' @export
-setMethod("show", "SpatialPointsDataFrame", 
+setMethod("show", "SpatialLinesDataFrame",
           function(object) {
             .print_Spatial(object)
           }
@@ -79,7 +71,15 @@ setMethod("show", "SpatialPointsDataFrame",
 
 #' @rdname sp-methods
 #' @export
-setMethod ('print' , 'Spatial', 
+setMethod("show", "SpatialPointsDataFrame",
+          function(object) {
+            .print_Spatial(object)
+          }
+)
+
+#' @rdname sp-methods
+#' @export
+setMethod ('print' , 'Spatial',
            function(x, ...) {
              .print_Spatial(x)
            }

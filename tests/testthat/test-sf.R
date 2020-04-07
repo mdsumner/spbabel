@@ -121,8 +121,8 @@ test_that("multipoints recreated", {
   tab <- as.data.frame(mp)
   if (attr(mp, "sf_column") %in% names(mp)) tab[[attr(mp, "sf_column")]] <- NULL
   map <- spbabel::sptable(mp)
-  crs <- attr(tab[[attr(mp, "sf_column")]], "crs")$proj4string
-  spbabel::sp(map, tab, crs) %>% expect_s4_class("SpatialMultiPointsDataFrame")
+# crs <- attr(tab[[attr(mp, "sf_column")]], "crs")$proj4string
+  spbabel::sp(map, tab) %>% expect_s4_class("SpatialMultiPointsDataFrame")
 
 
 })

@@ -1,4 +1,8 @@
-spbabel 0.5.0 
+spbabel 0.5.1
+
+Fix errors on CRAN. 
+
+Thank you
 
 ## Test environments
 
