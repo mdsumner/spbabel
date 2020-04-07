@@ -29,7 +29,7 @@ NOTE: this is largely deprecated by new code in https://github.com/hypertidy/sil
 
 Spatial data in the `sp` package have a formal definition  (extending class `Spatial`) that is modelled on shapefiles, and close at least in spirit to the [Simple Features definition](https://github.com/edzer/sfr). See [What is Spatial in R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for more details. 
 
-Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator [babelfish](https://en.wikipedia.org/wiki/List_of_races_and_species_in_The_Hitchhiker%27s_Guide_to_the_Galaxy#Babel_fish). 
+Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator [babelfish](https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy). 
 
 
 The `spbabel` package tries to help by providing a more systematic encoding into the long-form with consistent naming and lossless ways to re-compose the original (or somewhat modified) objects. 

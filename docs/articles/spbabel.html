@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>spbabel • spbabel</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="spbabel">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spbabel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -47,18 +48,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/sfbabel.html">Speaking Simple Features</a>
-    </li>
-  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -73,13 +62,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>spbabel</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2019-01-08</h4>
+            <h4 class="date">2020-04-07</h4>
       
       
       <div class="hidden name"><code>spbabel.Rmd</code></div>
@@ -97,7 +87,7 @@
 <h2 class="hasAnchor">
 <a href="#formal-spatial-data-in-r" class="anchor"></a>Formal spatial data in R</h2>
 <p>Spatial data in the <code>sp</code> package have a formal definition (extending class <code>Spatial</code>) that is modelled on shapefiles, and close at least in spirit to the <a href="https://github.com/edzer/sfr">Simple Features definition</a>. See <a href="https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R">What is Spatial in R?</a> for more details.</p>
-<p>Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator <a href="https://en.wikipedia.org/wiki/List_of_races_and_species_in_The_Hitchhiker%27s_Guide_to_the_Galaxy#Babel_fish">babelfish</a>.</p>
+<p>Turning these data into long-form tables has been likened to making fish soup, which has a nice nod to the universal translator <a href="https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy">babelfish</a>.</p>
 <p>The <code>spbabel</code> package tries to help by providing a more systematic encoding into the long-form with consistent naming and lossless ways to re-compose the original (or somewhat modified) objects.</p>
 <p>There are two main forms.</p>
 <ol style="list-style-type: decimal">
@@ -138,52 +128,52 @@
 </ul>
 <p>The <code>sp</code> function could include overrides to avoid these tests but it’s <em>so easy</em> to modify a table to have the matches for the required topology it hardly seems worth it.</p>
 <p>Use the <code>sptable&lt;-</code> replacement method to modify the underlying geometric attributes (here <code>x</code> and <code>y</code> is assumed no matter what coordinate system).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(maptools)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(wrld_simpl)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(spbabel)</a>
-<a class="sourceLine" id="cb1-4" title="4">(oz &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(wrld_simpl, NAME <span class="op">==</span><span class="st"> "Australia"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(maptools)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(wrld_simpl)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(spbabel)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>(oz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(wrld_simpl, NAME <span class="op">==</span><span class="st"> "Australia"</span>))</span></code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
 ## features    : 1 
 ## extent      : 112.9511, 159.1019, -54.74973, -10.05167  (xmin, xmax, ymin, ymax)
-## coord. ref. :  +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
 ## variables   : 11
 ## # A tibble: 1 x 11
-##   FIPS  ISO2  ISO3     UN NAME    AREA POP2005 REGION SUBREGION   LON   LAT
-## * &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 AS    AU    AUS      36 Aust… 768230  2.03e7      9        53  136. -25.0</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">## long-form encoding of objects</span></a>
-<a class="sourceLine" id="cb3-2" title="2">oztab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(oz)</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">##  make a copy to modify</span></a>
-<a class="sourceLine" id="cb3-5" title="5">woz &lt;-<span class="st"> </span>oz</a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">## modify the geometry on this object without separating the vertices from the objects</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x_ =</span> x_ <span class="op">-</span><span class="st"> </span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9"></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># plot to compare </span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(oz, <span class="dt">col =</span> <span class="st">"grey"</span>)</a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(woz, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+##   FIPS  ISO2  ISO3     UN NAME        AREA  POP2005 REGION SUBREGION   LON   LAT
+##   &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;      &lt;int&gt;    &lt;dbl&gt;  &lt;int&gt;     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 AS    AU    AUS      36 Australia 768230 20310208      9        53  136. -25.0</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## long-form encoding of objects</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>oztab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(oz)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">##  make a copy to modify</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>woz &lt;-<span class="st"> </span>oz</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">## modify the geometry on this object without separating the vertices from the objects</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(woz) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x_ =</span> x_ <span class="op">-</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded datum WGS_1984 in CRS definition,
+##  but +towgs84= values preserved</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># plot to compare </span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(oz, <span class="dt">col =</span> <span class="st">"grey"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(woz, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>We can also restructure objects, by mutating the value of object to be the same as “branch” we get individual objects from each.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">pp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(wrld_simpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(NAME <span class="op">==</span><span class="st"> "Japan"</span> <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grepl</a></span>(<span class="st">"Korea"</span>, NAME)))</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co">## explode (or "disaggregate"") objects to individual polygons</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">## here each branch becomes an object, and each object only has one branch</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">## (ignoring hole-vs-island status for now)</span></a>
-<a class="sourceLine" id="cb4-5" title="5">wone &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(pp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">object_ =</span> branch_), <span class="dt">crs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr</a></span>(pp, <span class="st">"crs"</span>))</a>
-<a class="sourceLine" id="cb4-6" title="6">op &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">0</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="../reference/sp.html">sp</a></span>(pp), <span class="dt">col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">grey</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="dt">length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(pp<span class="op">$</span>object)))))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>pp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sptable.html">sptable</a></span>(wrld_simpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(NAME <span class="op">==</span><span class="st"> "Japan"</span> <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"Korea"</span>, NAME)))</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## explode (or "disaggregate"") objects to individual polygons</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## here each branch becomes an object, and each object only has one branch</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## (ignoring hole-vs-island status for now)</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>wone &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(pp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">object_ =</span> branch_), <span class="dt">crs =</span> <span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(pp, <span class="st">"crs"</span>))</span>
+<span id="cb6-6"><a href="#cb6-6"></a>op &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="../reference/sp.html">sp</a></span>(pp), <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="dt">length =</span> <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(pp<span class="op">$</span>object)))))</span></code></pre></div>
 <pre><code>## Warning: Unknown or uninitialised column: 'object'.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(wone, <span class="dt">col =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/palettes">rainbow</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(wone), <span class="dt">alpha =</span> <span class="fl">0.6</span>)), <span class="dt">border =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(wone, <span class="dt">col =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="kw"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(wone), <span class="dt">alpha =</span> <span class="fl">0.6</span>)), <span class="dt">border =</span> <span class="ot">NA</span>)</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(op)</span></code></pre></div>
 <p>The long-form table is also ready for ggplot2:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(pp) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">fill =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(object_), <span class="dt">group =</span> branch_) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(pp) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">fill =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(object_), <span class="dt">group =</span> branch_) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>()</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## resample the branch_ IDs to mix up the colours so that </span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co">## object disaggregation is more apparent</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(pp) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">fill =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(branch_)), <span class="dt">group =</span> branch_, <span class="dt">col =</span> object_) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">## resample the branch_ IDs to mix up the colours so that </span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">## object disaggregation is more apparent</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">10</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(pp) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">fill =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(branch_)), <span class="dt">group =</span> branch_, <span class="dt">col =</span> object_) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>()</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 <p>Please note that that <code>geom_polygon</code> cannot handle islands with multiple holes, and it only can do one hole by pretending it is a closed path and hides the boundary so you don’t see the sleight of hand. See the package ‘ggpolypath’ for a ‘geom_polypath’ geom.</p>
 <div id="de-duplication-of-vertices" class="section level2">
@@ -191,63 +181,63 @@
 <a href="#de-duplication-of-vertices" class="anchor"></a>De-duplication of vertices</h2>
 <p>For the four-table for de-duplication is performed in “x”/“y” by default, but the technique is general and could be applied to a geometric space of any dimension. Duplicates are identified by coercing numeric values to character (after ‘base::duplicated’) and so is not robust to numeric issues. We haven’t found any problems yet.</p>
 <p>An example of working with the four table form.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">codes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"AUS"</span>,  <span class="st">"SLB"</span>,  <span class="st">"FJI"</span>, <span class="st">"FSM"</span>, <span class="st">"KIR"</span>, </a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="st">"NCL"</span>, <span class="st">"NFK"</span>, <span class="st">"CCK"</span>, <span class="st">"CXR"</span>, <span class="st">"VUT"</span>, <span class="st">"NRU"</span>,  <span class="st">"PNG"</span>, </a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="st">"SGP"</span>, <span class="st">"TUV"</span>, <span class="st">"IDN"</span>, <span class="st">"TLS"</span>, <span class="st">"PLW"</span>, <span class="st">"MHL"</span>, <span class="st">"NZL"</span>)</a>
-<a class="sourceLine" id="cb10-4" title="4"></a>
-<a class="sourceLine" id="cb10-5" title="5">mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/map_table.html">map_table</a></span>(wrld_simpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(ISO3 <span class="op">%in%</span><span class="st"> </span>codes))</a>
-<a class="sourceLine" id="cb10-6" title="6"></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">## cross the dateline properly</span></a>
-<a class="sourceLine" id="cb10-8" title="8">mm<span class="op">$</span>v &lt;-<span class="st"> </span>mm<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x_ =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(x_ <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, x_ <span class="op">+</span><span class="st"> </span><span class="dv">360</span>, x_))</a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(mm<span class="op">$</span>v[, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x_"</span>, <span class="st">"y_"</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>codes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AUS"</span>,  <span class="st">"SLB"</span>,  <span class="st">"FJI"</span>, <span class="st">"FSM"</span>, <span class="st">"KIR"</span>, </span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">"NCL"</span>, <span class="st">"NFK"</span>, <span class="st">"CCK"</span>, <span class="st">"CXR"</span>, <span class="st">"VUT"</span>, <span class="st">"NRU"</span>,  <span class="st">"PNG"</span>, </span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="st">"SGP"</span>, <span class="st">"TUV"</span>, <span class="st">"IDN"</span>, <span class="st">"TLS"</span>, <span class="st">"PLW"</span>, <span class="st">"MHL"</span>, <span class="st">"NZL"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/map_table.html">map_table</a></span>(wrld_simpl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ISO3 <span class="op">%in%</span><span class="st"> </span>codes))</span></code></pre></div>
+<pre><code>## Warning: 'map_table' is deprecated.
+## See help("Deprecated")</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">## cross the dateline properly</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>mm<span class="op">$</span>v &lt;-<span class="st"> </span>mm<span class="op">$</span>v <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x_ =</span> <span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(x_ <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, x_ <span class="op">+</span><span class="st"> </span><span class="dv">360</span>, x_))</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mm<span class="op">$</span>v[, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x_"</span>, <span class="st">"y_"</span>)])</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co">## get an sp object</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co">## cascaded inner join and arrange within branch</span></a>
-<a class="sourceLine" id="cb11-3" title="3">ctable &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(mm, </a>
-<a class="sourceLine" id="cb11-4" title="4">       <span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(v, bXv) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(b) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="st">         </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(branch_, order_) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="st">         </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>vertex_))</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">## get an sp object</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">## cascaded inner join and arrange within branch</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>ctable &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(mm, </span>
+<span id="cb15-4"><a href="#cb15-4"></a>       <span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(v, bXv) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(b) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="st">         </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(branch_, order_) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="st">         </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>vertex_))</span></code></pre></div>
 <pre><code>## Joining, by = "vertex_"</code></pre>
 <pre><code>## Joining, by = "branch_"</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mm_sp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(ctable, </a>
-<a class="sourceLine" id="cb14-2" title="2">            <span class="dt">attr_tab =</span> mm<span class="op">$</span>o)</a>
-<a class="sourceLine" id="cb14-3" title="3"></a>
-<a class="sourceLine" id="cb14-4" title="4">mm_sp</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mm_sp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sp.html">sp</a></span>(ctable, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>            <span class="dt">attr_tab =</span> mm<span class="op">$</span>o)</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>mm_sp</span></code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
 ## features    : 19 
 ## extent      : 95.00803, 209.7808, -54.74973, 14.59805  (xmin, xmax, ymin, ymax)
-## coord. ref. : NA 
 ## variables   : 12
 ## # A tibble: 19 x 12
-##    FIPS  ISO2  ISO3     UN NAME    AREA POP2005 REGION SUBREGION   LON
-##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;
-##  1 AS    AU    AUS      36 Aust… 768230  2.03e7      9        53 136. 
-##  2 BP    SB    SLB      90 Solo…   2799  4.72e5      9        54 160. 
-##  3 FJ    FJ    FJI     242 Fiji    1827  8.28e5      9        54 178. 
-##  4 FM    FM    FSM     583 Micr…     70  1.10e5      9        57 158. 
-##  5 KR    KI    KIR     296 Kiri…     73  9.20e4      9        57 175. 
-##  6 NC    NC    NCL     540 New …   1828  2.34e5      9        54 165. 
-##  7 NF    NF    NFK     574 Norf…      0  0.          9        53 168. 
-##  8 CK    CC    CCK     166 Coco…      1  0.          0         0  96.8
-##  9 KT    CX    CXR     162 Chri…      0  0.          0         0 106. 
-## 10 NH    VU    VUT     548 Vanu…   1219  2.15e5      9        54 167. 
-## 11 NR    NR    NRU     520 Nauru      2  1.01e4      9        57 167. 
-## 12 NZ    NZ    NZL     554 New …  26799  4.10e6      9        53 172. 
-## 13 PP    PG    PNG     598 Papu…  45286  6.07e6      9        54 143. 
-## 14 SN    SG    SGP     702 Sing…     67  4.33e6    142        35 104. 
-## 15 TV    TV    TUV     798 Tuva…      3  1.04e4      9        61 179. 
-## 16 ID    ID    IDN     360 Indo… 181157  2.26e8    142        35 114. 
-## 17 TT    TL    TLS     626 Timo…   1487  1.07e6    142        35 126. 
-## 18 PS    PW    PLW     585 Palau      0  2.01e4      9        57 135. 
-## 19 RM    MH    MHL     584 Mars…      0  5.67e3      9        57 169. 
-## # ... with 2 more variables: LAT &lt;dbl&gt;, object_1 &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(mm_sp, <span class="dt">col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/grDevices/topics/gray">grey</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(mm_sp))))</a></code></pre></div>
+##    FIPS  ISO2  ISO3     UN NAME    AREA POP2005 REGION SUBREGION   LON     LAT
+##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 AS    AU    AUS      36 Aust… 768230  2.03e7      9        53 136.  -25.0  
+##  2 BP    SB    SLB      90 Solo…   2799  4.72e5      9        54 160.   -9.61 
+##  3 FJ    FJ    FJI     242 Fiji    1827  8.28e5      9        54 178.  -17.8  
+##  4 FM    FM    FSM     583 Micr…     70  1.10e5      9        57 158.    6.88 
+##  5 KR    KI    KIR     296 Kiri…     73  9.20e4      9        57 175.   -1.51 
+##  6 NC    NC    NCL     540 New …   1828  2.34e5      9        54 165.  -21.4  
+##  7 NF    NF    NFK     574 Norf…      0  0.          9        53 168.  -29.0  
+##  8 CK    CC    CCK     166 Coco…      1  0.          0         0  96.8 -12.2  
+##  9 KT    CX    CXR     162 Chri…      0  0.          0         0 106.  -10.4  
+## 10 NH    VU    VUT     548 Vanu…   1219  2.15e5      9        54 167.  -15.4  
+## 11 NR    NR    NRU     520 Nauru      2  1.01e4      9        57 167.   -0.522
+## 12 NZ    NZ    NZL     554 New …  26799  4.10e6      9        53 172.  -42.6  
+## 13 PP    PG    PNG     598 Papu…  45286  6.07e6      9        54 143.   -5.95 
+## 14 SN    SG    SGP     702 Sing…     67  4.33e6    142        35 104.    1.35 
+## 15 TV    TV    TUV     798 Tuva…      3  1.04e4      9        61 179.   -8.51 
+## 16 ID    ID    IDN     360 Indo… 181157  2.26e8    142        35 114.   -0.976
+## 17 TT    TL    TLS     626 Timo…   1487  1.07e6    142        35 126.   -8.82 
+## 18 PS    PW    PLW     585 Palau      0  2.01e4      9        57 135.    7.50 
+## 19 RM    MH    MHL     584 Mars…      0  5.67e3      9        57 169.    7.60 
+## # … with 1 more variable: object_1 &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mm_sp, <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(mm_sp))))</span></code></pre></div>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co">## get a gg plot</span></a>
-<a class="sourceLine" id="cb17-2" title="2"></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(ctable <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mm<span class="op">$</span>o, NAME, object_))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">group =</span> branch_, <span class="dt">fill =</span> NAME) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>() <span class="op">+</span><span class="st"> </span>ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_equal</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">## get a gg plot</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(ctable <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mm<span class="op">$</span>o, NAME, object_))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x_, <span class="dt">y =</span> y_, <span class="dt">group =</span> branch_, <span class="dt">fill =</span> NAME) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span>() <span class="op">+</span><span class="st"> </span>ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_equal</a></span>()</span></code></pre></div>
 <pre><code>## Joining, by = "object_"</code></pre>
 <p><img src="spbabel_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
 </div>
@@ -255,6 +245,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -277,17 +268,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Michael D. Sumner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

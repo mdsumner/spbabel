@@ -15,9 +15,21 @@ downloads](http://cranlogs.r-pkg.org/badges/spbabel)](http://www.r-pkg.org/pkg/s
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg)](https://codecov.io/github/mdsumner/spbabel?branch=master)
 
+**Historical NOTE:** *spbabel is a product of its time, when the sp
+package was de rigeur in R spatial and we needed external workarounds to
+get around the limitations imposed by sp. Now we have to work around the
+inflexibility and lack of modularity of the sf package, and the need for
+spbabel is fading. If you are looking at spbabel to decompose spatial, I
+recommend looking at sfheaders and/or silicate. In combination these
+packages provide most workflows required to move to and from the sf
+format, without the sf package.*
+
+If you need help please [get in
+touch](https://github.com/hypertidy/silicate/).
+
 # spbabel for spatial forms
 
-Spbabel provides simple tools to flip between specialist, bespoke
+The spbabel provides simple tools to flip between specialist, bespoke
 formats and tabular, generic forms of spatial data. This package aims
 assist in the ongoing development of tools for spatial data in R. This
 is really a set of tools for developing other tools, but do see some
@@ -38,9 +50,9 @@ Currently supported:
 
   - sf
   - sp
-  - rangl
+  - silicate
   - trip
-  - rgl
+  - (some) rgl
 
 In progress:
 
@@ -112,7 +124,12 @@ The long-form version is similar to that implemented in:
     `SpatialPointsDataFrame`
   - rasters’s `geom()`
   - ggplot2’s `fortify()`
-  - gris’ normalized tables
+  - silicate’s normalized tables
+
+NOTE: the [sfheaders
+package](https://CRAN.r-project.org/package=sfheaders) provides the most
+powerful constructors for sf format, and provides a round-trip-able long
+form for sf that is a better standard than spbable ever provided.
 
 # How does spbabel work
 
@@ -185,12 +202,14 @@ is a particular long-term goal, and this will be best done(TM) via dplyr
 “back-ending”.
 
 A more general approach to this is started here:
-<https://github.com/mdsumner/sc>
+<https://github.com/hypertidy/silicate/>
 
 The decomposition and rebuild process of sf objects is now better
-thought out here: <https://github.com/mdsumner/gibble> and is to be
-built into whatever sc becomes.
+thought out here: <https://github.com/hypertidy/gibble> and is core to
+the operation of silicate.
+
+-----
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+Conduct](https://github.com/mdsumner/spbabel/blob/master/CONDUCT.md). By
+participating in this project you agree to abide by its terms.
