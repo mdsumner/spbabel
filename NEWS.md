@@ -1,3 +1,7 @@
+# dev
+
+* cleaned up Suggests for CRAN.
+
 # spbabel 0.5.1
 
 * Fixed CRAN breakages, caused by old use of select_ and distinct_, and needless problems of sf. #50

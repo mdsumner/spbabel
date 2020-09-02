@@ -1,12 +1,12 @@
-spbabel 0.5.1
+spbabel 0.5.5
 
-Fix errors on CRAN. 
+Fix use of Suggests packages to be conditional. 
 
 Thank you
 
 ## Test environments
 
-* Travis ubuntu 14.04 (devel and release)
+* Ubuntu 4.0.2
 * win-builder (devel and release)
 
 ## R CMD check results

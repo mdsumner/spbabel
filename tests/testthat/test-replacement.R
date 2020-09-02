@@ -1,7 +1,7 @@
 library(testthat)
 context("replacement")
 
-
+testthat::skip_if_not(requireNamespace("maptools"))
 library(maptools)
 library(dplyr)
 data(wrld_simpl)

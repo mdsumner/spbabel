@@ -1,3 +1,5 @@
+testthat::skip_if_not(requireNamespace("trip"))
+
 library(trip)
 library(testthat)
 context("trip")

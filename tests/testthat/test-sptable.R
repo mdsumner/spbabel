@@ -1,3 +1,5 @@
+testthat::skip_if_not(requireNamespace("maptools"))
+
 library(maptools)
 library(testthat)
 library(spbabel)
@@ -25,7 +27,7 @@ context("safety catch in case the column order changes")
 test_that("sptable names is the same", {
   expect_equal(names(polytab), polynames)
   expect_equal(names(linetab), linenames)
-  
+
 })
 
 
@@ -34,7 +36,7 @@ context("sptable")
 test_that("sptable structure is sound", {
   expect_equal(sort(names(polytab)), sort(polynames))
   expect_equal(sapply(polytab, class)[polynames], polytypes)
-  
+
   expect_equal(sort(names(linetab)), sort(linenames))
   expect_equal(sapply(linetab, class)[linenames], linetypes)
 })
@@ -43,7 +45,7 @@ context("points")
 test_that("sptable points structure is sound", {
   expect_true(all(pointnames %in% names(pointtab)))
   expect_equal(sapply(pointtab, class)[pointnames], pointtypes)
-  
+
   expect_equal(sort(names(multitab)), sort(multinames))
   expect_equal(sapply(multitab, class)[multinames], multitypes)
 })

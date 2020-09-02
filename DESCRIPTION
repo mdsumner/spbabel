@@ -1,6 +1,6 @@
 Package: spbabel
 Type: Package
-Version: 0.5.1
+Version: 0.5.5
 Title: Convert Spatial Data Using Tidy Tables
 Description: Tools to convert from specific formats to more general forms of 
     spatial data. Using tables to store the actual entities present in spatial
@@ -25,17 +25,14 @@ Suggests:
     ggplot2,
     maptools,
     raster,
+    sf,
     rmarkdown, 
     knitr,
     covr, 
-    broom, 
-    ggpolypath,
-    maps,
-    sf,
     trip, 
     viridis
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 ByteCompile: TRUE

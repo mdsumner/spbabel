@@ -1,4 +1,6 @@
 library(testthat)
+testthat::skip_if_not(requireNamespace("sf"))
+
 context("sf")
 library(sf)
 mix <- st_sfc(st_point(1:2), st_linestring(matrix(1:4,2)))
@@ -91,7 +93,7 @@ test_that("sptable can decompose the basic types", {
 gz <- rbind(zoodoo, gcdoo)
 
 sf_g_apply <- function(x, fun) {
-  lapply(sf::st_geometry(x), fun)
+  lapply(st_geometry(x), fun)
 }
 topology_types <- c("point", "multipoint", "linestring", "multilinestring", "polygon",
                     "multipolygon")

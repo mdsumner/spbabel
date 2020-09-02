@@ -41,26 +41,26 @@ sptable.sfc <- function(x, ...) {
 sptable.sf <- function(x, ...) {
   ## g <- sf::st_geometry(x)
   g <- x[[attr(x, "sf_column")]]
-  
+
   ftl <- feature_table.sfc(g)
-  
-  
+
+
  if ("island_" %in% names(ftl[[1]])) {
    ftl <- lapply(ftl, function(x) {
      x[["branch_"]] <- paste(x[["branch_"]], x[["island_"]])
      x[["island_"]] <- as.integer(factor(x[["branch_"]])) < 2
-     
+
      x
    })
  }
   gtab <- dplyr::bind_rows(ftl, .id = "object_")
-  
+
   if ("branch_" %in% names(ftl[[1]])) {
     gtab[["branch_"]] <- as.integer(factor(gtab[["branch_"]]))
   }
-  
+
   gtab[["object_"]] <- as.integer(factor(gtab[["object_"]], unique(gtab$object_)))
-  
+
   if (length(unique(gtab[["type"]])) > 1) warning("geometry has more than one topological type")
 
   sf_to_grisnames <- function(gnames) {
@@ -77,7 +77,7 @@ sptable.sf <- function(x, ...) {
   if (!any(grepl("POINT", gtab[["type_"]]))) {
     gtab$order_ <-  seq(nrow(gtab))
   }
- 
+
   gtab$type_ <- NULL
   #if (!is.null(gtab[["parent_"]])) {
   #  gtab$island_ <- gtab$parent_ == 1
@@ -164,21 +164,18 @@ feature_table.GEOMETRYCOLLECTION <- function(x, ...) dplyr::bind_rows(lapply(x, 
 ## this unname is only because there are NA names, which kill object_
 feature_table.sfc <- function(x, ...) {
   out <- unname(lapply(x, feature_table))
- out 
+ out
 }
 
 
 
-#' Individual geometries as tibbles. 
+#' Individual geometries as tibbles.
 #'
 #' @param x sf geometry of type sfg
 #'
 #' @return tibble
 #' @export
 #' @importFrom tibble as_tibble
-#' @examples
-#' 
-#' tibble::as_tibble(sf::st_point(c(1, 1, 1)))
 as_tibble.sfg <- function(x) {
      x <- as_tibble(as_matrix(x))
      ## convert non-coordinates to integer (remove this when someone cracks the limit)
@@ -205,7 +202,7 @@ as_matrix.MULTIPOLYGON <-
   function(x, ...) {
     do.call(rbind, lapply(seq_along(x),  function(island_) do.call(rbind, lapply(seq_along(x[[island_]]),
                                                                                  function(branch_) cbind(matrixOrVector(x[[island_]][[branch_]], class(x)[1L]),  island_, branch_)))))
-    
+
   }
 
 #' @importFrom utils tail

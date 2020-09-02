@@ -1,5 +1,7 @@
 library(testthat)
 context("sp From Table")
+testthat::skip_if_not(requireNamespace("maptools"))
+
 library(maptools)
 
 library(spbabel)

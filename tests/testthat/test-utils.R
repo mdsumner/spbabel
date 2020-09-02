@@ -1,4 +1,5 @@
 context("utils")
+testthat::skip_if_not(requireNamespace("raster"))
 
 ## TODO: Rename context
 ## TODO: Add more tests
