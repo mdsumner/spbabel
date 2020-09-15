@@ -432,6 +432,20 @@ with_tbl(tbl[is.na(tbl)] <- 1:2)
 with_df(df[matrix(c(rep(TRUE, 5), rep(FALSE, 7)), ncol = 3)] <- 4)
 with_tbl(tbl[matrix(c(rep(TRUE, 5), rep(FALSE, 7)), ncol = 3)] <- 4)
 
+## ----bracket-assign-array, dftbl = TRUE---------------------------------------
+
+with_tbl(tbl[1:2] <- matrix(8:1, ncol = 2))
+with_df(df[1:3, 1:2] <- matrix(6:1, ncol = 2))
+with_tbl(tbl[1:3, 1:2] <- matrix(6:1, ncol = 2))
+
+with_tbl(tbl[1:2] <- array(4:1, dim = c(4, 1, 1)))
+
+with_tbl(tbl[1:2] <- array(8:1, dim = c(4, 2, 1)))
+with_df(df[1:2] <- array(8:1, dim = c(2, 1, 4)))
+with_tbl(tbl[1:2] <- array(8:1, dim = c(2, 1, 4)))
+with_df(df[1:2] <- array(8:1, dim = c(4, 1, 2)))
+with_tbl(tbl[1:2] <- array(8:1, dim = c(4, 1, 2)))
+
 ## ----bracket-assign-wraps, dftbl = TRUE---------------------------------------
 
 with_tbl(tbl[1] <- 0)
@@ -440,11 +454,11 @@ with_tbl(tbl[1] <- list(0))
 
 ## ----bracket-assign-matrix, dftbl = TRUE--------------------------------------
 
-with_tbl(tbl[1] <- matrix(1:8, ncol = 2))
+with_tbl(tbl[1] <- list(matrix(1:8, ncol = 2)))
 
 
-with_df(df[1:2] <- matrix(1:8, ncol = 2))
-with_tbl(tbl[1:2] <- matrix(1:8, ncol = 2))
+
+with_tbl(tbl[1:2] <- list(matrix(1:8, ncol = 2)))
 
 ## ----bracket-assign-null, dftbl = TRUE----------------------------------------
 

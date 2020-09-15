@@ -1,9 +1,9 @@
-## ---- echo = FALSE,message=FALSE-----------------------------------------
+## ---- echo = FALSE,message=FALSE----------------------------------------------
 library(dplyr)
 library(maptools)
 library(ggplot2)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(maptools)
 data(wrld_simpl)
 library(spbabel)
@@ -22,7 +22,7 @@ sptable(woz) <- sptable(woz) %>% mutate(x_ = x_ - 5)
 plot(oz, col = "grey")
 plot(woz, add = TRUE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 pp <- sptable(wrld_simpl %>% subset(NAME == "Japan" | grepl("Korea", NAME)))
 ## explode (or "disaggregate"") objects to individual polygons
@@ -34,7 +34,7 @@ plot(sp(pp), col = grey(seq(0.3, 0.7, length = length(unique(pp$object)))))
 plot(wone, col = sample(rainbow(nrow(wone), alpha = 0.6)), border = NA)
 par(op)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(ggplot2)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom_polygon()
 ## resample the branch_ IDs to mix up the colours so that 
@@ -42,7 +42,7 @@ ggplot(pp) + aes(x = x_, y = y_, fill = factor(object_), group = branch_) + geom
 set.seed(10)
 ggplot(pp) + aes(x = x_, y = y_, fill = factor(sample(branch_)), group = branch_, col = object_) + geom_polygon()
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 codes <- c("AUS",  "SLB",  "FJI", "FSM", "KIR", 
 "NCL", "NFK", "CCK", "CXR", "VUT", "NRU",  "PNG", 
 "SGP", "TUV", "IDN", "TLS", "PLW", "MHL", "NZL")
@@ -66,7 +66,7 @@ mm_sp <- sp(ctable,
 mm_sp
 plot(mm_sp, col = grey(seq(0, 1, length = nrow(mm_sp))))
 
-## ---- fig.height=9, fig.width=9------------------------------------------
+## ---- fig.height=9, fig.width=9-----------------------------------------------
 ## get a gg plot
 
 ggplot(ctable %>% inner_join(dplyr::select(mm$o, NAME, object_))) + 

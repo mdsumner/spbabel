@@ -14,6 +14,22 @@
 
 <title>Column data types</title>
 
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -305,6 +321,34 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tibble)</span></code></pre></div>
 <p>This vignette shows an overview of known data types and their abbreviations, and their origin. For example, <code>&lt;int&gt;</code> in the header of a column indicates an integer column, and <code>&lt;chr&gt;</code> denotes a character column.</p>
+<pre><code>#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.</code></pre>
+<pre><code>#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.
+
+#&gt; Warning: `as_character()` is deprecated as of rlang 0.4.0
+#&gt; Please use `vctrs::vec_cast()` instead.</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -506,47 +550,43 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 #&gt; $ [1m`named list`     [22m [3m[90m&lt;named list&gt;[39m[23m [1]
 #&gt; $ [1mfactor           [22m [3m[90m&lt;fct&gt;[39m[23m A
 #&gt; $ [1mordered          [22m [3m[90m&lt;ord&gt;[39m[23m a
-#&gt; $ [1mDate             [22m [3m[90m&lt;date&gt;[39m[23m 2020-03-29
-#&gt; $ [1mPOSIXt           [22m [3m[90m&lt;dttm&gt;[39m[23m 2020-03-29 15:30:48
+#&gt; $ [1mDate             [22m [3m[90m&lt;date&gt;[39m[23m 2020-07-10
+#&gt; $ [1mPOSIXt           [22m [3m[90m&lt;dttm&gt;[39m[23m 2020-07-10 11:44:37
 #&gt; $ [1mdifftime         [22m [3m[90m&lt;drtn&gt;[39m[23m 1 secs
 #&gt; $ [1mhms              [22m [3m[90m&lt;time&gt;[39m[23m 00:00:01
 #&gt; $ [1minteger64        [22m [3m[90m&lt;int64&gt;[39m[23m 10000000000
-#&gt; $ [1mblob             [22m [3m[90m&lt;blob&gt;[39m[23m blob[1 B]
+#&gt; $ [1mblob             [22m [3m[90m&lt;blob&gt;[39m[23m [00]
 #&gt; $ [1mdata.frame       [22m [3m[90m&lt;df[,1]&gt;[39m[23m &lt;data.frame[1 x 1]&gt;
 #&gt; $ [1mtbl_df           [22m [3m[90m&lt;tibble&gt;[39m[23m &lt;tbl_df[1 x 1]&gt;
 #&gt; $ [1mAsIs             [22m [3m[90m&lt;I&lt;int&gt;&gt;[39m[23m 1
 #&gt; $ [1munspecified      [22m [3m[90m&lt;???&gt;[39m[23m NA
-#&gt; $ [1mvctrs_list_of    [22m [3m[90m&lt;list&lt;int&gt;&gt;[39m[23m 1
+#&gt; $ [1mvctrs_list_of    [22m [3m[90m&lt;list&lt;int&gt;&gt;[39m[23m [1]
 #&gt; $ [1mvctrs_vctr       [22m [3m[90m&lt;vctrs_vc&gt;[39m[23m 1
 #&gt; $ [1mvctrs_unspecified[22m [3m[90m&lt;???&gt;[39m[23m NA
 #&gt; $ [1mquosures         [22m [3m[90m&lt;quos&gt;[39m[23m [~1]</code></pre>
 <div id="implementation" class="section level2">
 <h2>Implementation</h2>
 <p>The column header is obtained by calling <code>pillar::type_sum()</code> on the column. This is an S3 method that can be overridden, but most of the time it is more useful to override <code>vctrs::vec_ptype_abbr()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>pillar<span class="op">:::</span>type_sum.default</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; function(x) {</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt;   if (is.object(x)) return(vctrs::vec_ptype_abbr(x))</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;   # r-lib/vctrs#323:</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;   if (typeof(x) == &quot;complex&quot;) return(&quot;cpl&quot;)</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;   if (vec_is(x)) return(vctrs::vec_ptype_abbr(x))</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; </span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt;   switch(typeof(x),</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;     builtin = ,</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;     special = ,</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;     closure = &quot;fn&quot;,</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;     environment = &quot;env&quot;,</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;     symbol =</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;       if (is_missing(x)) {</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;         &quot;missing&quot;</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;       } else {</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;         &quot;sym&quot;</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;       },</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; </span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;     typeof(x)</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt;   )</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; }</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; &lt;bytecode: 0x55a9e4de8b58&gt;</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; &lt;environment: namespace:pillar&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>pillar<span class="op">:::</span>type_sum.default</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; function(x) {</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;   if (is.object(x) || vctrs::vec_is(x)) return(vctrs::vec_ptype_abbr(x))</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;   switch(typeof(x),</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;     builtin = ,</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;     special = ,</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;     closure = &quot;fn&quot;,</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;     environment = &quot;env&quot;,</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;     symbol =</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;       if (is_missing(x)) {</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;         &quot;missing&quot;</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;       } else {</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;         &quot;sym&quot;</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;       },</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; </span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;     typeof(x)</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;   )</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; }</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; &lt;environment: namespace:pillar&gt;</span></span></code></pre></div>
 </div>
 
 

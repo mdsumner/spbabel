@@ -1,6 +1,6 @@
 Package: spbabel
 Type: Package
-Version: 0.5.1
+Version: 0.5.5
 Title: Convert Spatial Data Using Tidy Tables
 Description: Tools to convert from specific formats to more general forms of 
     spatial data. Using tables to store the actual entities present in spatial
@@ -14,17 +14,17 @@ URL: https://mdsumner.github.io/spbabel
 BugReports: https://github.com/mdsumner/spbabel/issues
 Depends: R (>= 3.2.3)
 Imports: dplyr, methods, sp, tibble, rlang
-Suggests: testthat, ggplot2, maptools, raster, rmarkdown, knitr, covr,
-        broom, ggpolypath, maps, sf, trip, viridis
+Suggests: testthat, ggplot2, maptools, raster, sf, rmarkdown, knitr,
+        covr, trip, viridis
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 ByteCompile: TRUE
 RemoteType: local
 RemoteUrl: /perm_storage/home/mdsumner/Git/spbabel
 NeedsCompilation: no
-Packaged: 2020-04-07 09:42:11 UTC; mdsumner
+Packaged: 2020-09-02 03:19:25 UTC; mdsumner
 Author: Michael D. Sumner [aut, cre]
 Maintainer: Michael D. Sumner <mdsumner@gmail.com>
-Built: R 3.6.3; ; 2020-04-07 09:42:12 UTC; unix
+Built: R 4.0.2; ; 2020-09-02 03:19:26 UTC; unix

@@ -1,3 +1,15 @@
+# glue 1.4.2
+
+* The required version of R is now 3.2 (#189)
+* `glue_sql()` now collapses `DBI::SQL()` elements correctly (#192 @shrektan)
+* The internal `compare()` method gains a `...` argument, for compatibility with testthat 3.0.0
+
+# glue 1.4.1
+
+* Internal changes for compatibility with vctrs 0.3.0 (#187).
+* `glue_sql()` now replaces missing values correctly when collapsing values (#185).
+* `glue_sql()` now always preserves the type of the column even in the presence of missing values (#130)
+
 # glue 1.4.0
 
 * `.envir = NULL` is now supported and is equivalent to passing `.envir = emptyenv()` (#140)

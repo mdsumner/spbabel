@@ -27,6 +27,22 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -393,9 +409,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb4-11"><a href="#cb4-11"></a>  <span class="kw">glue</span>(..., <span class="dt">.open =</span> <span class="st">&quot;:&quot;</span>, <span class="dt">.close =</span> <span class="st">&quot;:&quot;</span>, <span class="dt">.envir =</span> .envir, <span class="dt">.transformer =</span> emoji_transformer)</span>
 <span id="cb4-12"><a href="#cb4-12"></a>}</span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="kw">glue_ji</span>(<span class="st">&quot;one :heart:&quot;</span>)</span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; one ❤️</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="kw">glue_ji</span>(<span class="st">&quot;many :heart*:&quot;</span>)</span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; many 💘❤️💟💌</span></span></code></pre></div>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="kw">glue_ji</span>(<span class="st">&quot;many :heart*:&quot;</span>)</span></code></pre></div>
 </div>
 <div id="sprintf-transformer" class="section level3">
 <h3>sprintf transformer</h3>

@@ -1,3 +1,9 @@
+# spbabel 0.5.1
+
+* Fixed CRAN breakages, caused by old use of select_ and distinct_, and needless problems of sf. #50
+
+* Deprecated map_table(). 
+
 # spbabel 0.5.0
 
 * Declare 'vertex_table' as old class for sp to keep its data frame restriction happy. 

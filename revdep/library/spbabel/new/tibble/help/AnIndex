@@ -31,7 +31,6 @@ has_name	reexports
 has_rownames	rownames
 is.tibble	is.tibble
 is_tibble	is_tibble
-is_vector_s3	reexports
 knit_print.trunc_mat	knit_print.trunc_mat
 lst	lst
 lst_	deprecated
