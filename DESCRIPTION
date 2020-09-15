@@ -25,7 +25,6 @@ Suggests:
     ggplot2,
     maptools,
     raster,
-    sf,
     rmarkdown, 
     knitr,
     covr, 
