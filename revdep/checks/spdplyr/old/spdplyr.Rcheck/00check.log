@@ -1,10 +1,11 @@
-* using log directory ‘/perm_storage/home/mdsumner/Git/spbabel/revdep/checks/angstroms/new/angstroms.Rcheck’
+* using log directory ‘/perm_storage/home/mdsumner/Git/spbabel/revdep/checks/spdplyr/old/spdplyr.Rcheck’
 * using R version 4.0.2 (2020-06-22)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
-* checking for file ‘angstroms/DESCRIPTION’ ... OK
-* this is package ‘angstroms’ version ‘0.0.1’
+* checking for file ‘spdplyr/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘spdplyr’ version ‘0.4.0’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -13,8 +14,8 @@
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
-* checking whether package ‘angstroms’ can be installed ... ERROR
+* checking whether package ‘spdplyr’ can be installed ... ERROR
 Installation failed.
-See ‘/perm_storage/home/mdsumner/Git/spbabel/revdep/checks/angstroms/new/angstroms.Rcheck/00install.out’ for details.
+See ‘/perm_storage/home/mdsumner/Git/spbabel/revdep/checks/spdplyr/old/spdplyr.Rcheck/00install.out’ for details.
 * DONE
 Status: 1 ERROR

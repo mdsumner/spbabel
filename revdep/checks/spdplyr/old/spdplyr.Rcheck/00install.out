@@ -1,0 +1,14 @@
+* installing *source* package ‘spdplyr’ ...
+** package ‘spdplyr’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: package or namespace load failed for ‘dplyr’:
+ package ‘R6’ was installed before R 4.0.0: please re-install it
+Error: package ‘dplyr’ could not be loaded
+Execution halted
+ERROR: lazy loading failed for package ‘spdplyr’
+* removing ‘/perm_storage/home/mdsumner/Git/spbabel/revdep/checks/spdplyr/old/spdplyr.Rcheck/spdplyr’

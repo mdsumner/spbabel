@@ -5,7 +5,6 @@
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘angstroms/DESCRIPTION’ ... OK
 * this is package ‘angstroms’ version ‘0.0.1’
-* package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK

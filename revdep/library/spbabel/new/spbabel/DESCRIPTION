@@ -24,7 +24,7 @@ ByteCompile: TRUE
 RemoteType: local
 RemoteUrl: /perm_storage/home/mdsumner/Git/spbabel
 NeedsCompilation: no
-Packaged: 2020-09-02 03:19:25 UTC; mdsumner
+Packaged: 2020-09-15 04:10:01 UTC; mdsumner
 Author: Michael D. Sumner [aut, cre]
 Maintainer: Michael D. Sumner <mdsumner@gmail.com>
-Built: R 4.0.2; ; 2020-09-02 03:19:26 UTC; unix
+Built: R 4.0.2; ; 2020-09-15 04:10:01 UTC; unix

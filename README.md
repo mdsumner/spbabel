@@ -7,14 +7,6 @@ Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travi
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel)
 
-[![](http://www.r-pkg.org/badges/version/spbabel)](http://www.r-pkg.org/pkg/spbabel)
-
-[![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/spbabel)](http://www.r-pkg.org/pkg/spbabel)
-
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/mdsumner/spbabel/master.svg)](https://codecov.io/github/mdsumner/spbabel?branch=master)
-
 **Historical NOTE:** *spbabel is a product of its time, when the sp
 package was de rigeur in R spatial and we needed external workarounds to
 get around the limitations imposed by sp. Now we have to work around the
@@ -108,11 +100,11 @@ devtools::install_github("mdsumner/spbabel")
 Spatial data in the `sp` package have a formal definition (extending
 class `Spatial`) that is modelled on shapefiles, and close at least in
 spirit to the [Simple Features
-definition](https://github.com/edzer/sfr). See [What is Spatial in
-R?](https://github.com/mdsumner/spbabel/wiki/What-is-Spatial-in-R) for
-more details. Spatial data in the `ggplot2` package has no formal
-definition and there’s not a lot of guidance for how to switch between
-these two worlds, or the opportunities that exist for other options.
+definition](https://github.com/r-spatial/sf).
+
+Spatial data in the `ggplot2` package has no formal definition and
+there’s not a lot of guidance for how to switch between these two
+worlds, or the opportunities that exist for other options.
 
 The `spbabel` package tries to help by providing a more systematic
 encoding into the long-form with consistent naming and lossless ways to
@@ -205,7 +197,7 @@ A more general approach to this is started here:
 <https://github.com/hypertidy/silicate/>
 
 The decomposition and rebuild process of sf objects is now better
-thought out here: <https://github.com/hypertidy/gibble> and is core to
+thought out here: <https://github.com/mdsumner/gibble> and is core to
 the operation of silicate.
 
 -----
