@@ -15,5 +15,8 @@ Thank you
 
 ## Reverse dependencies
 
-The three reverse dependencies angstroms, spdplyr, and tabularaster pass check against this update. 
+The reverse dependencies pass check against this update. 
+
+* angstroms 
+* spdplyr 
 

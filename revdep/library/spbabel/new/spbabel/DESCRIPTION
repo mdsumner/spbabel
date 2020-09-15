@@ -10,7 +10,7 @@ Description: Tools to convert from specific formats to more general forms of
     tables, analogous to 'ggplot2::fortify'. There is also a more 'normal form' representation
     that decomposes simple features and their kin to tables of objects, parts, and unique coordinates. 
 Authors@R: c(person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com"))
-URL: https://mdsumner.github.io/spbabel
+URL: https://mdsumner.github.io/spbabel/
 BugReports: https://github.com/mdsumner/spbabel/issues
 Depends: R (>= 3.2.3)
 Imports: dplyr, methods, sp, tibble, rlang
@@ -24,7 +24,7 @@ ByteCompile: TRUE
 RemoteType: local
 RemoteUrl: /perm_storage/home/mdsumner/Git/spbabel
 NeedsCompilation: no
-Packaged: 2020-09-15 04:10:01 UTC; mdsumner
+Packaged: 2020-09-15 07:35:55 UTC; mdsumner
 Author: Michael D. Sumner [aut, cre]
 Maintainer: Michael D. Sumner <mdsumner@gmail.com>
-Built: R 4.0.2; ; 2020-09-15 04:10:01 UTC; unix
+Built: R 4.0.2; ; 2020-09-15 07:35:56 UTC; unix
