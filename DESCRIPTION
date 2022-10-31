@@ -33,5 +33,5 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 ByteCompile: TRUE
