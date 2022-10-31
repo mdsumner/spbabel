@@ -23,7 +23,6 @@ Imports:
 Suggests: 
     testthat,
     ggplot2,
-    maptools,
     raster,
     sf,
     rmarkdown, 
