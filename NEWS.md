@@ -1,3 +1,7 @@
+# spbabel dev
+
+* Remove maptools. 
+
 # 0.5.5
 
 * cleaned up Suggests for CRAN.

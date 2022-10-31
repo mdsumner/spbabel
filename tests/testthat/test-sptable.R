@@ -1,19 +1,16 @@
-testthat::skip_if_not(requireNamespace("maptools"))
 
-library(maptools)
 library(testthat)
 library(spbabel)
-data(wrld_simpl)
 data("mpoint1")
-polytab <- spbabel::sptable(wrld_simpl)
+polytab <- spbabel::sptable(.wrld_simpl)
 polynames <- c("object_", "branch_", "island_", "order_", "x_", "y_")
 polytypes <- setNames(c("integer", "integer", "logical", "integer", "numeric", "numeric"), polynames)
 
-linetab <- spbabel::sptable(as(wrld_simpl, "SpatialLinesDataFrame"))
+linetab <- spbabel::sptable(as(.wrld_simpl, "SpatialLinesDataFrame"))
 linenames <- c("object_", "branch_",  "order_", "x_", "y_")
 linetypes <- setNames(c("integer",  "integer",  "integer", "numeric", "numeric"), linenames)
 
-spts <- as(as(wrld_simpl, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
+spts <- as(as(.wrld_simpl, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
 pointtab <- spbabel::sptable(spts)
 pointnames <- c("object_", "x_", "y_")
 pointtypes <- setNames(c("integer",  "numeric", "numeric"), pointnames)
