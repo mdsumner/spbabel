@@ -172,12 +172,14 @@ feature_table.sfc <- function(x, ...) {
 #' Individual geometries as tibbles.
 #'
 #' @param x sf geometry of type sfg
-#'
+#' @inheritParams tibble::as_tibble
 #' @return tibble
 #' @export
 #' @importFrom tibble as_tibble
-as_tibble.sfg <- function(x) {
-     x <- as_tibble(as_matrix(x))
+as_tibble.sfg <- function(x, ..., .rows = NULL, .name_repair = c("check_unique",
+                                                                 "unique", "universal", "minimal"), rownames = pkgconfig::get_config("tibble::rownames",
+                                                                                                                                     NULL)) {
+     x <- as_tibble(as_matrix(x), ..., .rows = .rows, .name_repair = .name_repair, rownames = rownames)
      ## convert non-coordinates to integer (remove this when someone cracks the limit)
      nms <- setdiff(names(x), c("X", "Y", "Z", "M"))
      for (i in seq_along(nms)) x[[nms[i]]] <- as.integer(x[[nms[i]]])

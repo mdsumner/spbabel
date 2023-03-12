@@ -1,12 +1,12 @@
-spbabel 0.5.5
+spbabel 0.6.0
 
-Fix use of Suggests packages to be conditional. 
+Fix error with new tibble. 
 
 Thank you
 
 ## Test environments
 
-* Ubuntu 4.0.2
+* Ubuntu 
 * win-builder (devel and release)
 
 ## R CMD check results
