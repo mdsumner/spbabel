@@ -1,5 +1,6 @@
 spbabel 0.6.0
 
+Second submission of 0.6.0, fixed issues with pkgconfig import, outdated URL in README, and unused VignetteBuilder field. 
 Fix error with new tibble. 
 
 Thank you

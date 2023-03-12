@@ -19,18 +19,17 @@ Imports:
     methods,
     sp,
     tibble,
-    rlang
+    rlang,
+    pkgconfig
 Suggests: 
     testthat,
     ggplot2,
     raster,
     sf,
     rmarkdown, 
-    knitr,
     covr, 
     trip, 
     viridis
-VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3
 RoxygenNote: 7.2.3

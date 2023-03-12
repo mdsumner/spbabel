@@ -1,12 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis-CI Build
-Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel)
-
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel)
-
 **Historical NOTE:** *spbabel is a product of its time, when the sp
 package was de rigeur in R spatial and we needed external workarounds to
 get around the limitations imposed by sp. Now we have to work around the
@@ -40,16 +34,16 @@ spatial representations in R, in generic database-ready tables.
 
 Currently supported:
 
-  - sf
-  - sp
-  - silicate
-  - trip
-  - (some) rgl
+- sf
+- sp
+- silicate
+- trip
+- (some) rgl
 
 In progress:
 
-  - everything else
-  - especially the other trajectory / animal tracking packages
+- everything else
+- especially the other trajectory / animal tracking packages
 
 The tracking packages such as adehabitatLT, trajectories, and dozens of
 others `crawl` and `move` packages contain objects that could be coerced
@@ -78,8 +72,8 @@ of complicated workarounds doing constant translation.
 Not all pairwise combinations are of interest, but most importantly some
 of the representations are more general than others. The only one that
 can be used to represent all others is a set of relational tables, and
-‘gris’ does most of this, but ‘ggplot2’ also comes pretty close.
-Neither have been used extensively to do this though\!
+‘gris’ does most of this, but ‘ggplot2’ also comes pretty close. Neither
+have been used extensively to do this though!
 
 ## Installation
 
@@ -112,11 +106,11 @@ re-compose the original (or somewhat modified) objects.
 
 The long-form version is similar to that implemented in:
 
-  - sp’s `as()` coercion for `SpatialLinesDataFrame` to
-    `SpatialPointsDataFrame`
-  - rasters’s `geom()`
-  - ggplot2’s `fortify()`
-  - silicate’s normalized tables
+- sp’s `as()` coercion for `SpatialLinesDataFrame` to
+  `SpatialPointsDataFrame`
+- rasters’s `geom()`
+- ggplot2’s `fortify()`
+- silicate’s normalized tables
 
 NOTE: the [sfheaders
 package](https://CRAN.r-project.org/package=sfheaders) provides the most
@@ -133,10 +127,10 @@ and shared vertices between objects.
 The `sp` function re-composes a Spatial object from a table, it
 auto-detects the topology by the matching column names:
 
-  - SpatialPolygons: object\_, branch\_, island\_, order\_
-  - SpatialLines: object\_, branch\_, order\_
-  - SpatialPoints: object\_
-  - SpatialMultiPoints: object\_, branch\_
+- SpatialPolygons: object\_, branch\_, island\_, order\_
+- SpatialLines: object\_, branch\_, order\_
+- SpatialPoints: object\_
+- SpatialMultiPoints: object\_, branch\_
 
 After quite a lot of experimentation the long-form single table of all
 coordinates, with object, branch, island-status, and order provides the
@@ -167,19 +161,19 @@ existing code whereever possible.
 I want these things, and spbabel is the right compromise for where to
 start:
 
-  - flexibility in the number and type/s of attribute stored as
-    “coordinates”, x, y, lon, lat, z, time, temperature, etc.
-  - ability to store attributes on parts (\!) i.e. the state is the
-    object, the county is the part
-  - shared vertices
-  - ability to store points, lines and areas together, sharing topology
-    where appropriate
-  - provide a flexible basis for conversion between other formats.
-  - flexibility and ease of use
-  - integration with database engines and other systems
-  - integration with D3 via htmlwidgets, with shiny, and with gggeom
-    ggvis or similar
-  - data-flow with dplyr piping as the engine behind a D3 web interface
+- flexibility in the number and type/s of attribute stored as
+  “coordinates”, x, y, lon, lat, z, time, temperature, etc.
+- ability to store attributes on parts (!) i.e. the state is the object,
+  the county is the part
+- shared vertices
+- ability to store points, lines and areas together, sharing topology
+  where appropriate
+- provide a flexible basis for conversion between other formats.
+- flexibility and ease of use
+- integration with database engines and other systems
+- integration with D3 via htmlwidgets, with shiny, and with gggeom ggvis
+  or similar
+- data-flow with dplyr piping as the engine behind a D3 web interface
 
 Flexibility in attributes generally is the key to breaking out of
 traditional GIS constraints that don’t allow clear continuous / discrete
@@ -188,10 +182,9 @@ on topology versus geometry. When everything is tables this becomes
 natural, and we can build structures like link-relations between tables
 that transfer data only when required.
 
-The ability to use [Manifold
-System](http://www.georeference.org/doc/manifold.htm) seamlessly with R
-is a particular long-term goal, and this will be best done(TM) via dplyr
-“back-ending”.
+The ability to use [Manifold System](https://manifold.net/) seamlessly
+with R is a particular long-term goal, and this will be best done(TM)
+via dplyr “back-ending”.
 
 A more general approach to this is started here:
 <https://github.com/hypertidy/silicate/>
@@ -200,7 +193,7 @@ The decomposition and rebuild process of sf objects is now better
 thought out here: <https://github.com/mdsumner/gibble> and is core to
 the operation of silicate.
 
------
+------------------------------------------------------------------------
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/mdsumner/spbabel/blob/master/CONDUCT.md). By

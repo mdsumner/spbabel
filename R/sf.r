@@ -176,8 +176,10 @@ feature_table.sfc <- function(x, ...) {
 #' @return tibble
 #' @export
 #' @importFrom tibble as_tibble
+#' @importFrom pkgconfig get_config
 as_tibble.sfg <- function(x, ..., .rows = NULL, .name_repair = c("check_unique",
-                                                                 "unique", "universal", "minimal"), rownames = pkgconfig::get_config("tibble::rownames",
+                                                                 "unique", "universal", "minimal"),
+                          rownames = pkgconfig::get_config("tibble::rownames",
                                                                                                                                      NULL)) {
      x <- as_tibble(as_matrix(x), ..., .rows = .rows, .name_repair = .name_repair, rownames = rownames)
      ## convert non-coordinates to integer (remove this when someone cracks the limit)

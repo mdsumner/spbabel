@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
 ```
 
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/spbabel.svg?branch=master)](https://travis-ci.org/mdsumner/spbabel)
-
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/spbabel?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/spbabel)
-
 
 
 
@@ -129,7 +125,7 @@ I want these things, and spbabel is the right compromise for where to start:
 
 Flexibility in attributes generally is the key to breaking out of traditional GIS constraints that don't allow clear continuous / discrete distinctions, or time-varying objects/events, 3D/4D geometry, or clarity on topology versus geometry. When everything is tables this becomes natural, and we can build structures like link-relations between tables that transfer data only when required. 
 
-The ability to use [Manifold System](http://www.georeference.org/doc/manifold.htm) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending". 
+The ability to use [Manifold System](https://manifold.net/) seamlessly with R is a particular long-term goal, and this will be best done(TM) via dplyr "back-ending". 
 
 
 A more general approach to this is started here: https://github.com/hypertidy/silicate/
